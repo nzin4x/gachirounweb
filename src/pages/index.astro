@@ -1,16 +1,255 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
+import Slider from '../components/react/Slider';
 
+const slides = [
+  {
+    id: 1,
+    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1600&h=900&fit=crop',
+    title: '함께 만드는 가치로운 세상',
+    description: '사회적협동조합 가치로운이 더 나은 내일을 만들어갑니다',
+  },
+  {
+    id: 2,
+    image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=1600&h=900&fit=crop',
+    title: '노인복지 서비스',
+    description: '어르신들의 편안하고 행복한 노후를 위해 함께합니다',
+  },
+  {
+    id: 3,
+    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&h=900&fit=crop',
+    title: '장애인 활동지원',
+    description: '모두가 함께하는 세상을 만들어갑니다',
+  },
+  {
+    id: 4,
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&h=900&fit=crop',
+    title: '청소년 지원사업',
+    description: '우리 아이들의 밝은 미래를 응원합니다',
+  },
+];
+
+const services = [
+  {
+    icon: '👴',
+    title: '노인복지',
+    description: '어르신들의 건강하고 행복한 노후생활을 지원합니다',
+    link: '/services/elderly',
+  },
+  {
+    icon: '♿',
+    title: '장애인 지원',
+    description: '장애인의 자립생활과 사회참여를 돕습니다',
+    link: '/services/disability',
+  },
+  {
+    icon: '👦',
+    title: '청소년 지원',
+    description: '청소년의 건강한 성장과 발달을 응원합니다',
+    link: '/services/youth',
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="홈">
+  <section class="hero">
+    <div class="container">
+      <Slider slides={slides} client:load />
+    </div>
+  </section>
+
+  <section class="section about-preview bg-light">
+    <div class="container">
+      <h2 class="section-title">가치로운 사회적협동조합</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <h3>우리는 함께 성장합니다</h3>
+          <p>
+            사회적협동조합 가치로운은 2015년 설립 이래, 지역사회의 복지 증진과
+            사회적 약자를 위한 다양한 서비스를 제공해왔습니다.
+          </p>
+          <p>
+            노인복지, 장애인 활동지원, 청소년 지원 등 다양한 사업을 통해
+            모두가 행복한 세상을 만들어가고 있습니다.
+          </p>
+          <a href="/about" class="btn btn-primary">자세히 보기</a>
+        </div>
+        <div class="about-image">
+          <img
+            src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=600&h=400&fit=crop"
+            alt="가치로운 활동"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services">
+    <div class="container">
+      <h2 class="section-title">주요 사업</h2>
+      <div class="services-grid">
+        {services.map((service) => (
+          <a href={service.link} class="service-card">
+            <div class="service-icon">{service.icon}</div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+            <span class="service-link">자세히 보기 →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta bg-light">
+    <div class="container">
+      <div class="cta-content">
+        <h2>활동지원사를 모집합니다</h2>
+        <p>
+          가치로운과 함께 의미있는 일을 하실 분을 찾습니다.<br />
+          지금 바로 지원하세요!
+        </p>
+        <a href="/recruit" class="btn btn-primary btn-lg">지원하기</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .about-preview {
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+    align-items: center;
+  }
+
+  .about-text h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .about-text p {
+    line-height: 1.8;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .about-image {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl);
+  }
+
+  .service-card {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .service-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-card h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .service-card p {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-link {
+    color: var(--color-primary-600);
+    font-weight: 600;
+  }
+
+  .cta {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    color: white;
+  }
+
+  .cta-content {
+    text-align: center;
+    padding: var(--spacing-3xl) 0;
+  }
+
+  .cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+    color: white;
+  }
+
+  .cta-content p {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-2xl);
+    opacity: 0.95;
+  }
+
+  .btn-lg {
+    padding: var(--spacing-md) var(--spacing-2xl);
+    font-size: 1.1rem;
+    background-color: white;
+    color: var(--color-primary-600);
+  }
+
+  .btn-lg:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-primary-700);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--spacing-lg) 0;
+    }
+
+    .about-content {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .cta-content h2 {
+      font-size: 1.75rem;
+    }
+
+    .cta-content p {
+      font-size: 1rem;
+    }
+  }
+</style>

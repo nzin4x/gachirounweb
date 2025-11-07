@@ -1,0 +1,113 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout title="노인복지" description="어르신들의 건강하고 행복한 노후생활을 지원합니다">
+  <section class="page-hero">
+    <div class="container">
+      <h1>노인복지 사업</h1>
+      <p>어르신들의 건강하고 행복한 노후를 위해</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h2>사업 소개</h2>
+        <p>
+          가치로운의 노인복지 사업은 어르신들이 건강하고 행복한 노후생활을 영위할 수 있도록
+          다양한 서비스를 제공합니다.
+        </p>
+
+        <div class="service-list">
+          <div class="service-item">
+            <h3>🏠 방문요양 서비스</h3>
+            <p>전문 요양보호사가 어르신의 가정을 방문하여 일상생활 지원 및 건강관리 서비스를 제공합니다.</p>
+          </div>
+          
+          <div class="service-item">
+            <h3>🍽️ 식사 및 영양관리</h3>
+            <p>어르신의 건강 상태에 맞는 맞춤형 식사 및 영양관리 서비스를 제공합니다.</p>
+          </div>
+          
+          <div class="service-item">
+            <h3>🏃 건강증진 프로그램</h3>
+            <p>다양한 신체활동 및 여가 프로그램을 통해 어르신들의 건강 증진을 도모합니다.</p>
+          </div>
+          
+          <div class="service-item">
+            <h3>🤝 사회참여 지원</h3>
+            <p>어르신들의 사회활동 참여를 지원하여 건강하고 활기찬 노후생활을 돕습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .content-wrapper h2 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .content-wrapper > p {
+    line-height: 1.8;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-gray-700);
+  }
+
+  .service-list {
+    display: grid;
+    gap: var(--spacing-xl);
+  }
+
+  .service-item {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--color-primary-500);
+  }
+
+  .service-item h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.3rem;
+  }
+
+  .service-item p {
+    color: var(--color-gray-700);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

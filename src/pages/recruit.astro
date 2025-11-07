@@ -1,0 +1,185 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="활동지원사 구직신청" description="가치로운과 함께 의미있는 일을 하실 분을 찾습니다">
+  <section class="page-hero">
+    <div class="container">
+      <h1>활동지원사 구직신청</h1>
+      <p>가치로운과 함께 의미있는 일을 하실 분을 찾습니다</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h2>지원 안내</h2>
+        <p>
+          사회적협동조합 가치로운에서는 노인, 장애인 등 사회적 약자를 위한
+          활동지원 서비스를 제공할 활동지원사를 모집합니다.
+        </p>
+        
+        <div class="info-box">
+          <h3>📋 지원 자격</h3>
+          <ul>
+            <li>만 18세 이상</li>
+            <li>활동지원사 자격증 소지자 (또는 취득 예정자)</li>
+            <li>성실하고 책임감 있는 분</li>
+            <li>대상자에 대한 따뜻한 마음을 가진 분</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <h3>💼 근무 조건</h3>
+          <ul>
+            <li>근무 시간: 협의 가능 (파트타임/풀타임)</li>
+            <li>급여: 관련 법령에 따른 급여 지급</li>
+            <li>4대 보험 가입</li>
+            <li>정기적인 교육 및 슈퍼비전 제공</li>
+          </ul>
+        </div>
+
+        <div class="form-section">
+          <h3>📝 지원 방법</h3>
+          <p>
+            아래 Google Forms를 통해 지원서를 작성해주세요.<br />
+            담당자 검토 후 개별 연락 드리겠습니다.
+          </p>
+          
+          <div class="form-buttons">
+            <a 
+              href="https://docs.google.com/forms" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="btn btn-primary btn-lg"
+            >
+              📄 지원서 작성하기
+            </a>
+            
+            <div class="contact-info">
+              <p>문의: 000-0000-0000</p>
+              <p>이메일: recruit@gachiroun.or.kr</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .content-wrapper h2 {
+    color: var(--color-secondary-600);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .content-wrapper > p {
+    line-height: 1.8;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-gray-700);
+  }
+
+  .info-box {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+    border-left: 4px solid var(--color-secondary-500);
+  }
+
+  .info-box h3 {
+    color: var(--color-secondary-600);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .info-box ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .info-box li {
+    padding: var(--spacing-sm) 0;
+    padding-left: var(--spacing-lg);
+    position: relative;
+    color: var(--color-gray-700);
+  }
+
+  .info-box li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-secondary-500);
+    font-weight: 700;
+  }
+
+  .form-section {
+    background: var(--color-secondary-50);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .form-section h3 {
+    color: var(--color-secondary-700);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-section p {
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-gray-700);
+  }
+
+  .form-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+  }
+
+  .btn-lg {
+    padding: var(--spacing-md) var(--spacing-2xl);
+    font-size: 1.1rem;
+  }
+
+  .contact-info {
+    color: var(--color-gray-600);
+  }
+
+  .contact-info p {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .form-section {
+      padding: var(--spacing-lg);
+    }
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const history = [
+  { year: '2015', event: '사회적협동조합 가치로운 설립' },
+  { year: '2016', event: '노인복지 사업 시작' },
+  { year: '2017', event: '장애인 활동지원 서비스 개시' },
+  { year: '2018', event: '청소년 지원사업 확대' },
+  { year: '2020', event: 'COVID-19 대응 비대면 서비스 도입' },
+  { year: '2023', event: '지역사회 협력 네트워크 확대' },
+  { year: '2024', event: '디지털 전환 및 온라인 서비스 강화' },
+];
+---
+
+<MainLayout title="연혁" description="사회적협동조합 가치로운의 역사">
+  <section class="page-hero">
+    <div class="container">
+      <h1>연혁</h1>
+      <p>가치로운의 발자취</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="timeline">
+        {history.map((item, index) => (
+          <div class="timeline-item" class:list={[{ 'timeline-item-left': index % 2 === 0 }]}>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">{item.year}</div>
+              <div class="timeline-event">{item.event}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-primary-200);
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 50%;
+    padding-bottom: var(--spacing-2xl);
+    position: relative;
+  }
+
+  .timeline-item-left {
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-left: 50%;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-primary-500);
+    border: 4px solid white;
+    box-shadow: 0 0 0 4px var(--color-primary-200);
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  .timeline-content {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-right: var(--spacing-2xl);
+    max-width: 350px;
+  }
+
+  .timeline-item-left .timeline-content {
+    margin-right: 0;
+    margin-left: var(--spacing-2xl);
+  }
+
+  .timeline-year {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .timeline-event {
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .timeline::before {
+      left: 20px;
+    }
+
+    .timeline-item,
+    .timeline-item-left {
+      justify-content: flex-start;
+      padding-left: 60px;
+      padding-right: 0;
+    }
+
+    .timeline-marker {
+      left: 20px;
+    }
+
+    .timeline-content,
+    .timeline-item-left .timeline-content {
+      margin: 0;
+      max-width: 100%;
+    }
+  }
+</style>

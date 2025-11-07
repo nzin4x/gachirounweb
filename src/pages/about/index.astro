@@ -1,0 +1,115 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout title="조합 소개" description="사회적협동조합 가치로운을 소개합니다">
+  <section class="page-hero">
+    <div class="container">
+      <h1>조합 소개</h1>
+      <p>함께 만들어가는 가치로운 세상</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h2>사회적협동조합 가치로운</h2>
+        <p>
+          사회적협동조합 가치로운은 2015년 설립 이래, 지역사회의 복지 증진과
+          사회적 약자를 위한 다양한 서비스를 제공해왔습니다.
+        </p>
+        <p>
+          우리는 노인, 장애인, 청소년 등 사회적 약자를 위한 맞춤형 복지 서비스를 제공하며,
+          지역사회와 함께 성장하는 사회적 경제 조직입니다.
+        </p>
+
+        <div class="vision-grid">
+          <div class="vision-card">
+            <h3>🎯 비전</h3>
+            <p>모두가 행복한 포용적 사회 실현</p>
+          </div>
+          <div class="vision-card">
+            <h3>💫 미션</h3>
+            <p>사회적 약자의 자립과 사회참여 지원</p>
+          </div>
+          <div class="vision-card">
+            <h3>💚 가치</h3>
+            <p>연대, 협력, 나눔, 성장</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .content-wrapper h2 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .content-wrapper p {
+    line-height: 1.8;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-gray-700);
+  }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+  }
+
+  .vision-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+  }
+
+  .vision-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .vision-card p {
+    margin-bottom: 0;
+    color: var(--color-gray-600);
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .vision-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+  }
+</style>
