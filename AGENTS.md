@@ -520,7 +520,7 @@ const content = await strapi.getPageContent(PAGE_ID);
 **조직 소개** (`/about/organization`)
 - 4단계 조직도: 총회 → 이사회/감사 → 사무국 → 4개 팀
 - 거버넌스 구조: 총회, 이사회, 감사
-- 임원 정보: 이사장 전승호
+- 임원 정보: 이사장 구자애
 - 조합원 유형 4가지
 
 **개인정보 처리방침** (`/privacy`)
