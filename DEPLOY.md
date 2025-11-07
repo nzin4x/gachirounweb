@@ -65,39 +65,6 @@ git push origin master
 
 ---
 
-## 방법 2: Wrangler CLI (수동)
-
-로컬에서 직접 배포하는 방법입니다.
-
-### 1단계: Wrangler 설치
-```bash
-npm install -g wrangler
-```
-
-### 2단계: Cloudflare 로그인
-```bash
-wrangler login
-```
-브라우저가 열리면 Cloudflare 계정으로 로그인
-
-### 3단계: 빌드
-```bash
-npm run build
-```
-
-### 4단계: 배포
-```bash
-# 첫 배포
-wrangler pages deploy dist --project-name=gachiroun-homepage
-
-# 이후 배포 (package.json에 스크립트 있음)
-npm run deploy
-```
-
-### 5단계: 배포 확인
-배포 완료 후 제공되는 URL로 접속하여 확인
-
----
 
 ## 커스텀 도메인 설정
 
@@ -212,20 +179,7 @@ http://localhost:4321 에서 프로덕션 빌드 확인
 
 ---
 
-## 추천 배포 방법
+## 배포 URL
 
-**처음 배포**: GitHub 연동 (방법 1) 사용
-- 설정 한 번만 하면 됨
-- 이후 git push만으로 자동 배포
-- 배포 히스토리 관리 용이
-- 롤백 쉬움
-
-**긴급 수정**: Wrangler CLI (방법 2) 사용
-- 빠른 핫픽스 가능
-- GitHub 거치지 않고 즉시 배포
-
----
-
-**배포 URL**: 
 - 기본: `https://gachiroun-homepage.pages.dev`
 - 커스텀: `https://gachiroun.or.kr` (DNS 설정 후)
