@@ -15,7 +15,7 @@ const {
 
 const BASE_URL = 'https://gachiroun-homepage.pages.dev';
 const canonicalURL = new URL(Astro.url.pathname, BASE_URL);
-// 기본 OG 이미지는 og-image.jpg, image prop이 있으면 우선 사용
+// 기본 OG 이미지는 og-image.png, image prop이 있으면 우선 사용
 let ogImagePath = '/images/og-image.png';
 if (image && typeof image === 'string' && image.trim() !== '') {
   ogImagePath = image;
