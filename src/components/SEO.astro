@@ -9,12 +9,17 @@ interface Props {
 const {
   title,
   description = '사회적협동조합 가치로운 - 노인복지, 장애인 지원, 청소년 지원사업을 통해 더 나은 세상을 만들어갑니다.',
-  image = '/images/og-image.jpg',
+  image,
   type = 'website',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://gachiroun.or.kr');
-const ogImage = new URL(image, Astro.site || 'https://gachiroun.or.kr');
+// 기본 OG 이미지는 main-logo.png, image prop이 있으면 우선 사용
+let ogImagePath = '/images/main-logo.png';
+if (image && typeof image === 'string' && image.trim() !== '') {
+  ogImagePath = image;
+}
+const ogImage = new URL(ogImagePath, Astro.site || 'https://gachiroun.or.kr');
 ---
 
 <!-- Primary Meta Tags -->
