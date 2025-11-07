@@ -26,8 +26,7 @@ const navItems = [
   <div class="container">
     <nav class="nav">
       <a href="/" class="logo">
-        <span class="logo-icon">🌸</span>
-        <span class="logo-text">가치로운</span>
+        <img src="/images/main-logo.png" alt="사회적협동조합 가치로운" class="logo-img" />
       </a>
       
       <button class="mobile-menu-toggle" aria-label="메뉴 열기">
@@ -85,15 +84,17 @@ const navItems = [
   .logo {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-primary-600);
-    text-decoration: none;
   }
   
-  .logo-icon {
-    font-size: 2rem;
+  .logo-img {
+    height: 50px;
+    max-width: 300px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  
+  .logo-img:hover {
+    transform: scale(1.05);
   }
   
   .mobile-menu-toggle {

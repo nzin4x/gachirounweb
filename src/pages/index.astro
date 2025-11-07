@@ -84,18 +84,112 @@ const services = [
     </div>
   </section>
 
-  <section class="section services">
+    <section class="section vision-section">
     <div class="container">
-      <h2 class="section-title">주요 사업</h2>
+      <div class="vision-content">
+        <div class="vision-text">
+          <h2>우리의 비전</h2>
+          <p class="vision-statement">
+            <strong>"모두가 가치있는 삶을 누리는 사회"</strong>
+          </p>
+          <p class="vision-description">
+            사회적협동조합 가치로운은 돌봄이 필요한 모든 이웃과 함께<br />
+            더 나은 내일을 만들어가는 사회복지 전문 협동조합입니다.
+          </p>
+        </div>
+        <div class="vision-values">
+          <div class="value-item">
+            <div class="value-icon">💚</div>
+            <h4>존중</h4>
+            <p>모든 생명의 가치를 존중합니다</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🤝</div>
+            <h4>연대</h4>
+            <p>함께 성장하는 공동체를 만듭니다</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🌱</div>
+            <h4>지속가능성</h4>
+            <p>미래 세대를 위한 책임을 다합니다</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services-preview">
+    <div class="container">
+      <div class="section-header">
+        <h2>우리의 사업</h2>
+        <p>가치로운이 펼쳐가는 다양한 사회복지 활동</p>
+      </div>
+
       <div class="services-grid">
-        {services.map((service) => (
-          <a href={service.link} class="service-card">
-            <div class="service-icon">{service.icon}</div>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-            <span class="service-link">자세히 보기 →</span>
-          </a>
-        ))}
+        <div class="service-card">
+          <div class="service-icon">🏠</div>
+          <h3>재가방문요양</h3>
+          <p>어르신들의 건강하고 행복한 노후를 위한 맞춤형 재가 서비스</p>
+          <a href="/services/elderly" class="service-link">자세히 보기 →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">♿</div>
+          <h3>장애인활동지원</h3>
+          <p>장애인의 자립생활과 사회참여를 지원하는 1:1 맞춤형 활동지원</p>
+          <a href="/services/disability" class="service-link">자세히 보기 →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">👦</div>
+          <h3>아동청소년지원</h3>
+          <p>미래 세대의 건강한 성장을 돕는 교육·문화·정서지원</p>
+          <a href="/services/youth" class="service-link">자세히 보기 →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🎓</div>
+          <h3>교육 및 인력양성</h3>
+          <p>돌봄 전문가 양성과 역량강화 교육 프로그램</p>
+          <a href="/services" class="service-link">자세히 보기 →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🌍</div>
+          <h3>사회적 가치 창출</h3>
+          <p>지역사회와 함께하는 사회적경제 활성화 사업</p>
+          <a href="/services" class="service-link">자세히 보기 →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🔗</div>
+          <h3>지역사회 네트워킹</h3>
+          <p>다양한 주체들과의 협력을 통한 통합적 돌봄 체계 구축</p>
+          <a href="/services" class="service-link">자세히 보기 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">년간 운영 경험</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">200+</div>
+          <div class="stat-label">활동지원사</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">서비스 이용자</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">9</div>
+          <div class="stat-label">핵심 사업영역</div>
+        </div>
       </div>
     </div>
   </section>
@@ -116,10 +210,107 @@ const services = [
 
 <style>
   .hero {
-    padding: var(--spacing-2xl) 0;
+    position: relative;
+    height: 600px;
+    overflow: hidden;
   }
 
-  .about-preview {
+  .vision-section {
+    background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-secondary-50) 100%);
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .vision-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+    align-items: center;
+  }
+
+  .vision-text h2 {
+    font-size: 2.5rem;
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .vision-statement {
+    font-size: 1.75rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.4;
+  }
+
+  .vision-description {
+    font-size: 1.125rem;
+    color: var(--color-gray-700);
+    line-height: 1.8;
+  }
+
+  .vision-values {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .value-item {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: transform 0.3s ease;
+  }
+
+  .value-item:hover {
+    transform: translateX(8px);
+  }
+
+  .value-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .value-item h4 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.25rem;
+  }
+
+  .value-item p {
+    color: var(--color-gray-600);
+    margin: 0;
+  }
+
+  .stats-section {
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-2xl);
+    text-align: center;
+  }
+
+  .stat-item {
+    padding: var(--spacing-xl);
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .stat-label {
+    font-size: 1.125rem;
+    opacity: 0.95;
+  }  .about-preview {
   }
 
   .about-content {
@@ -229,27 +420,52 @@ const services = [
     color: var(--color-primary-700);
   }
 
-  @media (max-width: 768px) {
-    .hero {
-      padding: var(--spacing-lg) 0;
+    @media (max-width: 1024px) {
+    .vision-content {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-2xl);
     }
 
-    .about-content {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-xl);
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      height: 400px;
+    }
+
+    .vision-text h2 {
+      font-size: 2rem;
+    }
+
+    .vision-statement {
+      font-size: 1.375rem;
+    }
+
+    .value-item {
+      flex-direction: column;
+      text-align: center;
     }
 
     .services-grid {
       grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
       gap: var(--spacing-lg);
     }
 
-    .cta-content h2 {
-      font-size: 1.75rem;
+    .stat-number {
+      font-size: 2.5rem;
     }
 
-    .cta-content p {
-      font-size: 1rem;
+    .cta-content {
+      flex-direction: column;
+      text-align: center;
     }
   }
+</style>
 </style>

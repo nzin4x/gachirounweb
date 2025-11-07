@@ -24,21 +24,33 @@
   padding: 0;
 }
 
-/* 색상 변수 - 꽃 테마 */
+/* 색상 변수 - 가치로운 꽃 테마 (주황 & 노랑) */
 :root {
-  /* Primary - 분홍/자몽색 */
-  --color-primary-50: #fff1f2;
-  --color-primary-100: #ffe4e6;
-  --color-primary-200: #fecdd3;
-  --color-primary-300: #fda4af;
-  --color-primary-400: #fb7185;
-  --color-primary-500: #f43f5e;
-  --color-primary-600: #e11d48;
-  --color-primary-700: #be123c;
-  --color-primary-800: #9f1239;
-  --color-primary-900: #881337;
+  /* Primary - 주황색 (열정, 보람) */
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #FF6B35;  /* 메인 주황 */
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
   
-  /* Secondary - 초록색 잎 */
+  /* Accent - 노랑색 (희망, 즐거움) */
+  --color-accent-50: #fefce8;
+  --color-accent-100: #fef9c3;
+  --color-accent-200: #fef08a;
+  --color-accent-300: #fde047;
+  --color-accent-400: #facc15;
+  --color-accent-500: #FFB800;  /* 메인 노랑 */
+  --color-accent-600: #ca8a04;
+  --color-accent-700: #a16207;
+  --color-accent-800: #854d0e;
+  --color-accent-900: #713f12;
+  
+  /* Secondary - 초록색 잎 (성장, 생명) */
   --color-secondary-50: #f0fdf4;
   --color-secondary-100: #dcfce7;
   --color-secondary-200: #bbf7d0;

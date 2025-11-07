@@ -34,12 +34,10 @@ const footerLinks = [
     <div class="footer-content">
       <div class="footer-section">
         <div class="footer-logo">
-          <span class="logo-icon">🌸</span>
-          <span class="logo-text">가치로운</span>
+          <img src="/images/main-logo.png" alt="사회적협동조합 가치로운" class="footer-logo-img" />
         </div>
         <p class="footer-description">
-          사회적협동조합 가치로운은 노인복지, 장애인 지원, 청소년 지원사업을 통해<br />
-          더 나은 세상을 만들어갑니다.
+          더불어 함께 살아가는 사회적 가치 실현
         </p>
       </div>
       
@@ -59,9 +57,10 @@ const footerLinks = [
       <div class="footer-section">
         <h3 class="footer-title">연락처</h3>
         <ul class="footer-contact">
-          <li>📞 000-0000-0000</li>
-          <li>📧 info@gachiroun.or.kr</li>
-          <li>📍 서울특별시 OO구 OO로 123</li>
+          <li>📞 010-6549-8765</li>
+          <li>📧 nzin4x@gmail.com</li>
+          <li>📍 서울 강남구 테헤란로 406</li>
+          <li>샹제리제타워 A동 C111호</li>
         </ul>
       </div>
     </div>
@@ -101,14 +100,14 @@ const footerLinks = [
   .footer-logo {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
   }
   
-  .logo-icon {
-    font-size: 2rem;
+  .footer-logo-img {
+    height: 40px;
+    max-width: 250px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
   }
   
   .footer-description {

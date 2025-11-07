@@ -2,42 +2,252 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="노인복지" description="어르신들의 건강하고 행복한 노후생활을 지원합니다">
+<MainLayout title="재가방문요양" description="어르신들의 건강하고 행복한 노후를 위한 맞춤형 재가 서비스">
   <section class="page-hero">
     <div class="container">
-      <h1>노인복지 사업</h1>
-      <p>어르신들의 건강하고 행복한 노후를 위해</p>
+      <h1>재가방문요양</h1>
+      <p>어르신들의 건강하고 행복한 노후를 함께합니다</p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section intro-section">
     <div class="container">
-      <div class="content-wrapper">
-        <h2>사업 소개</h2>
-        <p>
-          가치로운의 노인복지 사업은 어르신들이 건강하고 행복한 노후생활을 영위할 수 있도록
-          다양한 서비스를 제공합니다.
+      <div class="intro-content">
+        <h2>재가방문요양이란?</h2>
+        <p class="lead">
+          재가방문요양은 거동이 불편한 어르신들이 <strong>익숙한 집에서</strong><br />
+          편안하게 생활하실 수 있도록 전문 요양보호사가 직접 방문하여<br />
+          <strong>맞춤형 돌봄 서비스</strong>를 제공하는 노인장기요양보험 서비스입니다.
         </p>
+      </div>
 
-        <div class="service-list">
-          <div class="service-item">
-            <h3>🏠 방문요양 서비스</h3>
-            <p>전문 요양보호사가 어르신의 가정을 방문하여 일상생활 지원 및 건강관리 서비스를 제공합니다.</p>
+      <div class="service-features">
+        <div class="feature-box">
+          <div class="feature-icon">🏠</div>
+          <h3>익숙한 환경</h3>
+          <p>평생 살아온 집에서<br />편안하게 생활</p>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">👥</div>
+          <h3>1:1 맞춤 돌봄</h3>
+          <p>전문 요양보호사의<br />개별 맞춤 서비스</p>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">💰</div>
+          <h3>경제적 부담 완화</h3>
+          <p>장기요양보험으로<br />비용 부담 최소화</p>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">❤️</div>
+          <h3>가족과 함께</h3>
+          <p>사랑하는 가족과<br />함께하는 시간</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services-section">
+    <div class="container">
+      <h2 class="section-title">제공 서비스</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🧼</div>
+          <h3>신체활동 지원</h3>
+          <ul>
+            <li>세면, 구강관리, 목욕 등 위생관리</li>
+            <li>식사 보조 및 영양 관리</li>
+            <li>체위 변경 및 이동 지원</li>
+            <li>옷 갈아입기 및 외출 동행</li>
+            <li>배설 도움 및 기저귀 교환</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🏡</div>
+          <h3>가사 및 일상생활 지원</h3>
+          <ul>
+            <li>식사 준비 및 설거지</li>
+            <li>청소 및 주변 정리정돈</li>
+            <li>세탁 및 의류 관리</li>
+            <li>장보기 및 심부름</li>
+            <li>생활용품 관리</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🩺</div>
+          <h3>건강관리 지원</h3>
+          <ul>
+            <li>혈압, 혈당 등 건강 체크</li>
+            <li>투약 관리 및 복약 지도</li>
+            <li>운동 및 재활 보조</li>
+            <li>건강상태 모니터링</li>
+            <li>응급상황 대처</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">😊</div>
+          <h3>정서적 지원</h3>
+          <ul>
+            <li>말벗 및 대화</li>
+            <li>취미활동 지원</li>
+            <li>외출 및 산책 동행</li>
+            <li>인지활동 프로그램</li>
+            <li>우울감 예방 및 정서 지원</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section eligibility-section">
+    <div class="container">
+      <h2 class="section-title">이용 대상 및 절차</h2>
+      
+      <div class="eligibility-content">
+        <div class="eligibility-box">
+          <h3>📋 이용 대상</h3>
+          <ul>
+            <li><strong>만 65세 이상</strong> 노인</li>
+            <li><strong>만 65세 미만</strong>으로 노인성 질병(치매, 뇌혈관질환, 파킨슨병 등)이 있는 자</li>
+            <li>6개월 이상 혼자서 일상생활을 수행하기 어렵다고 인정되는 자</li>
+          </ul>
+        </div>
+
+        <div class="process-box">
+          <h3>🔄 이용 절차</h3>
+          <div class="process-steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <h4>장기요양 인정 신청</h4>
+              <p>국민건강보험공단<br />방문·우편·인터넷 신청</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <h4>방문조사 및 등급판정</h4>
+              <p>공단 직원 방문조사<br />등급판정위원회 심의</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <h4>장기요양인정서 발급</h4>
+              <p>1~5등급 또는<br />인지지원등급 판정</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <h4>서비스 이용 시작</h4>
+              <p>가치로운 방문요양<br />서비스 이용</p>
+            </div>
           </div>
-          
-          <div class="service-item">
-            <h3>🍽️ 식사 및 영양관리</h3>
-            <p>어르신의 건강 상태에 맞는 맞춤형 식사 및 영양관리 서비스를 제공합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section grades-section">
+    <div class="container">
+      <h2 class="section-title">장기요양 등급별 서비스</h2>
+      <div class="grades-grid">
+        <div class="grade-card grade-1">
+          <h3>1등급</h3>
+          <p class="grade-desc">심신의 기능상태 장애로 일상생활에서 전적으로 다른 사람의 도움이 필요한 자</p>
+          <p class="grade-score">점수: 95점 이상</p>
+        </div>
+
+        <div class="grade-card grade-2">
+          <h3>2등급</h3>
+          <p class="grade-desc">심신의 기능상태 장애로 일상생활에서 상당 부분 다른 사람의 도움이 필요한 자</p>
+          <p class="grade-score">점수: 75점 이상 ~ 95점 미만</p>
+        </div>
+
+        <div class="grade-card grade-3">
+          <h3>3등급</h3>
+          <p class="grade-desc">심신의 기능상태 장애로 일상생활에서 부분적으로 다른 사람의 도움이 필요한 자</p>
+          <p class="grade-score">점수: 60점 이상 ~ 75점 미만</p>
+        </div>
+
+        <div class="grade-card grade-4">
+          <h3>4등급</h3>
+          <p class="grade-desc">심신의 기능상태 장애로 일상생활에서 일정 부분 다른 사람의 도움이 필요한 자</p>
+          <p class="grade-score">점수: 51점 이상 ~ 60점 미만</p>
+        </div>
+
+        <div class="grade-card grade-5">
+          <h3>5등급</h3>
+          <p class="grade-desc">치매환자로서 일상생활에서 일부 다른 사람의 도움이 필요한 자</p>
+          <p class="grade-score">점수: 45점 이상 ~ 51점 미만</p>
+        </div>
+
+        <div class="grade-card grade-cog">
+          <h3>인지지원등급</h3>
+          <p class="grade-desc">치매환자로서 가장 경증의 상태</p>
+          <p class="grade-score">점수: 45점 미만</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section why-gachiroun">
+    <div class="container">
+      <h2 class="section-title">가치로운 재가요양의 특장점</h2>
+      <div class="advantages-grid">
+        <div class="advantage-item">
+          <div class="advantage-icon">✨</div>
+          <h4>전문성</h4>
+          <p>정기적인 교육과 훈련을 받은 전문 요양보호사가 서비스 제공</p>
+        </div>
+
+        <div class="advantage-item">
+          <div class="advantage-icon">🤝</div>
+          <h4>신뢰성</h4>
+          <p>협동조합 운영으로 투명하고 신뢰할 수 있는 서비스</p>
+        </div>
+
+        <div class="advantage-item">
+          <div class="advantage-icon">💗</div>
+          <h4>인간중심</h4>
+          <p>어르신의 존엄성과 자율성을 최우선으로 고려</p>
+        </div>
+
+        <div class="advantage-item">
+          <div class="advantage-icon">📞</div>
+          <h4>신속한 대응</h4>
+          <p>긴급 상황 발생 시 즉각적인 대처 및 가족 연락</p>
+        </div>
+
+        <div class="advantage-item">
+          <div class="advantage-icon">📋</div>
+          <h4>맞춤형 계획</h4>
+          <p>개인별 건강 상태와 욕구에 맞춘 서비스 계획 수립</p>
+        </div>
+
+        <div class="advantage-item">
+          <div class="advantage-icon">🔄</div>
+          <h4>지속적 관리</h4>
+          <p>정기적인 모니터링과 서비스 품질 개선</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <div class="cta-text">
+          <h2>재가방문요양 서비스 상담 문의</h2>
+          <p>어르신의 건강하고 행복한 노후를 위해 가치로운이 함께합니다</p>
+        </div>
+        <div class="cta-info">
+          <div class="contact-item">
+            <span class="contact-label">📞 전화</span>
+            <a href="tel:010-6549-8765" class="contact-value">010-6549-8765</a>
           </div>
-          
-          <div class="service-item">
-            <h3>🏃 건강증진 프로그램</h3>
-            <p>다양한 신체활동 및 여가 프로그램을 통해 어르신들의 건강 증진을 도모합니다.</p>
-          </div>
-          
-          <div class="service-item">
-            <h3>🤝 사회참여 지원</h3>
-            <p>어르신들의 사회활동 참여를 지원하여 건강하고 활기찬 노후생활을 돕습니다.</p>
+          <div class="contact-item">
+            <span class="contact-label">✉️ 이메일</span>
+            <a href="mailto:nzin4x@gmail.com" class="contact-value">nzin4x@gmail.com</a>
           </div>
         </div>
       </div>
@@ -64,50 +274,369 @@ import MainLayout from '../../layouts/MainLayout.astro';
     opacity: 0.95;
   }
 
-  .content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
+  .intro-section {
+    background: var(--color-bg-light);
+    padding: var(--spacing-4xl) 0;
   }
 
-  .content-wrapper h2 {
+  .intro-content {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto var(--spacing-3xl);
+  }
+
+  .intro-content h2 {
     color: var(--color-primary-600);
+    font-size: 2.25rem;
     margin-bottom: var(--spacing-xl);
   }
 
-  .content-wrapper > p {
+  .lead {
+    font-size: 1.25rem;
     line-height: 1.8;
-    margin-bottom: var(--spacing-2xl);
     color: var(--color-gray-700);
   }
 
-  .service-list {
+  .service-features {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-3xl);
+  }
+
+  .feature-box {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+  }
+
+  .feature-box:hover {
+    transform: translateY(-8px);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .feature-box h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .feature-box p {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+  }
+
+  .services-section {
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.25rem;
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+  }
+
+  .service-card {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .service-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .service-card h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .service-card li {
+    padding: var(--spacing-sm) 0;
+    padding-left: var(--spacing-lg);
+    position: relative;
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+
+  .service-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-secondary-500);
+    font-weight: 700;
+  }
+
+  .eligibility-section {
+    background: var(--color-bg-light);
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .eligibility-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-3xl);
+  }
+
+  .eligibility-box,
+  .process-box {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .eligibility-box h3,
+  .process-box h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-xl);
+    font-size: 1.5rem;
+  }
+
+  .eligibility-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .eligibility-box li {
+    padding: var(--spacing-md) 0;
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+
+  .process-steps {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .step {
+    flex: 1;
+    text-align: center;
+  }
+
+  .step-number {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto var(--spacing-md);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .step h4 {
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+  }
+
+  .step p {
+    color: var(--color-gray-600);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .step-arrow {
+    color: var(--color-primary-400);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .grades-section {
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .grades-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-xl);
   }
 
-  .service-item {
+  .grade-card {
     background: white;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-2xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    border-left: 4px solid var(--color-primary-500);
+    border-left: 5px solid;
+    transition: transform 0.3s ease;
   }
 
-  .service-item h3 {
+  .grade-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .grade-1 { border-color: #dc2626; }
+  .grade-2 { border-color: #ea580c; }
+  .grade-3 { border-color: #ca8a04; }
+  .grade-4 { border-color: #16a34a; }
+  .grade-5 { border-color: #2563eb; }
+  .grade-cog { border-color: #9333ea; }
+
+  .grade-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-600);
+  }
+
+  .grade-desc {
+    color: var(--color-gray-700);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .grade-score {
+    color: var(--color-gray-600);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .why-gachiroun {
+    background: var(--color-bg-light);
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl);
+  }
+
+  .advantage-item {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .advantage-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .advantage-item h4 {
     color: var(--color-primary-600);
     margin-bottom: var(--spacing-md);
-    font-size: 1.3rem;
   }
 
-  .service-item p {
+  .advantage-item p {
     color: var(--color-gray-700);
-    line-height: 1.8;
-    margin: 0;
+    line-height: 1.6;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-600));
+    color: white;
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .cta-content {
+    text-align: center;
+  }
+
+  .cta-text h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .cta-text p {
+    font-size: 1.125rem;
+    opacity: 0.95;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .cta-info {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-3xl);
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .contact-label {
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+
+  .contact-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .contact-value:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 1024px) {
+    .service-features {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-grid,
+    .grades-grid,
+    .advantages-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .eligibility-content {
+      grid-template-columns: 1fr;
+    }
+
+    .process-steps {
+      flex-direction: column;
+    }
+
+    .step-arrow {
+      transform: rotate(90deg);
+    }
   }
 
   @media (max-width: 768px) {
     .page-hero h1 {
       font-size: 2rem;
+    }
+
+    .service-features,
+    .services-grid,
+    .grades-grid,
+    .advantages-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-info {
+      flex-direction: column;
+      gap: var(--spacing-lg);
     }
   }
 </style>
