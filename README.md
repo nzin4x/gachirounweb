@@ -153,6 +153,27 @@ http://localhost:4321 에서 확인
 2. Astro 페이지에서 임포트
 3. `client:load` 등 디렉티브로 하이드레이션 지정
 
+## 🎨 아이콘 및 Favicon
+
+### 아이콘 생성
+
+`public/images/ci.png`를 기반으로 다양한 아이콘 생성:
+
+```bash
+# 임시 아이콘 생성 (복사본)
+bash generate-icons.sh
+
+# ImageMagick 사용 (실제 리사이즈)
+bash generate-icons-imagemagick.sh
+```
+
+### 온라인 도구 (권장)
+
+- [Favicon Generator](https://realfavicongenerator.net/)
+- `ci.png` 업로드 → 모든 플랫폼용 favicon 자동 생성
+
+자세한 내용: [ICONS_GUIDE.md](./ICONS_GUIDE.md)
+
 ## 🧪 테스트
 
 ### URL 전체 점검

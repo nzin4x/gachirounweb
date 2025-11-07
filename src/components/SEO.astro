@@ -15,8 +15,8 @@ const {
 
 const BASE_URL = 'https://gachiroun-homepage.pages.dev';
 const canonicalURL = new URL(Astro.url.pathname, BASE_URL);
-// 기본 OG 이미지는 main-logo.png, image prop이 있으면 우선 사용
-let ogImagePath = '/images/main-logo.png';
+// 기본 OG 이미지는 og-image.jpg, image prop이 있으면 우선 사용
+let ogImagePath = '/images/og-image.png';
 if (image && typeof image === 'string' && image.trim() !== '') {
   ogImagePath = image;
 }
@@ -49,7 +49,21 @@ const ogImage = new URL(ogImagePath, BASE_URL);
 <meta property="twitter:image" content={ogImage} />
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#FF6B35" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="가치로운" />
+
+<!-- Android/Chrome -->
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
 
 <!-- Sitemap -->
 <link rel="sitemap" href="/sitemap-index.xml" />

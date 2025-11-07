@@ -1,0 +1,39 @@
+{
+  "name": "사회적협동조합 가치로운",
+  "short_name": "가치로운",
+  "description": "전문적이고 인간중심적인 돌봄 서비스 - 재가방문요양, 장애인활동지원, 아동청소년지원",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6B35",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["social", "health", "lifestyle"],
+  "lang": "ko-KR",
+  "dir": "ltr"
+}
