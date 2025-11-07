@@ -1,3 +1,79 @@
+/* ===== Footer 스타일 ===== */
+.footer {
+  background: var(--color-primary-700);
+  color: white;
+  padding: var(--spacing-4xl) 0 var(--spacing-xl) 0;
+  margin-top: var(--spacing-4xl);
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3xl);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.footer-section {
+  min-width: 180px;
+  flex: 1 1 180px;
+  margin-bottom: var(--spacing-xl);
+}
+
+.footer-logo {
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-logo-img {
+  display: block;
+  background: white;
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 0.08);
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-description {
+  color: var(--color-accent-100);
+  font-size: 1rem;
+  margin-top: var(--spacing-sm);
+}
+
+.footer-title {
+  color: var(--color-accent-500);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-links,
+.footer-contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li,
+.footer-contact li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: var(--color-accent-400);
+}
+
+@media (max-width: 900px) {
+  .footer-content {
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+}
 /* 아리따돋움 웹폰트 */
 @font-face {
   font-family: 'Arita-dotum';
