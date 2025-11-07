@@ -13,13 +13,14 @@ const {
   type = 'website',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://gachiroun.or.kr');
+const BASE_URL = 'https://gachiroun-homepage.pages.dev';
+const canonicalURL = new URL(Astro.url.pathname, BASE_URL);
 // 기본 OG 이미지는 main-logo.png, image prop이 있으면 우선 사용
 let ogImagePath = '/images/main-logo.png';
 if (image && typeof image === 'string' && image.trim() !== '') {
   ogImagePath = image;
 }
-const ogImage = new URL(ogImagePath, Astro.site || 'https://gachiroun.or.kr');
+const ogImage = new URL(ogImagePath, BASE_URL);
 ---
 
 <!-- Primary Meta Tags -->
