@@ -142,7 +142,9 @@ const navItems = [
     background-color: var(--color-primary-50);
   }
   
-  .has-dropdown:hover .dropdown {
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:focus-within .dropdown,
+  .has-dropdown .dropdown:hover {
     display: block;
   }
   
@@ -157,7 +159,8 @@ const navItems = [
     padding: var(--spacing-sm);
     min-width: 200px;
     list-style: none;
-    margin: var(--spacing-xs) 0 0 0;
+    margin: -4px 0 0 0; /* overlap menu bar to remove mouse gap */
+    z-index: 1002;
   }
   
   .dropdown-link {
@@ -202,14 +205,7 @@ const navItems = [
       box-shadow: none;
       padding-left: var(--spacing-lg);
       margin-top: var(--spacing-sm);
-    }
-    
-    .has-dropdown .dropdown {
-      display: none;
-    }
-    
-    .has-dropdown.active .dropdown {
-      display: block;
+      display: block !important;
     }
   }
 </style>

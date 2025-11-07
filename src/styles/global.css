@@ -343,6 +343,8 @@ a:hover {
 
 .section-title {
   text-align: center;
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-lg);
   margin-bottom: var(--spacing-2xl);
   color: var(--color-primary-700);
 }
