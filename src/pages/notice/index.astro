@@ -1,0 +1,217 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// 추후 Strapi에서 가져올 예정
+const notices = [
+  {
+    id: 1,
+    title: '2025년 활동지원사 양성교육 안내',
+    excerpt: '2025년 상반기 활동지원사 양성교육을 아래와 같이 진행합니다.',
+    date: '2025-01-15',
+    category: '교육',
+  },
+  {
+    id: 2,
+    title: '설 연휴 운영 안내',
+    excerpt: '설 연휴 기간 조합 운영시간을 안내드립니다.',
+    date: '2025-01-20',
+    category: '공지',
+  },
+  {
+    id: 3,
+    title: '청소년 힐링 여행 프로그램 참가자 모집',
+    excerpt: '2025년 상반기 청소년 힐링 여행 프로그램 참가자를 모집합니다.',
+    date: '2025-01-25',
+    category: '모집',
+  },
+];
+---
+
+<MainLayout title="공지사항" description="사회적협동조합 가치로운의 소식과 공지사항">
+  <section class="page-hero">
+    <div class="container">
+      <h1>공지사항</h1>
+      <p>가치로운의 소식을 전해드립니다</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="notice-container">
+        <div class="notice-header">
+          <p class="notice-count">총 {notices.length}개의 공지사항이 있습니다</p>
+        </div>
+
+        <div class="notice-list">
+          {notices.map((notice) => (
+            <article class="notice-card">
+              <div class="notice-category">{notice.category}</div>
+              <h2 class="notice-title">
+                <a href={`/notice/${notice.id}`}>{notice.title}</a>
+              </h2>
+              <p class="notice-excerpt">{notice.excerpt}</p>
+              <div class="notice-meta">
+                <span class="notice-date">{notice.date}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="notice-empty">
+          <div class="empty-state">
+            <div class="empty-icon">📢</div>
+            <h3>곧 더 많은 소식을 전해드리겠습니다</h3>
+            <p>
+              현재 공지사항은 Strapi CMS 연동 전 샘플 데이터입니다.<br />
+              실제 공지사항은 관리자 페이지를 통해 등록될 예정입니다.
+            </p>
+            <a href="/" class="btn btn-primary">홈으로 돌아가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .notice-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .notice-header {
+    margin-bottom: var(--spacing-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .notice-count {
+    font-size: 1.1rem;
+    color: var(--color-gray-600);
+  }
+
+  .notice-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .notice-card {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--color-primary-500);
+  }
+
+  .notice-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .notice-category {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .notice-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .notice-title a {
+    color: var(--color-gray-900);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .notice-title a:hover {
+    color: var(--color-primary-600);
+  }
+
+  .notice-excerpt {
+    color: var(--color-gray-700);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .notice-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    color: var(--color-gray-500);
+    font-size: 0.9rem;
+  }
+
+  .notice-date::before {
+    content: '📅 ';
+  }
+
+  .notice-empty {
+    margin-top: var(--spacing-3xl);
+  }
+
+  .empty-state {
+    background: var(--color-bg-light);
+    padding: var(--spacing-3xl);
+    border-radius: var(--radius-xl);
+    text-align: center;
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .empty-state h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .empty-state p {
+    color: var(--color-gray-600);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .notice-card {
+      padding: var(--spacing-lg);
+    }
+
+    .notice-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>

@@ -1,0 +1,234 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout title="오시는 길" description="사회적협동조합 가치로운 찾아오시는 길">
+  <section class="page-hero">
+    <div class="container">
+      <h1>오시는 길</h1>
+      <p>사회적협동조합 가치로운과 함께하세요</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-info">
+          <div class="info-card">
+            <h2>📍 주소</h2>
+            <p class="address-main">서울 강남구 테헤란로 406</p>
+            <p class="address-sub">샹제리제타워 A동 지하1층 111호 (C111호)</p>
+          </div>
+
+          <div class="info-card">
+            <h2>🚇 대중교통</h2>
+            <h3>지하철</h3>
+            <p><strong>2호선 · 수인분당선 선릉역</strong></p>
+            <p>1번 출구에서 도보 16m (약 1분)</p>
+            
+            <h3 style="margin-top: 1rem;">버스</h3>
+            <p><strong>강남역 정류장</strong> 하차 후 도보 5분</p>
+          </div>
+
+          <div class="info-card">
+            <h2>📞 연락처</h2>
+            <p><strong>전화:</strong> <a href="tel:010-6549-8765">010-6549-8765</a></p>
+            <p><strong>이메일:</strong> <a href="mailto:nzin4x@gmail.com">nzin4x@gmail.com</a></p>
+          </div>
+
+          <div class="info-card">
+            <h2>🕒 운영시간</h2>
+            <p><strong>평일:</strong> 09:00 - 18:00</p>
+            <p><strong>토요일:</strong> 09:00 - 13:00</p>
+            <p><strong>일요일, 공휴일:</strong> 휴무</p>
+          </div>
+
+          <div class="info-card">
+            <h2>👨‍💼 조합 정보</h2>
+            <p><strong>단체명:</strong> 사회적협동조합 가치로운</p>
+            <p><strong>대표:</strong> 전승호</p>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <h2>지도</h2>
+          <div class="map-wrapper">
+            <iframe 
+              src="https://map.naver.com/p/entry/place/2017611628?c=15.00,0,0,0,dh"
+              width="100%" 
+              height="500" 
+              style="border:0; border-radius: var(--radius-lg);" 
+              allowfullscreen="" 
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          
+          <div class="map-links">
+            <a 
+              href="https://map.naver.com/p/search/사회적협동조합%20가치로운/place/2017611628" 
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-secondary"
+            >
+              네이버 지도로 보기
+            </a>
+            <a 
+              href="https://map.kakao.com/link/search/서울%20강남구%20테헤란로%20406"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline"
+            >
+              카카오맵으로 보기
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--spacing-3xl);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .location-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .info-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--color-primary-500);
+  }
+
+  .info-card h2 {
+    font-size: 1.3rem;
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+    color: var(--color-gray-700);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .info-card p {
+    line-height: 1.8;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .address-main {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-primary-700);
+  }
+
+  .address-sub {
+    font-size: 1rem;
+    color: var(--color-gray-600);
+  }
+
+  .info-card a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .info-card a:hover {
+    text-decoration: underline;
+  }
+
+  .map-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .map-container h2 {
+    font-size: 1.5rem;
+    color: var(--color-primary-600);
+  }
+
+  .map-wrapper {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .map-links {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+
+  .map-links .btn {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+  }
+
+  @media (max-width: 1024px) {
+    .location-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-2xl);
+    }
+
+    .map-wrapper iframe {
+      height: 400px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .info-card {
+      padding: var(--spacing-lg);
+    }
+
+    .map-wrapper iframe {
+      height: 350px;
+    }
+
+    .map-links {
+      flex-direction: column;
+    }
+
+    .map-links .btn {
+      width: 100%;
+    }
+  }
+</style>

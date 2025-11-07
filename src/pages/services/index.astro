@@ -1,0 +1,192 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout title="사업 안내" description="사회적협동조합 가치로운의 전문적이고 체계적인 사업 영역">
+  <section class="page-hero">
+    <div class="container">
+      <h1>사업 안내</h1>
+      <p>사회적협동조합 가치로운의 전문적이고 체계적인 사업 영역</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="services-intro">
+        <p class="intro-text">
+          사회적협동조합 가치로운은 노인복지, 장애인 지원, 청소년 지원 등<br />
+          다양한 사회복지 사업을 통해 지역사회의 사회적 가치를 실현합니다.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <a href="/services/elderly" class="service-card">
+          <div class="service-icon">👴</div>
+          <h3>재가방문요양 사업</h3>
+          <p>어르신들의 일상생활을 지원하여 건강하고 안전한 노후를 돕습니다</p>
+          <span class="service-link">자세히 보기 →</span>
+        </a>
+
+        <a href="/services/disability" class="service-card">
+          <div class="service-icon">♿</div>
+          <h3>장애인 활동지원 사업</h3>
+          <p>장애인의 자립생활과 사회참여를 적극적으로 지원합니다</p>
+          <span class="service-link">자세히 보기 →</span>
+        </a>
+
+        <a href="/services/youth" class="service-card">
+          <div class="service-icon">👶</div>
+          <h3>아동·청소년 성장지원 사업</h3>
+          <p>미래 세대의 건강한 성장과 교육 기회를 제공합니다</p>
+          <span class="service-link">자세히 보기 →</span>
+        </a>
+
+        <div class="service-card">
+          <div class="service-icon">🤝</div>
+          <h3>중증장애인 활동지원사업</h3>
+          <p>신체적·정신적 장애로 혼자서 일상생활이 어려운 장애인에게 활동지원급여를 제공합니다</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">💼</div>
+          <h3>협동조합 컨설팅</h3>
+          <p>사회적경제 조직의 설립과 운영을 위한 전문 컨설팅 서비스를 제공합니다</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📚</div>
+          <h3>교육 및 인력양성</h3>
+          <p>활동지원사 양성교육과 사회적경제 인재 육성 프로그램을 운영합니다</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">💝</div>
+          <h3>사회적 가치 창출</h3>
+          <p>지역사회 내 취약계층을 위한 다양한 사회적 가치 실현 활동을 전개합니다</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🌍</div>
+          <h3>지역사회 네트워킹</h3>
+          <p>지역 내 다양한 기관과의 협력을 통한 통합적 서비스를 제공합니다</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">⭐</div>
+          <h3>조합원 복리증진</h3>
+          <p>조합원들의 경제적·사회적 지위 향상과 복리증진을 위한 다양한 사업을 운영합니다</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-700) 100%);
+    color: white;
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+
+  .page-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+  }
+
+  .services-intro {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .intro-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--color-gray-700);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid transparent;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-secondary-300);
+  }
+
+  a.service-card:hover {
+    background: var(--color-secondary-50);
+  }
+
+  .service-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-card h3 {
+    color: var(--color-secondary-600);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.3rem;
+  }
+
+  .service-card p {
+    color: var(--color-gray-700);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+    flex-grow: 1;
+  }
+
+  .service-link {
+    color: var(--color-secondary-600);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .service-card {
+      padding: var(--spacing-lg);
+    }
+  }
+</style>
