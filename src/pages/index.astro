@@ -23,438 +23,582 @@ const slides = [
   },
 ];
 
-const services = [
+// 최근 활동 샘플 데이터
+const recentActivities = [
   {
-    icon: '👴',
-    title: '노인복지',
-    description: '어르신들의 건강하고 행복한 노후생활을 지원합니다',
-    link: '/services/elderly',
+    id: 1,
+    image: '/images/노인복지.jpg',
+    title: '제13회 강남구민화합축제 참여',
+    date: '2025.10.18',
   },
   {
-    icon: '♿',
-    title: '장애인 지원',
-    description: '장애인의 자립생활과 사회참여를 돕습니다',
-    link: '/services/disability',
+    id: 2,
+    image: '/images/장애인지원.jpg',
+    title: '제2회 대치4동 문화마당',
+    date: '2025.09.27',
   },
   {
-    icon: '👦',
-    title: '청소년 지원',
-    description: '청소년의 건강한 성장과 발달을 응원합니다',
-    link: '/services/youth',
+    id: 3,
+    image: '/images/청소년지원.jpg',
+    title: '창립총회 개최',
+    date: '2025.07.17',
+  },
+];
+
+// 최근 공지사항 샘플
+const recentNotices = [
+  {
+    id: 1,
+    title: '2025년 활동지원사 모집 안내',
+    date: '2025.11.01',
+  },
+  {
+    id: 2,
+    title: '장애인활동지원사업 확대 운영',
+    date: '2025.10.25',
+  },
+  {
+    id: 3,
+    title: '재가방문요양 신규 이용자 안내',
+    date: '2025.10.15',
+  },
+];
+
+// 행사일정 샘플
+const upcomingEvents = [
+  {
+    id: 1,
+    title: '아동청소년 역사문화탐방',
+    date: '2025.11.20',
+  },
+  {
+    id: 2,
+    title: '활동지원사 보수교육',
+    date: '2025.11.25',
+  },
+  {
+    id: 3,
+    title: '연말 송년회',
+    date: '2025.12.15',
   },
 ];
 ---
 
 <MainLayout title="홈">
-  <section class="hero">
-    <div class="container">
-      <Slider slides={slides} client:load />
-    </div>
-  </section>
-
-  <section class="section about-preview bg-light">
-    <div class="container">
-      <h2 class="section-title">사회적협동조합 가치로운</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <h3>우리는 함께 성장합니다</h3>
-          <p>
-            사회적협동조합 가치로운은 2025년 설립하였으며, 지역사회의 복지 증진과
-            사회적 약자를 위한 다양한 서비스를 제공해왔습니다.
-          </p>
-          <p>
-            노인복지, 장애인활동지원사업, 청소년 지원 등 다양한 사업을 통해
-            모두가 행복한 세상을 만들어가고 있습니다.
-          </p>
-          <a href="/about" class="btn btn-primary">자세히 보기</a>
-        </div>
-        <!-- 이미지 제거 -->
-      </div>
-    </div>
-  </section>
-
-    <section class="section vision-section">
-    <div class="container">
-      <div class="vision-content">
-        <div class="vision-text">
-          <h2>우리의 비전</h2>
-          <p class="vision-statement">
-            <strong>"모두가 가치있는 삶을 누리는 사회"</strong>
-          </p>
-          <p class="vision-description">
-            사회적협동조합 가치로운은 돌봄이 필요한 모든 이웃과 함께<br />
-            더 나은 내일을 만들어가는 사회복지 전문 협동조합입니다.
-          </p>
-        </div>
-        <div class="vision-values">
-          <div class="value-item">
-            <div class="value-icon">💚</div>
-            <h4>존중</h4>
-            <p>모든 생명의 가치를 존중합니다</p>
-          </div>
-          <div class="value-item">
-            <div class="value-icon">🤝</div>
-            <h4>연대</h4>
-            <p>함께 성장하는 공동체를 만듭니다</p>
-          </div>
-          <div class="value-item">
-            <div class="value-icon">🌱</div>
-            <h4>지속가능성</h4>
-            <p>미래 세대를 위한 책임을 다합니다</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section services-preview">
-    <div class="container">
-      <div class="section-header">
-        <h2>우리의 사업</h2>
-        <p>가치로운이 펼쳐가는 다양한 사회복지 활동</p>
-      </div>
-
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🏠</div>
-          <h3>재가방문요양사업</h3>
-          <p>어르신들의 건강하고 행복한 노후를 위한 맞춤형 재가 서비스</p>
-          <a href="/services#elderly" class="service-link">자세히 보기 →</a>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">♿</div>
-          <h3>장애인활동지원</h3>
-          <p>장애인의 자립생활과 사회참여를 지원하는 1:1 맞춤형 활동지원</p>
-          <a href="/services#disability" class="service-link">자세히 보기 →</a>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">👦</div>
-          <h3>아동청소년지원</h3>
-          <p>미래 세대의 건강한 성장을 돕는 교육·문화·정서지원</p>
-          <a href="/services#youth" class="service-link">자세히 보기 →</a>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🎓</div>
-          <h3>교육 및 인력양성</h3>
-          <p>돌봄 전문가 양성과 역량강화 교육 프로그램</p>
-          <a href="/services" class="service-link">자세히 보기 →</a>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🌍</div>
-          <h3>사회적 가치 창출</h3>
-          <p>지역사회와 함께하는 사회적경제 활성화 사업</p>
-          <a href="/services" class="service-link">자세히 보기 →</a>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🔗</div>
-          <h3>지역사회 네트워킹</h3>
-          <p>다양한 주체들과의 협력을 통한 통합적 돌봄 체계 구축</p>
-          <a href="/services" class="service-link">자세히 보기 →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number">15+</div>
-          <div class="stat-label">년간 운영 경험</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">200+</div>
-          <div class="stat-label">활동지원사</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">500+</div>
-          <div class="stat-label">서비스 이용자</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">9</div>
-          <div class="stat-label">핵심 사업영역</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section cta bg-light">
-    <div class="container">
-      <div class="cta-content">
-        <h2>활동지원사를 모집합니다</h2>
-        <p>
-          가치로운과 함께 의미있는 일을 하실 분을 찾습니다.<br />
-          지금 바로 지원하세요!
+  <div class="home-content">
+    <!-- 레이어 팝업 (주황-노랑 그라데이션) -->
+    <div id="layerPopup" class="layer-popup hidden">
+      <div class="popup-overlay"></div>
+      <div class="popup-container">
+        <button class="popup-close" aria-label="닫기">✕</button>
+        <div class="popup-badge">공지</div>
+        <h3 class="popup-title">2025년 활동지원사 모집 안내</h3>
+        <p class="popup-content">
+          <span class="brand-emphasis">사회적협동조합 가치로운</span>에서 함께 일하실 활동지원사를 모집합니다.<br />
+          따뜻한 마음과 봉사정신을 가지신 분들의 많은 지원 바랍니다.
         </p>
-        <a href="/recruit" class="btn btn-primary btn-lg">지원하기</a>
+        <div class="popup-actions">
+          <a href="/recruit" class="popup-btn btn-primary">자세히 보기</a>
+          <button class="popup-btn btn-secondary popup-close-btn">오늘 하루 보지 않기</button>
+        </div>
       </div>
     </div>
-  </section>
+
+    <!-- 1. 메인 슬라이드 배너 -->
+    <section id="slider" class="hero">
+      <div class="container">
+        <Slider slides={slides} client:load />
+      </div>
+    </section>
+
+    <!-- 2. 최근 활동 사진 -->
+    <section id="activities" class="section activities-section">
+      <div class="container">
+        <h2 class="section-title clickable-title">최근 활동</h2>
+        <div class="activities-grid">
+          {recentActivities.map((activity) => (
+            <div class="activity-card">
+              <div class="activity-image">
+                <img 
+                  src={activity.image} 
+                  alt={activity.title}
+                  onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\"placeholder-icon\">��</div>';"
+                />
+              </div>
+              <div class="activity-content">
+                <h3>{activity.title}</h3>
+                <p class="activity-date">{activity.date}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="section-footer">
+          <a href="/resources#activities" class="btn btn-outline">더 보기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 최근 공지사항 / 행사일정 -->
+    <section id="notice" class="section news-section bg-light">
+      <div class="container">
+        <div class="news-grid">
+          <!-- 공지사항 -->
+          <div class="news-column">
+            <h2 class="section-title clickable-title">공지사항</h2>
+            <ul class="news-list">
+              {recentNotices.map((notice) => (
+                <li class="news-item">
+                  <a href={`/notice#announcements`}>
+                    <span class="news-title">{notice.title}</span>
+                    <span class="news-date">{notice.date}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div class="news-footer">
+              <a href="/notice#announcements" class="btn btn-sm">더 보기 →</a>
+            </div>
+          </div>
+
+          <!-- 행사일정 -->
+          <div class="news-column">
+            <h2 class="section-title clickable-title">행사일정</h2>
+            <ul class="news-list">
+              {upcomingEvents.map((event) => (
+                <li class="news-item">
+                  <a href={`/notice#events`}>
+                    <span class="news-title">{event.title}</span>
+                    <span class="news-date">{event.date}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div class="news-footer">
+              <a href="/notice#events" class="btn btn-sm">더 보기 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </MainLayout>
 
 <style>
-  .hero {
-    position: relative;
-    height: 600px;
-    overflow: hidden;
-  }
-
-  .vision-section {
-    background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-secondary-50) 100%);
-    padding: var(--spacing-4xl) 0;
-  }
-
-  .vision-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-3xl);
-    align-items: center;
-  }
-
-  .vision-text h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .vision-statement {
-    font-size: 1.75rem;
-    color: var(--color-gray-900);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.4;
-  }
-
-  .vision-description {
-    font-size: 1.125rem;
-    color: var(--color-gray-700);
-    line-height: 1.8;
-  }
-
-  .vision-values {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-
-  .value-item {
-    background: white;
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+  /* 레이어 팝업 */
+  .layer-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
-    transition: transform 0.3s ease;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
   }
 
-  .value-item:hover {
-    transform: translateX(8px);
+  .layer-popup.hidden {
+    display: none;
   }
 
-  .value-icon {
-    font-size: 2.5rem;
-    flex-shrink: 0;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
-  .value-item h4 {
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-xs);
-    font-size: 1.25rem;
+  .popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
   }
 
-  .value-item p {
-    color: var(--color-gray-600);
-    margin: 0;
+  .popup-container {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-accent-50) 100%);
+    max-width: 500px;
+    width: 90%;
+    padding: var(--spacing-3xl);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+    border: 3px solid transparent;
+    background-image: 
+      linear-gradient(white, white),
+      linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
   }
 
-  .stats-section {
-    background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-700) 100%);
-    color: white;
-    padding: var(--spacing-3xl) 0;
+  @keyframes slideUp {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-2xl);
-    text-align: center;
-  }
-
-  .stat-item {
-    padding: var(--spacing-xl);
-  }
-
-  .stat-number {
-    font-size: 3rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: var(--spacing-sm);
-  }
-
-  .stat-label {
-    font-size: 1.125rem;
-    opacity: 0.95;
-  }  .about-preview {
-  }
-
-  .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-3xl);
-    align-items: center;
-  }
-
-  .about-text h3 {
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .about-text p {
-    line-height: 1.8;
+  .popup-close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--color-gray-200);
     color: var(--color-gray-700);
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .popup-close:hover {
+    background: var(--color-gray-300);
+    transform: rotate(90deg);
+  }
+
+  .popup-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-accent-600) 100%);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 700;
     margin-bottom: var(--spacing-md);
   }
 
-  .about-image {
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    box-shadow: var(--shadow-xl);
+  .popup-title {
+    font-size: 1.75rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.3;
   }
 
-  .about-image img {
-    width: 100%;
-    height: auto;
+  .popup-content {
+    color: var(--color-gray-700);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .popup-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-direction: column;
+  }
+
+  .popup-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-accent-600) 100%);
+    color: white;
+    text-decoration: none;
     display: block;
   }
 
-  .services-grid {
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: var(--color-gray-100);
+    color: var(--color-gray-700);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-gray-200);
+  }
+
+  /* 메인 슬라이드 배너 */
+  .hero {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-bg-light);
+  }
+
+  .hero .container {
+    max-width: 1400px;
+  }
+
+  /* 최근 활동 */
+  .activities-section {
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .clickable-title {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+  }
+
+  .clickable-title:hover {
+    color: var(--color-primary-500);
+  }
+
+  .clickable-title:hover::after {
+    content: '���';
+    margin-left: var(--spacing-sm);
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+
+  .activities-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
   }
 
-  .service-card {
+  .activity-card {
     background: white;
-    padding: var(--spacing-2xl);
     border-radius: var(--radius-lg);
+    overflow: hidden;
     box-shadow: var(--shadow-md);
-    text-align: center;
     transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
   }
 
-  .service-card:hover {
+  .activity-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
   }
 
-  .service-icon {
+  .activity-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-200) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .activity-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder-icon {
     font-size: 4rem;
-    margin-bottom: var(--spacing-lg);
+    opacity: 0.3;
   }
 
-  .service-card h3 {
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-md);
+  .activity-content {
+    padding: var(--spacing-lg);
   }
 
-  .service-card p {
-    color: var(--color-gray-600);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-lg);
+  .activity-content h3 {
+    font-size: 1.125rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-sm);
   }
 
-  .service-link {
-    color: var(--color-primary-600);
-    font-weight: 600;
+  .activity-date {
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
   }
 
-  .cta {
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
-    color: white;
-  }
-
-  .cta-content {
+  .section-footer {
     text-align: center;
-    padding: var(--spacing-3xl) 0;
   }
 
-  .cta-content h2 {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-lg);
-    color: white;
+  /* 공지사항/행사일정 */
+  .news-section {
+    padding: var(--spacing-4xl) 0;
   }
 
-  .cta-content p {
-    font-size: 1.25rem;
-    margin-bottom: var(--spacing-2xl);
-    opacity: 0.95;
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-3xl);
   }
 
-  .btn-lg {
-    padding: var(--spacing-md) var(--spacing-2xl);
-    font-size: 1.1rem;
-    background-color: white;
+  .news-column {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .news-column .section-title {
+    margin-bottom: var(--spacing-xl);
     color: var(--color-primary-600);
   }
 
-  .btn-lg:hover {
-    background-color: var(--color-gray-100);
-    color: var(--color-primary-700);
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-lg) 0;
   }
 
-    @media (max-width: 1024px) {
-    .vision-content {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-2xl);
+  .news-item {
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .news-item:last-child {
+    border-bottom: none;
+  }
+
+  .news-item a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    color: var(--color-gray-700);
+    transition: all 0.2s ease;
+  }
+
+  .news-item a:hover {
+    color: var(--color-primary-600);
+    padding-left: var(--spacing-sm);
+  }
+
+  .news-title {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .news-date {
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
+    margin-left: var(--spacing-md);
+  }
+
+  .news-footer {
+    text-align: right;
+  }
+
+  .btn-sm {
+    padding: var(--spacing-xs) var(--spacing-lg);
+    font-size: 0.875rem;
+  }
+
+  /* 반응형 */
+  @media (max-width: 1024px) {
+    .activities-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .news-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-2xl);
     }
   }
 
   @media (max-width: 768px) {
     .hero {
-      height: 400px;
+      padding: var(--spacing-2xl) 0;
     }
 
-    .vision-text h2 {
-      font-size: 2rem;
+    .activities-grid {
+      grid-template-columns: 1fr;
     }
 
-    .vision-statement {
+    .popup-title {
       font-size: 1.375rem;
     }
 
-    .value-item {
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .services-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-    }
-
-    .cta-content {
-      flex-direction: column;
-      text-align: center;
+    .activity-image {
+      height: 200px;
     }
   }
 </style>
-</style>
+
+<script>
+  // 레이어 팝업 제어
+  document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('layerPopup');
+    if (!popup) return;
+    
+    const closeButton = popup.querySelector('.popup-close');
+    const hideTodayButton = popup.querySelector('.popup-close-btn');
+    const overlay = popup.querySelector('.popup-overlay');
+    
+    // localStorage 확인 (오늘 하루 보지 않기)
+    const hidePopupUntil = localStorage.getItem('hidePopupUntil');
+    const today = new Date().toDateString();
+    
+    // 오늘 하루 보지 않기가 설정되지 않았으면 팝업 표시
+    if (hidePopupUntil !== today) {
+      popup.classList.remove('hidden');
+    }
+
+    // X 버튼 클릭 - 팝업만 닫기
+    closeButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.classList.add('hidden');
+    });
+
+    // "오늘 하루 보지 않기" 버튼 클릭 - 팝업 닫고 localStorage 저장
+    hideTodayButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      localStorage.setItem('hidePopupUntil', today);
+      popup.classList.add('hidden');
+    });
+
+    // 오버레이 클릭 시 닫기
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        popup.classList.add('hidden');
+      }
+    });
+
+    // ESC 키로 닫기
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !popup.classList.contains('hidden')) {
+        popup.classList.add('hidden');
+      }
+    });
+  });
+
+  // 섹션 제목 클릭 시 URL 복사
+  document.querySelectorAll('.clickable-title').forEach(title => {
+    title.addEventListener('click', async (e) => {
+      const section = (e.target as HTMLElement).closest('section');
+      if (!section?.id) return;
+      
+      const url = `${window.location.origin}${window.location.pathname}#${section.id}`;
+      
+      try {
+        await navigator.clipboard.writeText(url);
+        
+        // 복사 성공 피드백
+        const originalText = (e.target as HTMLElement).textContent;
+        (e.target as HTMLElement).textContent = '링크 복사됨! ✓';
+        (e.target as HTMLElement).style.color = 'var(--color-secondary-600)';
+        
+        setTimeout(() => {
+          (e.target as HTMLElement).textContent = originalText;
+          (e.target as HTMLElement).style.color = '';
+        }, 2000);
+      } catch (err) {
+        console.error('URL 복사 실패:', err);
+      }
+    });
+  });
+</script>

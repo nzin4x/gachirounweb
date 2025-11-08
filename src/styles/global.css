@@ -74,21 +74,34 @@
     gap: var(--spacing-xl);
   }
 }
-/* 아리따돋움 웹폰트 */
+/* 로컬 웹폰트: Arita Dotum / Arita Buri (Medium 파일만 사용, 굵기는 weight로 조절) */
 @font-face {
   font-family: 'Arita-dotum';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff');
+  src: url('/fonts/AritaDotumKR-Medium.woff') format('woff');
 }
-
 @font-face {
   font-family: 'Arita-dotum';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 700; /* Bold도 동일 파일 재사용 */
   font-display: swap;
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Bold.woff') format('woff');
+  src: url('/fonts/AritaDotumKR-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'Arita-buri';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/AritaBuriKR-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'Arita-buri';
+  font-style: normal;
+  font-weight: 700; /* Bold도 동일 파일 재사용 */
+  font-display: swap;
+  src: url('/fonts/AritaBuriKR-Medium.woff') format('woff');
 }
 
 /* CSS Reset */
@@ -209,9 +222,22 @@ body {
 
 /* 타이포그래피 */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 700; /* Bold 효과: 같은 Medium 파일이지만 weight로 강조 */
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
+  font-family: 'Arita-dotum', sans-serif;
+}
+
+/* 서사/인사말 등 본문 내 특정 영역에서 사용할 부리체 */
+.narrative, .greeting, .long-text {
+  font-family: 'Arita-buri', 'Arita-dotum', serif;
+  font-weight: 400;
+}
+
+/* 브랜드 강조: '가치', '가치로운' 등에 적용 */
+.brand-emphasis {
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 h1 {

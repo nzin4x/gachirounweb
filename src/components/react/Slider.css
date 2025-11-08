@@ -8,7 +8,7 @@
 }
 
 .slider-wrapper {
-  position: relative;
+  height: 500px; /* fixed height needed because all children are absolutely positioned */
   width: 100%;
   height: 100%;
 }

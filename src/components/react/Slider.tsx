@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react';
+/* @jsx React.createElement */
+/* @jsxFrag React.Fragment */
+/* @jsxRuntime classic */
+import React, { useState, useEffect } from 'react';
 import './Slider.css';
 
 interface Slide {
@@ -16,6 +19,8 @@ interface SliderProps {
 
 export default function Slider({ slides, autoplay = true, interval = 5000 }: SliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
     if (!autoplay) return;
@@ -39,8 +44,40 @@ export default function Slider({ slides, autoplay = true, interval = 5000 }: Sli
     setCurrentIndex((prev) => (prev + 1) % slides.length);
   };
 
+  // 스와이프 감지
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      // 왼쪽으로 스와이프 (다음 슬라이드)
+      goToNext();
+    } else if (distance < -minSwipeDistance) {
+      // 오른쪽으로 스와이프 (이전 슬라이드)
+      goToPrevious();
+    }
+
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   return (
-    <div className="slider">
+    <div 
+      className="slider"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="slider-wrapper">
         {slides.map((slide, index) => (
           <div

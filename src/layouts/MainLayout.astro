@@ -39,11 +39,62 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       <slot />
     </main>
     <Footer />
+    
+    <!-- 전역 스크립트: 섹션 해시 추적 -->
+    <script>
+      // IntersectionObserver로 현재 보이는 섹션을 추적하여 URL 해시 업데이트
+      document.addEventListener('DOMContentLoaded', () => {
+        const sections = document.querySelectorAll('section[id]');
+        if (sections.length === 0) return;
+
+        const observerOptions = {
+          root: null,
+          rootMargin: '-50% 0px -50% 0px', // 뷰포트 중앙에 위치한 섹션 감지
+          threshold: 0,
+        };
+
+        let isManualScroll = true;
+
+        const observer = new IntersectionObserver((entries) => {
+          if (!isManualScroll) return;
+
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              
+              // URL 해시 업데이트 (히스토리에 추가하지 않음)
+              if (window.location.hash !== `#${id}`) {
+                history.replaceState(null, '', `#${id}`);
+              }
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((section) => {
+          observer.observe(section);
+        });
+
+        // 해시 링크 클릭 시 일시적으로 자동 추적 중지
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', () => {
+            isManualScroll = false;
+            setTimeout(() => {
+              isManualScroll = true;
+            }, 1000); // 1초 후 재개
+          });
+        });
+      });
+    </script>
   </body>
 </html>
 
 <style is:global>
   main {
     min-height: 60vh;
+  }
+  
+  /* 섹션 스크롤 애니메이션 */
+  section[id] {
+    scroll-margin-top: 80px; /* 헤더 높이만큼 여백 */
   }
 </style>

@@ -2,6 +2,7 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
+  { href: '/', label: '홈' },
   { href: '/about', label: '가치로운이란?', 
     children: [
       { href: '/about#purpose', label: '설립 목적 및 비전' },
@@ -16,7 +17,7 @@ const navItems = [
       { href: '/about#location', label: '사무실 위치' },
     ]
   },
-  { href: '/services', label: '사업 소개',
+  { href: '/services', label: '사업소개',
     children: [
       { href: '/services#overview', label: '주요 사업 활동' },
       { href: '/services#elderly', label: '재가방문요양사업' },
@@ -60,30 +61,33 @@ const navItems = [
       </button>
       
       <ul class="nav-menu">
-        {navItems.map((item) => (
-          <li class="nav-item" class:list={[{ 'has-dropdown': item.children }]}>
-            <a 
-              href={item.href} 
-              class:list={['nav-link', { active: currentPath.startsWith(item.href) }]}
-            >
-              {item.label}
-            </a>
-            {item.children && (
-              <ul class="dropdown">
-                {item.children.map((child) => (
-                  <li>
-                    <a 
-                      href={child.href}
-                      class:list={['dropdown-link', { active: currentPath === child.href }]}
-                    >
-                      {child.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
+        {navItems.map((item) => {
+          const isActive = item.href === '/' ? (currentPath === '/') : currentPath.startsWith(item.href);
+          return (
+            <li class="nav-item" class:list={[{ 'has-dropdown': item.children }]}>
+              <a 
+                href={item.href} 
+                class:list={['nav-link', { active: isActive }]}
+              >
+                {item.label}
+              </a>
+              {item.children && (
+                <ul class="dropdown">
+                  {item.children.map((child) => (
+                    <li>
+                      <a 
+                        href={child.href}
+                        class:list={['dropdown-link', { active: currentPath === child.href }]}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </nav>
   </div>
