@@ -57,7 +57,7 @@
 
 4. **배포**
    ```bash
-   wrangler pages deploy dist --project-name=gachiroun-homepage
+   wrangler pages deploy dist --project-name=gachiroun-or-kr
    ```
 
 ### 3. 로컬에서 프로덕션 빌드 테스트

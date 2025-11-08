@@ -38,7 +38,7 @@ git push origin master
 
 6. **빌드 설정 입력**
    ```
-   Project name: gachiroun-homepage
+   Project name: gachiroun-or-kr
    Production branch: master
    
    Framework preset: Astro (자동 감지됨)
@@ -60,7 +60,7 @@ git push origin master
    - 약 2-3분 소요
 
 10. **배포 완료!**
-    - 배포 URL: `https://gachiroun-homepage.pages.dev`
+    - 배포 URL: `https://gachiroun.or.kr`
     - 이 URL로 바로 접속 가능
 
 ---

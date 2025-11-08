@@ -412,7 +412,7 @@ import { strapi } from '@/lib/strapi';
 const pageContent = await strapi.getPageContent('about');
 ---
 
-<Layout title="소개" description="가치로운 사회적협동조합 소개">
+<Layout title="소개" description="사회적협동조합 가치로운 소개">
   <div class="content" set:html={pageContent.html} />
 </Layout>
 
@@ -464,7 +464,7 @@ const content = await strapi.getPageContent(PAGE_ID);
 - [x] Cloudflare 어댑터 설정
 - [x] 테마 색상 변경 (주황 #FF6B35, 노랑 #FFB800)
 - [x] About 페이지 상세화 (미션/비전/가치 6가지/특장점 6가지)
-- [x] 재가방문요양 페이지 (서비스/등급/절차 상세)
+- [x] 재가방문요양사업 페이지 (서비스/등급/절차 상세)
 - [x] 장애인활동지원 페이지 (서비스/본인부담금/교육)
 - [x] 아동청소년지원 페이지 (4개 프로그램 카테고리)
 - [x] 조직 페이지 (조직도, 거버넌스 구조)
@@ -495,7 +495,7 @@ const content = await strapi.getPageContent(PAGE_ID);
 
 #### 서비스 페이지
 
-**재가방문요양** (`/services/elderly`)
+**재가방문요양사업** (`/services/elderly`)
 - 4가지 서비스: 신체활동, 가사지원, 건강관리, 정서지원
 - 장기요양 등급 6개 (1~5등급 + 인지지원)
 - 이용 절차 4단계
@@ -612,7 +612,7 @@ const content = await strapi.getPageContent(PAGE_ID);
 ✓ /about/location - 오시는 길 (지도, 연락처)
 ✓ /about/organization - 조직 소개 (조직도, 거버넌스)
 ✓ /services - 서비스 소개
-✓ /services/elderly - 재가방문요양 (4서비스, 6등급, 절차)
+✓ /services/elderly - 재가방문요양사업 (4서비스, 6등급, 절차)
 ✓ /services/disability - 장애인활동지원 (4서비스, 본인부담금, 교육)
 ✓ /services/youth - 아동청소년지원 (4카테고리 12프로그램)
 ✓ /notice - 공지사항 (준비중)

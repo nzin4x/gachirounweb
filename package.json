@@ -1,5 +1,5 @@
 {
-  "name": "gachiroun-homepage",
+  "name": "gachiroun-or-kr",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=gachiroun-homepage",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=gachiroun-or-kr",
     "deploy:preview": "npm run build && wrangler pages dev dist"
   },
   "dependencies": {

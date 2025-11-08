@@ -1,7 +1,7 @@
 {
   "name": "사회적협동조합 가치로운",
   "short_name": "가치로운",
-  "description": "전문적이고 인간중심적인 돌봄 서비스 - 재가방문요양, 장애인활동지원, 아동청소년지원",
+  "description": "전문적이고 인간중심적인 돌봄 서비스 - 재가방문요양사업, 장애인활동지원, 아동청소년지원",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

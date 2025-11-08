@@ -1,4 +1,4 @@
-# 가치로운 사회적협동조합 홈페이지
+# 사회적협동조합 가치로운 홈페이지
 
 > 사회적협동조합 가치로운(gachiroun.or.kr) 공식 웹사이트
 
@@ -26,7 +26,7 @@
 
 ### 서비스
 - `/services` - 서비스 소개
-- `/services/elderly` - 재가방문요양
+- `/services/elderly` - 재가방문요양사업
 - `/services/disability` - 장애인활동지원
 - `/services/youth` - 아동청소년지원
 

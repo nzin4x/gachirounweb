@@ -33,7 +33,7 @@ git push origin master
 
 4. **빌드 설정**
    ```
-   Project name: gachiroun-homepage
+   Project name: gachiroun-or-kr
    Production branch: master
    
    Build settings:
@@ -50,7 +50,7 @@ git push origin master
    - 첫 빌드가 자동으로 시작됩니다 (약 2-3분 소요)
 
 6. **배포 완료**
-   - 배포 완료 후 URL 제공: `https://gachiroun-homepage.pages.dev`
+   - 배포 완료 후 URL 제공: `https://gachiroun.or.kr`
    - Custom domain 설정 가능: `gachiroun.or.kr`
 
 ### 자동 배포
@@ -89,7 +89,7 @@ git push origin master
    ```
    Type: CNAME
    Name: @ (또는 비워둠)
-   Value: gachiroun-homepage.pages.dev
+   Value: gachiroun.or.kr
    ```
 
 4. **SSL/TLS 설정**
@@ -181,5 +181,5 @@ http://localhost:4321 에서 프로덕션 빌드 확인
 
 ## 배포 URL
 
-- 기본: `https://gachiroun-homepage.pages.dev`
+- 기본: `https://gachiroun.or.kr`
 - 커스텀: `https://gachiroun.or.kr` (DNS 설정 후)
