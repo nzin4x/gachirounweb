@@ -1,0 +1,456 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+// 가상 활동 내역 샘플
+const activities = [
+  {
+    id: 1,
+    title: '제13회 강남구민화합축제 참여',
+    date: '2025-10-18',
+    image: '/images/ci.png',
+    description: '강남구민과 함께한 화합의 축제'
+  },
+  {
+    id: 2,
+    title: '제2회 대치4동 문화마당',
+    date: '2025-09-27',
+    image: '/images/ci.png',
+    description: '이경지 여사 추모식 및 지역 문화행사'
+  },
+  {
+    id: 3,
+    title: '청소년 역사문화탐방',
+    date: '2025-08-15',
+    image: '/images/ci.png',
+    description: '청소년들과 함께한 역사문화 체험'
+  },
+  {
+    id: 4,
+    title: '어르신 말벗 봉사활동',
+    date: '2025-07-20',
+    image: '/images/ci.png',
+    description: '지역 어르신들과의 따뜻한 만남'
+  },
+  {
+    id: 5,
+    title: '장애인 인식개선 캠페인',
+    date: '2025-06-10',
+    image: '/images/ci.png',
+    description: '지역사회 장애인 인식개선 활동'
+  },
+  {
+    id: 6,
+    title: '환경보호 캠페인',
+    date: '2025-05-22',
+    image: '/images/ci.png',
+    description: '청소년과 함께하는 환경정화 활동'
+  }
+];
+
+// 다운로드 가능한 서식 목록
+const forms = [
+  {
+    id: 1,
+    category: '봉사활동',
+    title: '봉사활동 신청서',
+    description: '자원봉사 신청 시 작성하는 양식입니다.',
+    filename: '봉사활동신청서.pdf',
+    icon: '📄'
+  },
+  {
+    id: 2,
+    category: '봉사활동',
+    title: '봉사활동 확인서',
+    description: '봉사활동 완료 후 발급받는 확인서입니다.',
+    filename: '봉사활동확인서.pdf',
+    icon: '📄'
+  },
+  {
+    id: 3,
+    category: '후원',
+    title: '정기후원 신청서',
+    description: '정기후원 신청 시 작성하는 양식입니다.',
+    filename: '정기후원신청서.pdf',
+    icon: '📄'
+  },
+  {
+    id: 4,
+    category: '후원',
+    title: '후원금 납부 안내',
+    description: '후원금 납부 방법 및 계좌 안내입니다.',
+    filename: '후원금납부안내.pdf',
+    icon: '📄'
+  },
+  {
+    id: 5,
+    category: '조합원',
+    title: '조합원 가입 신청서',
+    description: '사회적협동조합 조합원 가입 신청서입니다.',
+    filename: '조합원가입신청서.pdf',
+    icon: '📄'
+  },
+  {
+    id: 6,
+    category: '기타',
+    title: '서비스 이용 문의서',
+    description: '재가요양 및 활동지원 서비스 문의 양식입니다.',
+    filename: '서비스문의서.pdf',
+    icon: '📄'
+  }
+];
+---
+
+<MainLayout title="자료실">
+  <div class="page-container">
+    <!-- 활동 내역 -->
+    <section id="activities" class="content-section">
+      <div class="container">
+        <h2 class="section-title">활동 내역</h2>
+        <p class="section-description">
+          사회적협동조합 가치로운의 다양한 활동을 사진으로 확인하세요.
+        </p>
+
+        <div class="activities-grid">
+          {activities.map((activity) => (
+            <div class="activity-card">
+              <div class="activity-image">
+                <img src={activity.image} alt={activity.title} />
+                <div class="activity-overlay">
+                  <span class="activity-date">{activity.date}</span>
+                </div>
+              </div>
+              <div class="activity-content">
+                <h3>{activity.title}</h3>
+                <p>{activity.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="more-info">
+          <p>
+            📸 더 많은 활동 사진은 인스타그램에서 확인하세요!<br />
+            <a href="#" class="social-link">@gachiroun_official</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 서식 다운로드 -->
+    <section id="downloads" class="content-section bg-light">
+      <div class="container">
+        <h2 class="section-title">서식 다운로드</h2>
+        <p class="section-description">
+          각종 신청서 및 안내 자료를 다운로드하실 수 있습니다.
+        </p>
+
+        <div class="forms-list">
+          {forms.map((form) => (
+            <div class="form-item">
+              <div class="form-icon">
+                <span>{form.icon}</span>
+              </div>
+              <div class="form-info">
+                <span class="form-category">{form.category}</span>
+                <h3>{form.title}</h3>
+                <p>{form.description}</p>
+              </div>
+              <div class="form-download">
+                <button 
+                  class="btn-download" 
+                  onclick="alert('서식이 준비중입니다. 문의: 02-6952-4756')"
+                >
+                  다운로드
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="download-notice">
+          <h3>다운로드 안내</h3>
+          <ul>
+            <li>모든 서식은 PDF 형식으로 제공됩니다.</li>
+            <li>서식 작성 후 이메일 또는 방문 제출이 가능합니다.</li>
+            <li>문의사항: 02-6952-4756</li>
+            <li>이메일: info@gachiroun.or.kr (준비중)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .page-container {
+    width: 100%;
+  }
+
+  .content-section {
+    padding: var(--spacing-4xl) 0;
+    scroll-margin-top: 80px;
+  }
+
+  .content-section.bg-light {
+    background-color: var(--color-bg-light);
+  }
+
+  .section-description {
+    text-align: center;
+    color: var(--color-gray-600);
+    font-size: 1.1rem;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  /* 활동 내역 - 인스타그램 스타일 */
+  .activities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl);
+    margin-top: var(--spacing-2xl);
+  }
+
+  .activity-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .activity-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .activity-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--color-gray-100);
+  }
+
+  .activity-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .activity-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--spacing-lg);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .activity-card:hover .activity-overlay {
+    opacity: 1;
+  }
+
+  .activity-date {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  .activity-content {
+    padding: var(--spacing-lg);
+  }
+
+  .activity-content h3 {
+    color: var(--color-primary-700);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.1rem;
+  }
+
+  .activity-content p {
+    color: var(--color-gray-600);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .more-info {
+    text-align: center;
+    margin-top: var(--spacing-4xl);
+    padding: var(--spacing-2xl);
+    background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-accent-50) 100%);
+    border-radius: var(--radius-lg);
+  }
+
+  .more-info p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .social-link {
+    color: var(--color-primary-600);
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .social-link:hover {
+    text-decoration: underline;
+  }
+
+  /* 서식 다운로드 */
+  .forms-list {
+    margin-top: var(--spacing-2xl);
+  }
+
+  .form-item {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+  }
+
+  .form-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: var(--color-primary-50);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-icon span {
+    font-size: 2rem;
+  }
+
+  .form-info {
+    flex: 1;
+  }
+
+  .form-category {
+    display: inline-block;
+    background: var(--color-accent-500);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .form-info h3 {
+    color: var(--color-primary-700);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.2rem;
+  }
+
+  .form-info p {
+    color: var(--color-gray-600);
+    font-size: 0.95rem;
+  }
+
+  .form-download {
+    flex-shrink: 0;
+  }
+
+  .btn-download {
+    background: var(--color-primary-600);
+    color: white;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .btn-download:hover {
+    background: var(--color-primary-700);
+  }
+
+  .download-notice {
+    margin-top: var(--spacing-3xl);
+    padding: var(--spacing-2xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .download-notice h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.3rem;
+  }
+
+  .download-notice ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .download-notice li {
+    padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-lg);
+    border-left: 3px solid var(--color-accent-500);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  @media (max-width: 1024px) {
+    .activities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .activities-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-item {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .form-icon {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .form-download {
+      width: 100%;
+    }
+
+    .btn-download {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Smooth scroll for hashbang navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  });
+
+  // Track hashbang navigation
+  window.addEventListener('hashchange', () => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('config', 'GTM-MVL6P7N7', {
+        page_path: window.location.pathname + window.location.hash
+      });
+    }
+  });
+</script>

@@ -2,23 +2,42 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { href: '/about', label: '소개', 
+  { href: '/about', label: '가치로운이란?', 
     children: [
-      { href: '/about', label: '조합 소개' },
-      { href: '/about/history', label: '연혁' },
-      { href: '/about/organization', label: '조직도' },
-      { href: '/about/location', label: '오시는 길' },
+      { href: '/about#purpose', label: '설립 목적 및 비전' },
+      { href: '/about#values', label: '가치란' },
+      { href: '/about#cooperative', label: '사회적협동조합이란' },
+      { href: '/about#greeting', label: '인사말' },
+      { href: '/about#vision', label: '경영철학 & 비전' },
+      { href: '/about#gangnam', label: '가치로운 강남구' },
+      { href: '/about#access', label: '가치로운 접근성' },
+      { href: '/about#organization', label: '조직도' },
+      { href: '/about#history', label: '연혁' },
+      { href: '/about#location', label: '사무실 위치' },
     ]
   },
-  { href: '/services', label: '사업안내',
+  { href: '/services', label: '사업 소개',
     children: [
-      { href: '/services/elderly', label: '노인복지' },
-      { href: '/services/disability', label: '장애인 지원' },
-      { href: '/services/youth', label: '청소년 지원' },
+      { href: '/services#overview', label: '주요 사업 활동' },
+      { href: '/services#elderly', label: '재가방문요양사업' },
+      { href: '/services#disability', label: '장애인활동지원사업' },
+      { href: '/services#youth', label: '아동청소년성장지원사업' },
     ]
   },
-  { href: '/notice', label: '공지사항' },
-  { href: '/recruit', label: '활동지원사 구직신청' },
+  { href: '/notice', label: '안내사항',
+    children: [
+      { href: '/notice#announcements', label: '공지사항' },
+      { href: '/notice#events', label: '행사일정' },
+      { href: '/notice#volunteer', label: '봉사활동 신청' },
+      { href: '/notice#donation', label: '정기후원 신청' },
+    ]
+  },
+  { href: '/resources', label: '자료실',
+    children: [
+      { href: '/resources#activities', label: '활동 내역' },
+      { href: '/resources#downloads', label: '서식 다운로드' },
+    ]
+  },
 ];
 ---
 
@@ -27,6 +46,11 @@ const navItems = [
     <nav class="nav">
       <a href="/" class="logo">
         <img src="/images/main-logo.png" alt="사회적협동조합 가치로운" class="logo-img" />
+      </a>
+      
+      <a href="tel:02-6952-4756" class="header-phone">
+        <span class="phone-icon">📞</span>
+        <span class="phone-number">02-6952-4756</span>
       </a>
       
       <button class="mobile-menu-toggle" aria-label="메뉴 열기">
@@ -95,6 +119,32 @@ const navItems = [
   
   .logo-img:hover {
     transform: scale(1.05);
+  }
+  
+  .header-phone {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-primary-600);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  
+  .header-phone:hover {
+    background-color: var(--color-primary-50);
+    transform: scale(1.05);
+  }
+  
+  .phone-icon {
+    font-size: 1.3rem;
+  }
+  
+  .phone-number {
+    letter-spacing: 0.5px;
   }
   
   .mobile-menu-toggle {
