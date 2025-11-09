@@ -589,47 +589,96 @@ a:hover {
 
 /* 타임라인 반응형 */
 @media (max-width: 768px) {
+  /* 모바일: 가운데 라인, 좌우 배치 완전 제거, 리스트 형식으로 전환 */
   .history-timeline {
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-sm) !important;
   }
   
   .timeline-line {
-    left: 50%;
+    display: none !important;
   }
   
-  .history-item.left {
-    padding-right: calc(50% + 40px);
-    padding-left: var(--spacing-md);
-  }
-  
+  .history-item,
+  .history-item.left,
   .history-item.right {
-    padding-left: calc(50% + 40px);
-    padding-right: var(--spacing-md);
+    display: grid !important;
+    grid-template-columns: 60px 1fr !important;
+    gap: var(--spacing-sm) !important;
+    align-items: flex-start !important;
+    float: none !important;
+    clear: both !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: var(--spacing-sm) 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: transparent !important;
+  }
+  .history-item.left,
+  .history-item.right {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
   
-  /* 모바일에서도 가지 라인 유지 */
-  .history-item.left::before {
-    width: 30px;
+  .history-item:last-child {
+    border-bottom: none !important;
   }
   
+  /* 좌우 배치 관련 의사 요소 모두 제거 */
+  .history-item::before,
+  .history-item.left::before,
   .history-item.right::before {
-    width: 30px;
+    display: none !important;
   }
   
-  .history-item .timeline-dot {
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    border-width: 3px;
+  .history-item .timeline-dot,
+  .timeline-dot {
+    display: none !important;
   }
   
+  /* 날짜: 왼쪽 고정 컬럼 */
+  .history-date {
+    grid-column: 1 !important;
+    font-weight: 700 !important;
+    color: var(--color-primary-600) !important;
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+    padding: 2px 0 0 0 !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+    display: block !important;
+  }
+  
+  /* 내용: 오른쪽 나머지 영역 full width */
   .history-content {
-    max-width: 100%;
-    padding: var(--spacing-md) var(--spacing-lg);
+    grid-column: 2 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
   
   .history-content h4 {
-    font-size: 1rem;
+    font-size: 0.95rem !important;
+    margin: 0 0 var(--spacing-xs) 0 !important;
+    color: var(--color-gray-900) !important;
+  }
+  
+  .history-content p {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    color: var(--color-gray-700) !important;
   }
   
   .section-content {

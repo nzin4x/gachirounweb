@@ -546,21 +546,28 @@ const upcomingEvents = [
 </style>
 
 <script>
-  // 레이어 팝업 제어
+  // 레이어 팝업 제어 (localStorage + 쿠키 domain=.gachiroun.or.kr)
   document.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('layerPopup');
     if (!popup) return;
-    
     const closeButton = popup.querySelector('.popup-close');
     const hideTodayButton = popup.querySelector('.popup-close-btn');
     const overlay = popup.querySelector('.popup-overlay');
-    
-    // localStorage 확인 (오늘 하루 보지 않기)
-    const hidePopupUntil = localStorage.getItem('hidePopupUntil');
     const today = new Date().toDateString();
-    
-    // 오늘 하루 보지 않기가 설정되지 않았으면 팝업 표시
-    if (hidePopupUntil !== today) {
+
+    // 쿠키 읽기 함수
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // localStorage/쿠키 확인 (둘 중 하나라도 today면 숨김)
+    const hidePopupUntil = localStorage.getItem('hidePopupUntil');
+    const hidePopupCookie = getCookie('hidePopupUntil');
+    if (hidePopupUntil === today || hidePopupCookie === today) {
+      popup.classList.add('hidden');
+    } else {
       popup.classList.remove('hidden');
     }
 
@@ -570,10 +577,12 @@ const upcomingEvents = [
       popup.classList.add('hidden');
     });
 
-    // "오늘 하루 보지 않기" 버튼 클릭 - 팝업 닫고 localStorage 저장
+    // "오늘 하루 보지 않기" 버튼 클릭 - 팝업 닫고 localStorage+쿠키 저장
     hideTodayButton?.addEventListener('click', (e) => {
       e.stopPropagation();
       localStorage.setItem('hidePopupUntil', today);
+      // domain=.gachiroun.or.kr로 쿠키 저장 (1일)
+      document.cookie = `hidePopupUntil=${today}; path=/; domain=.gachiroun.or.kr; max-age=86400; SameSite=Lax`;
       popup.classList.add('hidden');
     });
 
