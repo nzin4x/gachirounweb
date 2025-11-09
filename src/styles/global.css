@@ -37,13 +37,11 @@
 
 .footer-description {
   color: var(--color-accent-100);
-  font-size: 1rem;
   margin-top: var(--spacing-sm);
 }
 
 .footer-title {
   color: var(--color-accent-500);
-  font-size: 1.1rem;
   margin-bottom: var(--spacing-md);
 }
 
@@ -232,6 +230,8 @@ html {
 body {
   background-color: var(--color-bg);
   min-height: 100vh;
+  font-size: 1.1rem;
+  line-height: 1.7;
 }
 
 /* 타이포그래피 */

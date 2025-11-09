@@ -477,7 +477,6 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
   .logo-text {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 1.1rem;
     line-height: 1.9;
     margin-bottom: var(--spacing-lg);
     color: var(--color-gray-800);
@@ -544,7 +543,6 @@ import MainLayout from '../layouts/MainLayout.astro';
 
   .greeting-content p {
     margin-bottom: var(--spacing-lg);
-    font-size: 1.1rem;
   }
 
   .signature {
@@ -586,7 +584,6 @@ import MainLayout from '../layouts/MainLayout.astro';
   .cycle-description p {
     line-height: 1.8;
     margin-bottom: var(--spacing-md);
-    font-size: 1.05rem;
   }
 
   .highlight-service {
@@ -678,16 +675,16 @@ import MainLayout from '../layouts/MainLayout.astro';
   #gangnam::before {
     content: '';
     position: absolute;
-    right: -50px;
+    right: 0px;
     top: 50%;
     transform: translateY(-50%);
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
     background-image: url('/images/gangnam-gu.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.08;
+    opacity: 0.5; /* 0.08 → 0.25 (진하게) */
     z-index: 0;
   }
 
@@ -704,7 +701,7 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   .gangnam-item {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.01); /* 0.92 → 0.4 (더 투명하게) */
     padding: var(--spacing-2xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
@@ -740,7 +737,6 @@ import MainLayout from '../layouts/MainLayout.astro';
   .gangnam-item li {
     padding: var(--spacing-sm) 0;
     margin-bottom: var(--spacing-sm);
-    line-height: 1.6;
   }
 
   .gangnam-item li::before {
@@ -762,7 +758,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 
   .access-image {
     flex: 1;
-    max-width: 400px;
+    max-width: 600px; /* 400px → 600px (1.5배) */
   }
 
   .access-image img {
@@ -813,7 +809,6 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   .access-card p {
-    font-size: 1.1rem;
     line-height: 1.6;
     color: var(--color-gray-700);
     font-weight: 500;
@@ -956,7 +951,6 @@ import MainLayout from '../layouts/MainLayout.astro';
 
   .org-notes p {
     margin-bottom: var(--spacing-sm);
-    line-height: 1.6;
   }
 
   /* 연혁 스타일은 global.css로 이동 */
