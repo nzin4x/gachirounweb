@@ -420,15 +420,17 @@ a:hover {
 
 /* ===== 섹션 스타일 개선 ===== */
 .content-section {
-  padding: var(--spacing-4xl) 0;
+  padding: var(--spacing-3xl) 0 var(--spacing-4xl) 0;
+  padding-bottom: var(--spacing-3xl) !important;
   position: relative;
 }
 
 .content-section .section-title {
   font-size: 2rem;
   color: var(--color-gray-900);
-  margin-bottom: var(--spacing-2xl);
-  padding-bottom: var(--spacing-md);
+  margin-top: 0;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-sm);
   position: relative;
   display: inline-block;
 }

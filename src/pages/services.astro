@@ -4,13 +4,13 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 <MainLayout title="사업소개">
   <div class="page-container">
-    <!-- 주요 사업 활동 개요 -->
+    <!-- 주요사업 개요 -->
     <section id="overview" class="content-section">
       <div class="container">
-        <h2 class="section-title clickable-title">주요 사업 활동</h2>
+        <h2 class="section-title clickable-title">주요사업</h2>
         <div class="services-grid">
           <div class="service-card">
-            <h3>재가방문요양 사업</h3>
+            <h3>재가방문요양사업</h3>
             <ul>
               <li>어르신 맞춤형 돌봄 서비스 제공</li>
               <li>전문 요양보호사 파견</li>
@@ -22,7 +22,7 @@ import MainLayout from '../layouts/MainLayout.astro';
           </div>
 
           <div class="service-card">
-            <h3>장애인활동지원 사업</h3>
+            <h3>장애인활동지원사업</h3>
             <ul>
               <li>장애인의 자립생활 지원</li>
               <li>일상생활 및 사회활동 보조</li>
@@ -34,7 +34,7 @@ import MainLayout from '../layouts/MainLayout.astro';
           </div>
 
           <div class="service-card">
-            <h3>아동청소년성장지원 사업</h3>
+            <h3>아동청소년성장지원사업</h3>
             <ul>
               <li>금연지도 캠페인</li>
               <li>학폭, 도박, 마약, 딥페이크 근절 캠페인</li>
@@ -49,154 +49,95 @@ import MainLayout from '../layouts/MainLayout.astro';
     </section>
 
     <!-- 재가방문요양사업 -->
-    <section id="elderly" class="content-section bg-light">
+    <section id="elderly" class="content-section bg-light service-detail-section">
       <div class="container">
-        <h2 class="section-title clickable-title">재가방문요양 사업</h2>
+        <h2 class="section-title clickable-title">재가방문요양사업</h2>
         
-        <div class="detail-box">
-          <h3>서비스 내용 및 대상</h3>
-          <div class="content-grid">
-            <div class="content-item">
-              <strong>대상</strong>
-              <p>65세 이상 장기요양등급 수급자</p>
-            </div>
-            <div class="content-item">
-              <strong>서비스 내용</strong>
-              <ul>
-                <li>식사 및 복약 지원</li>
-                <li>개인위생 및 신체활동 보조</li>
-                <li>가사 및 일상생활 지원</li>
-              </ul>
-            </div>
+        <div class="detail-cards">
+          <div class="detail-card">
+            <h3>서비스 내용 및 대상</h3>
+            <p><strong>대상:</strong> 65세 이상 장기요양등급 수급자</p>
+            <p><strong>내용:</strong> 식사 및 복약 지원, 개인위생 및 신체활동 보조, 가사 및 일상생활 지원</p>
+          </div>
+
+          <div class="detail-card">
+            <h3>전문 인력 확보 및 교육</h3>
+            <p>전문 요양보호사 채용 및 관리, 정기적인 직무 교육, 요양보호사·이용인 인권교육, 스트레스 관리 프로그램</p>
+          </div>
+
+          <div class="detail-card">
+            <h3>품질 관리 시스템</h3>
+            <p>서비스 만족도 조사, 케어 플랜 수립 및 평가, 보호자 소통 채널, 이용인 인권 위원회 운영</p>
           </div>
         </div>
-
-        <div class="detail-box">
-          <h3>전문 인력 확보 및 교육</h3>
-          <ul class="feature-list">
-            <li>전문 요양보호사 채용 및 관리</li>
-            <li>정기적인 직무 교육 실시</li>
-            <li>요양보호사를 위한 인권교육</li>
-            <li>이용인을 위한 인권교육</li>
-            <li>스트레스 관리 프로그램 운영</li>
-          </ul>
-        </div>
-
-        <div class="detail-box">
-          <h3>품질 관리 시스템</h3>
-          <ul class="feature-list">
-            <li>정기적인 서비스 만족도 조사</li>
-            <li>케어 플랜 수립 및 평가</li>
-            <li>보호자 소통 채널 운영</li>
-            <li>이용인 인권 위원회 운영</li>
-          </ul>
-        </div>
       </div>
+      <div class="section-bg-image elderly-bg"></div>
     </section>
 
     <!-- 장애인활동지원사업 -->
-    <section id="disability" class="content-section">
+    <section id="disability" class="content-section service-detail-section">
       <div class="container">
-        <h2 class="section-title clickable-title">장애인활동지원 사업</h2>
+        <h2 class="section-title clickable-title">장애인활동지원사업</h2>
 
-        <div class="detail-box">
-          <h3>서비스 범위 및 특징</h3>
-          <ul class="feature-list">
-            <li>일상생활 및 사회활동 지원</li>
-            <li>개인별 맞춤 서비스 제공</li>
-            <li>24시간 활동지원 서비스 운영</li>
-            <li>이용인 중심의 서비스 품질 관리</li>
-          </ul>
-        </div>
+        <div class="detail-cards">
+          <div class="detail-card">
+            <h3>서비스 범위 및 특징</h3>
+            <p>일상생활 및 사회활동 지원, 개인별 맞춤 서비스, 24시간 활동지원 서비스, 이용인 중심의 품질 관리</p>
+          </div>
 
-        <div class="detail-box">
-          <h3>장애인 권리 증진 방안</h3>
-          <ul class="feature-list">
-            <li>장애인 자기결정권 존중</li>
-            <li>개인별 맞춤형 지원계획 수립 및 실행</li>
-            <li>장애인 인권교육 정기 실시</li>
-            <li>서비스 이용인 권리 옹호 시스템 구축</li>
-          </ul>
-        </div>
+          <div class="detail-card">
+            <h3>장애인 권리 증진</h3>
+            <p>자기결정권 존중, 맞춤형 지원계획 수립, 정기 인권교육, 권리 옹호 시스템 구축</p>
+          </div>
 
-        <div class="detail-box">
-          <h3>지역사회와의 연계</h3>
-          <ul class="feature-list">
-            <li>지역 장애인 단체와 협력 네트워크 구축</li>
-            <li>지역사회 자원 연계 및 활용</li>
-            <li>장애인 가족 지원 프로그램 운영</li>
-            <li>지역 내 장애이해 캠페인 활동 추진</li>
-          </ul>
-        </div>
+          <div class="detail-card">
+            <h3>지역사회 연계</h3>
+            <p>장애인 단체 협력 네트워크, 자원 연계 및 활용, 가족 지원 프로그램, 장애이해 캠페인</p>
+          </div>
 
-        <div class="detail-box">
-          <h3>전문 인력 확보 및 교육</h3>
-          <ul class="feature-list">
-            <li>전문 활동지원사 양성 교육 프로그램</li>
-            <li>정기적인 보수교육 및 역량강화 교육</li>
-            <li>활동지원사를 위한 인권교육</li>
-            <li>이용인을 위한 인권교육</li>
-            <li>직원 복지 향상을 통한 서비스 질 개선</li>
-          </ul>
+          <div class="detail-card">
+            <h3>전문 인력 확보 및 교육</h3>
+            <p>활동지원사 양성 교육, 정기 보수교육 및 역량강화, 활동지원사·이용인 인권교육, 직원 복지 향상</p>
+          </div>
         </div>
       </div>
+      <div class="section-bg-image disabled-bg"></div>
     </section>
 
     <!-- 아동청소년성장지원사업 -->
-    <section id="youth" class="content-section bg-light">
+    <section id="youth" class="content-section bg-light service-detail-section">
       <div class="container">
-        <h2 class="section-title clickable-title">아동청소년성장지원 사업</h2>
+        <h2 class="section-title clickable-title">아동청소년성장지원사업</h2>
 
-        <div class="intro-text">
-          <p>
-            가치로운은 아동청소년의 건강한 성장과 발달을 위해 다양한 프로그램을 제공합니다.
-            지역사회와 협력하여 청소년들의 잠재력을 개발하고, 사회적 책임감을 기우는 데 중점을 둡니다.
-            이를 통해 미래 사회의 주역으로 성장할 수 있도록 지원합니다.
-          </p>
-        </div>
-
-        <div class="youth-programs">
-          <div class="program-card">
+        <div class="detail-cards">
+          <div class="detail-card">
             <h3>청소년 인권보호사업</h3>
-            <ul>
-              <li>금연 지도 및 계도</li>
-              <li>학교폭력, 마약, 도박, 딥페이크 근절 캠페인</li>
-            </ul>
+            <p>금연 지도 및 계도, 학교폭력·마약·도박·딥페이크 근절 캠페인을 통해 청소년의 건강하고 안전한 성장 환경을 조성합니다.</p>
           </div>
 
-          <div class="program-card">
-            <h3>안전한 학교주변 환경조성 사업</h3>
-            <ul>
-              <li>유해업소 청소년 출입 점검</li>
-              <li>등하굣길 도로안전 개선사업</li>
-            </ul>
+          <div class="detail-card">
+            <h3>안전한 학교주변 환경조성</h3>
+            <p>유해업소 청소년 출입 점검 및 등하굣길 도로안전 개선사업으로 청소년들이 안심하고 생활할 수 있는 환경을 만듭니다.</p>
           </div>
 
-          <div class="program-card">
-            <h3>건강한 시민, 사회참여 연계사업</h3>
-            <ul>
-              <li>아동청소년 자원봉사 연계</li>
-              <li>아동장애인과의 1:1 결연 후원</li>
-            </ul>
+          <div class="detail-card">
+            <h3>건강한 시민, 사회참여</h3>
+            <p>아동청소년 자원봉사 연계 및 아동장애인과의 1:1 결연 후원을 통해 사회적 책임감과 공동체 의식을 함양합니다.</p>
           </div>
 
-          <div class="program-card">
+          <div class="detail-card">
             <h3>환경교육 및 기후위기 캠페인</h3>
-            <ul>
-              <li>환경보호 교육 프로그램</li>
-              <li>지역사회 기후위기 대응 활동</li>
-            </ul>
+            <p>환경보호 교육 프로그램과 지역사회 기후위기 대응 활동으로 미래 세대의 환경 감수성을 키웁니다.</p>
           </div>
 
-          <div class="program-card">
-            <h3>예술로 연결되는 정서적 회복 사업</h3>
-            <ul>
-              <li>아동청소년/학부모 오케스트라 운영 지원</li>
-              <li>아동청소년 역사문화탐방 지원</li>
-            </ul>
+          <div class="detail-card">
+            <h3>예술로 연결되는 정서적 회복</h3>
+            <p>아동청소년/학부모 오케스트라 운영 지원 및 역사문화탐방을 통해 정서적 안정과 문화 감수성을 증진합니다.</p>
           </div>
+
         </div>
       </div>
+      <div class="section-bg-image youth-bg"></div>
     </section>
   </div>
 </MainLayout>
@@ -215,7 +156,7 @@ import MainLayout from '../layouts/MainLayout.astro';
     background-color: var(--color-bg-light);
   }
 
-  /* 주요 사업 활동 */
+  /* 주요사업 */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -314,50 +255,83 @@ import MainLayout from '../layouts/MainLayout.astro';
     text-align: center;
   }
 
-  .intro-text p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    max-width: 900px;
-    margin: 0 auto;
+  /* 컴팩트한 상세 카드 스타일 */
+  .service-detail-section {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: var(--spacing-4xl);
   }
 
-  .youth-programs {
+  .detail-cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-2xl);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
   }
 
-  .program-card {
-    background: white;
-    padding: var(--spacing-2xl);
+  .detail-card {
+    background: rgba(255, 255, 255, 0.4);
+    padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--color-primary-500);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .detail-card:hover {
+    transform: translateY(-4px);
     box-shadow: var(--shadow-md);
-    border-left: 4px solid var(--color-accent-600);
   }
 
-  .program-card h3 {
+  .detail-card h3 {
     color: var(--color-primary-600);
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
   }
 
-  .program-card ul {
-    list-style: none;
-    padding: 0;
+  .detail-card p {
+    line-height: 1.7;
+    color: var(--color-gray-700);
+    font-size: 0.95rem;
   }
 
-  .program-card li {
-    padding: var(--spacing-sm) 0;
-    padding-left: var(--spacing-md);
-    position: relative;
+  .detail-card strong {
+    color: var(--color-primary-600);
+    font-weight: 600;
   }
 
-  .program-card li::before {
-    content: "✓";
+  /* 배경 이미지 */
+  .section-bg-image {
     position: absolute;
-    left: 0;
-    color: var(--color-accent-600);
-    font-weight: bold;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    height: 400px;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+  }
+
+  .elderly-bg {
+    background-image: url('/images/bg-elders.png');
+  }
+
+  .disabled-bg {
+    background-image: url('/images/bg-disabled.png');
+  }
+
+  .youth-bg {
+    background-image: url('/images/bg-children.png');
+  }
+
+  .service-detail-section .container {
+    position: relative;
+    z-index: 1;
   }
 
   @media (max-width: 1024px) {
@@ -368,11 +342,26 @@ import MainLayout from '../layouts/MainLayout.astro';
     .youth-programs {
       grid-template-columns: 1fr;
     }
+
+    .detail-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .section-bg-image {
+      width: 300px;
+      height: 300px;
+      opacity: 0.3;
+    }
   }
 
   @media (max-width: 768px) {
     .content-grid {
       grid-template-columns: 1fr;
+    }
+
+    .section-bg-image {
+      width: 200px;
+      height: 200px;
     }
   }
 </style>

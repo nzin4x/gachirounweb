@@ -4,67 +4,25 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 <MainLayout title="가치로운이란?">
   <div class="page-container">
-    <!-- 설립 목적 및 비전 -->
-    <section id="purpose" class="content-section">
-      <div class="container">
-        <h2 class="section-title clickable-title">설립 목적 및 비전</h2>
-        <div class="intro-box">
-          <h3>누구나 다르지 않은 일상 실현을</h3>
-          <p class="vision-text">
-            지원하는 사회적협동조합으로서<br />
-            노인, 장애인, 아동·청소년의<br />
-            가치로운 삶을 위한 동행을<br />
-            설립 목적으로 합니다.
-          </p>
-          <p class="motto">우리 같이 가치롭게</p>
-        </div>
-        
-        <div class="features-grid">
-          <div class="feature-box">
-            <h4>조직 특성</h4>
-            <ul>
-              <li>참여자 중심 운영</li>
-              <li>수평적 의사결정</li>
-              <li>투명한 재무 관리</li>
-              <li>지역사회와의 연대</li>
-            </ul>
-          </div>
-          <div class="feature-box">
-            <h4>주요 가치와 원칙</h4>
-            <ul>
-              <li>상호 협력과 연대</li>
-              <li>사회적 가치 창출</li>
-              <li>인권경영 실천</li>
-              <li>지역사회 공헌</li>
-              <li>기회의 평등, 공정한 과정 실현</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 가치란 -->
     <section id="values" class="content-section bg-light">
       <div class="container">
         <h2 class="section-title clickable-title">가치란</h2>
-        <h3>가치의 정의</h3>
-        <div class="value-badges">
-          <span class="value-badge">보람</span>
-          <span class="value-badge">의의</span>
-          <span class="value-badge">중요성</span>
-          <span class="value-badge">의미</span>
-          <span class="value-badge">뜻</span>
-        </div>
         
-        <div class="logo-description">
-          <h4>가치로운 GACHIROUN</h4>
-          <p>
-            ㉧ '가치로운'의 초성 'ㄱ'과 'ㅊ'을 사람 형상으로 표현하여 '같이'의 의미를
-            담았으며, 이는 이용자·지역사회·우리 이웃들과의 동행을 나타냅니다.
-          </p>
-          <p>
-            ㉧ 주황은 열정, 노랑은 희망과 즐거움을 상징합니다.
-          </p>
+        <div class="value-content">
+          <div class="value-image">
+            <img src="/images/about-gachi.png" alt="가치로운 로고 의미" />
+          </div>
+          
+          <div class="logo-description">
+            <p class="logo-text">
+              ㉧ '가치로운'의 초성 <span class="highlight-orange">'ㄱ'</span>과 <span class="highlight-yellow">'ㅊ'</span>을 사람 형상으로 표현하여 <strong class="highlight-bold-orange">'같이'</strong>의 의미를 담았으며, 이는 이용자·지역사회·우리 이웃들과의 <strong class="highlight-bold-orange">동행</strong>을 나타냅니다.
+            </p>
+            <p class="logo-text">
+              ㉧ <span class="highlight-orange">주황</span>은 열정, <span class="highlight-yellow">노랑</span>은 희망과 즐거움을 상징합니다.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -72,7 +30,7 @@ import MainLayout from '../layouts/MainLayout.astro';
     <!-- 사회적협동조합이란 -->
     <section id="cooperative" class="content-section">
       <div class="container">
-        <h2 class="section-title clickable-title">사회적협동조합이란?</h2>
+        <h2 class="section-title clickable-title">사회적협동조합이란</h2>
         <h3>사회적협동조합 설립의 필요성</h3>
         <ul class="necessity-list">
           <li>공신력을 가진 법인으로서의 활동 가능</li>
@@ -82,15 +40,6 @@ import MainLayout from '../layouts/MainLayout.astro';
           <li>사회복지사 실습 지도 및 청소년 및 지역주민 자원봉사 실적 인정 가능</li>
           <li>사회적협동조합 폐업 시 모든 재산은 국가에게 환수</li>
         </ul>
-        
-        <div class="purpose-box">
-          <h4>설립목적</h4>
-          <p>
-            자주적·자립적·자치적인 조합 활동을 통하여 노인과 장애인 등 취약계층의 
-            삶의 질 향상에 기여하고 지역주민의 복리증진 및 지역사회 발전에 
-            이바지하는 것을 목적으로 한다
-          </p>
-        </div>
       </div>
     </section>
 
@@ -120,23 +69,34 @@ import MainLayout from '../layouts/MainLayout.astro';
       </div>
     </section>
 
+    <!-- 가치로운의 순환구조 -->
+    <section id="cycle" class="content-section bg-light">
+      <div class="container">
+        <h2 class="section-title clickable-title">가치로운의 순환구조</h2>
+        
+        <div class="cycle-content">
+          <div class="cycle-image">
+            <img src="/images/gachi-cycle.png" alt="가치로운 순환구조 다이어그램" />
+          </div>
+          <div class="cycle-description">
+            <p>
+              <strong class="highlight-service">어르신 재가방문요양</strong> 및 <strong class="highlight-service">장애인활동지원</strong> 사업을 통해 수익을 창출하고,<br />
+              <strong class="highlight-service">아동청소년</strong> 주도의 <strong class="highlight-service">성장지원</strong> 활동을 통해 지역사회에 환원하는<br />
+              <strong class="highlight-value">지속가능한 복지 모델</strong>을 실현하고자 합니다.
+            </p>
+            <p>
+              어르신·장애인·청소년·지역주민이 함께 참여하는<br />
+              복지 및 성장지원 사업을 통해 <strong class="highlight-value">상생과 배려의 공동체 실현</strong>을 추구하고자 합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 경영철학 & 비전 -->
     <section id="vision" class="content-section">
       <div class="container">
         <h2 class="section-title clickable-title">경영철학 & 비전</h2>
-        
-        <div class="vision-intro">
-          <h3>가치로운의 순환구조</h3>
-          <p>
-            어르신 재가방문요양 및 장애인활동지원 사업을 통해 수익을 창출하고,<br />
-            아동청소년 주도의 성장지원 활동을 통해 지역사회에 환원하는<br />
-            지속가능한 복지 모델을 실현하고자 합니다.
-          </p>
-          <p>
-            어르신·장애인·청소년·지역주민이 함께 참여하는<br />
-            복지 및 성장지원 사업을 통해 상생과 배려의 공동체 실현을 추구하고자 합니다.
-          </p>
-        </div>
 
         <div class="philosophy-grid">
           <div class="philosophy-box">
@@ -225,18 +185,23 @@ import MainLayout from '../layouts/MainLayout.astro';
     <section id="access" class="content-section">
       <div class="container">
         <h2 class="section-title clickable-title">가치로운 접근성</h2>
-        <div class="access-grid">
-          <div class="access-card">
-            <span class="access-number">01</span>
-            <p>선릉역 1번출구<br />지하철 바로 연결</p>
+        <div class="access-content">
+          <div class="access-image">
+            <img src="/images/gachi-in-gangnam.png" alt="가치로운 강남구 위치" />
           </div>
-          <div class="access-card">
-            <span class="access-number">02</span>
-            <p>지하철 2호선 /<br />수인분당선</p>
-          </div>
-          <div class="access-card">
-            <span class="access-number">03</span>
-            <p>강남구 중북부<br />유일한 기관</p>
+          <div class="access-grid">
+            <div class="access-card">
+              <span class="access-number">01</span>
+              <p>선릉역 1번출구<br />지하철 바로 연결</p>
+            </div>
+            <div class="access-card">
+              <span class="access-number">02</span>
+              <p>지하철 2호선 /<br />수인분당선</p>
+            </div>
+            <div class="access-card">
+              <span class="access-number">03</span>
+              <p>강남구 중북부<br />유일한 기관</p>
+            </div>
           </div>
         </div>
       </div>
@@ -246,43 +211,60 @@ import MainLayout from '../layouts/MainLayout.astro';
     <section id="organization" class="content-section bg-light">
       <div class="container">
         <h2 class="section-title clickable-title">조직도</h2>
-        <div class="organization-chart">
-          <div class="org-level org-top">
-            <div class="org-box org-primary">총회</div>
-          </div>
-          <div class="org-level">
-            <div class="org-box org-secondary">이사회</div>
-            <div class="org-box org-secondary">감사</div>
-          </div>
-          <div class="org-level">
-            <div class="org-box org-leader">부이사장</div>
-            <div class="org-box org-leader">이사장</div>
-          </div>
-          <div class="org-committees">
-            <span class="committee-tag">운영위원회</span>
-            <span class="committee-tag">인사위원회</span>
-            <span class="committee-tag">인권위원회</span>
-            <span class="committee-tag">고충처리위원회</span>
-          </div>
-          <div class="org-level org-departments">
-            <div class="org-department">
-              <h4>재가방문요양<br />사업본부</h4>
-              <p>본부장 / 사회복지사 / 요양보호사</p>
+        <div class="org-chart-multicol">
+          <div class="org-col">
+            <div class="org-title">총회</div>
+            <div class="org-group">
+              <div class="org-item">감사</div>
+              <div class="org-item">이사회
+                <div class="org-subgroup">
+                  <div class="org-item">이사장</div>
+                  <div class="org-item">부이사장</div>
+                </div>
+              </div>
+              <div class="org-item">위원회
+                <div class="org-subgroup">
+                  <div class="org-item">운영위원회</div>
+                  <div class="org-item">인사위원회</div>
+                  <div class="org-item">인권위원회</div>
+                  <div class="org-item">고충처리위원회</div>
+                </div>
+              </div>
             </div>
-            <div class="org-department">
-              <h4>장애인활동지원<br />사업본부</h4>
-              <p>본부장 / 사회복지사 / 활동지원사</p>
-            </div>
-            <div class="org-department">
-              <h4>아동청소년성장지원<br />사업본부</h4>
-              <p>본부장 / 회원 / 자원봉사자</p>
+          </div>
+          <div class="org-col">
+            <div class="org-title">사업본부</div>
+            <div class="org-group">
+              <div class="org-item">재가방문요양사업본부
+                <div class="org-subgroup">
+                  <div class="org-item">본부장</div>
+                  <div class="org-item">사회복지사</div>
+                  <div class="org-item">요양보호사</div>
+                </div>
+              </div>
+              <div class="org-item">장애인활동지원사업본부
+                <div class="org-subgroup">
+                  <div class="org-item">본부장</div>
+                  <div class="org-item">사회복지사</div>
+                  <div class="org-item">활동지원사</div>
+                </div>
+              </div>
+              <div class="org-item">아동청소년성장지원사업본부
+                <div class="org-subgroup">
+                  <div class="org-item">본부장</div>
+                  <div class="org-item">회원</div>
+                  <div class="org-item">자원봉사자</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        
         <div class="org-notes">
-          <p><strong>* 이사장:</strong> 협동조합 대표, 협동조합 운영 및 사업본부 슈퍼비전</p>
-          <p><strong>* 부이사장:</strong> 지역사회 네트워크 및 사업별 예산, 인사, 실무 총괄</p>
-          <p><strong>* 본부장:</strong> 각 본부의 사업 실무 총괄 및 사원 관리</p>
+          <p><strong>이사장:</strong> 협동조합 대표, 협동조합 운영 및 사업본부 슈퍼비전</p>
+          <p><strong>부이사장:</strong> 지역사회 네트워크 및 사업별 예산, 인사, 실무 총괄</p>
+          <p><strong>본부장:</strong> 각 본부의 사업 실무 총괄 및 사원 관리</p>
+          <p><strong>사회복지사, 요양보호사, 활동지원사, 자원봉사자, 회원, 조합원</strong></p>
         </div>
       </div>
     </section>
@@ -315,7 +297,9 @@ import MainLayout from '../layouts/MainLayout.astro';
               <div class="history-content">
                 <span class="history-date">2025.9.27</span>
                 <h4>이경지 여사 추모식</h4>
-                <p>제2회 대치4동 문화마당</p>
+                <p>제2회 대치4동 문화마당<br>
+                  <a href="https://www.gangnam.go.kr/board/B_000031/1074674/view.do?mid=ID01_0313" target="_blank" rel="noopener noreferrer" data-type="external-event">관련 기사 보기</a>
+                </p>
               </div>
               <div class="timeline-dot"></div>
             </div>
@@ -325,6 +309,9 @@ import MainLayout from '../layouts/MainLayout.astro';
               <div class="history-content">
                 <span class="history-date">2025.10.18</span>
                 <h4>제13회 강남구민화합축제</h4>
+                <p>
+                  <a href="https://www.gangnam.go.kr/board/B_000045/1070923/view.do?mid=ID05_040103" target="_blank" rel="noopener noreferrer" data-type="external-event">행사 상세 보기</a>
+                </p>
               </div>
             </div>
           </div>
@@ -428,10 +415,18 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   .feature-box {
-    background: white;
+    background: rgba(255, 255, 255, 0.92);
     padding: var(--spacing-2xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+    backdrop-filter: blur(8px);
+    border-left: 4px solid var(--color-primary-500);
+    transition: all 0.3s ease;
+  }
+
+  .feature-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
   }
 
   .feature-box h4 {
@@ -452,43 +447,70 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   /* 가치란 */
-  .value-badges {
+  .value-content {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    margin: var(--spacing-2xl) 0;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3xl);
+    margin-top: var(--spacing-2xl);
   }
 
-  .value-badge {
-    background: var(--color-primary-600);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    border-radius: var(--radius-full);
-    font-size: 1.2rem;
-    font-weight: bold;
+  .value-image {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .value-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
   }
 
   .logo-description {
+    width: 100%;
+    max-width: 900px;
     background: var(--color-accent-50);
-    padding: var(--spacing-2xl);
+    padding: var(--spacing-3xl);
     border-radius: var(--radius-lg);
-    margin-top: var(--spacing-2xl);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    border-left: 4px solid var(--color-accent-500);
   }
-
-  .logo-description h4 {
-    color: var(--color-primary-600);
+  .logo-text {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.9;
     margin-bottom: var(--spacing-lg);
-    font-size: 1.5rem;
-    text-align: center;
+    color: var(--color-gray-800);
   }
 
-  .logo-description p {
-    line-height: 1.8;
-    margin-bottom: var(--spacing-md);
+  .logo-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .highlight-orange {
+    color: var(--color-primary-600);
+    font-weight: 700;
+  }
+
+  .highlight-yellow {
+    color: var(--color-accent-600);
+    font-weight: 700;
+  }
+
+  .highlight-bold-orange {
+    color: var(--color-primary-600);
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .value-image {
+      max-width: 100%;
+    }
+
+    .logo-description {
+      padding: var(--spacing-2xl);
+    }
   }
 
   /* 사회적협동조합 */
@@ -504,24 +526,6 @@ import MainLayout from '../layouts/MainLayout.astro';
     margin-bottom: var(--spacing-md);
     background: var(--color-gray-50);
     border-radius: var(--radius-md);
-  }
-
-  .purpose-box {
-    background: var(--color-primary-50);
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-lg);
-    margin-top: var(--spacing-2xl);
-  }
-
-  .purpose-box h4 {
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-md);
-    font-size: 1.3rem;
-  }
-
-  .purpose-box p {
-    line-height: 1.8;
-    font-size: 1.1rem;
   }
 
   /* 인사말 */
@@ -551,22 +555,48 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   /* 경영철학 & 비전 */
-  .vision-intro {
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto var(--spacing-3xl);
+  .cycle-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3xl);
+    margin-bottom: var(--spacing-3xl);
   }
 
-  .vision-intro h3 {
+  .cycle-image {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .cycle-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+  }
+
+  .cycle-description {
+    flex: 1;
+  }
+
+  .cycle-description h3 {
     color: var(--color-primary-600);
     margin-bottom: var(--spacing-lg);
     font-size: 1.8rem;
   }
 
-  .vision-intro p {
+  .cycle-description p {
     line-height: 1.8;
     margin-bottom: var(--spacing-md);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+  }
+
+  .highlight-service {
+    color: var(--color-primary-600);
+    font-weight: 700;
+  }
+
+  .highlight-value {
+    color: var(--color-secondary-600);
+    font-weight: 700;
   }
 
   .philosophy-grid {
@@ -577,10 +607,18 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   .philosophy-box {
-    background: white;
+    background: rgba(255, 255, 255, 0.92);
     padding: var(--spacing-2xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+    backdrop-filter: blur(8px);
+    border-left: 4px solid var(--color-accent-500);
+    transition: all 0.3s ease;
+  }
+
+  .philosophy-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
   }
 
   .philosophy-box h4 {
@@ -632,22 +670,66 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   /* 가치로운 강남구 */
+  #gangnam {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #gangnam::before {
+    content: '';
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    background-image: url('/images/gangnam-gu.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.08;
+    z-index: 0;
+  }
+
+  #gangnam .container {
+    position: relative;
+    z-index: 1;
+  }
+
   .gangnam-grid {
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-2xl);
     margin-top: var(--spacing-2xl);
   }
 
   .gangnam-item {
-    background: white;
+    background: rgba(255, 255, 255, 0.92);
     padding: var(--spacing-2xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(8px);
+    border-left: 4px solid var(--color-primary-500);
+    transition: all 0.3s ease;
+  }
+
+  .gangnam-item:nth-child(2) {
+    border-left: 4px solid var(--color-accent-500);
+  }
+
+  .gangnam-item:nth-child(3) {
+    border-left: 4px solid var(--color-primary-500);
+  }
+
+  .gangnam-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
   }
 
   .gangnam-item h4 {
     color: var(--color-primary-600);
     margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
   }
 
   .gangnam-item ul {
@@ -656,121 +738,220 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   .gangnam-item li {
-    padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-md);
-    border-left: 3px solid var(--color-accent-500);
-    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+  }
+
+  .gangnam-item li::before {
+    content: "•";
+    color: var(--color-primary-500);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-right: var(--spacing-xs);
   }
 
   /* 접근성 */
-  .access-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-2xl);
+  .access-content {
+    display: flex;
+    gap: var(--spacing-3xl);
+    align-items: center;
     margin-top: var(--spacing-2xl);
   }
 
-  .access-card {
-    background: white;
-    padding: var(--spacing-3xl) var(--spacing-2xl);
+  .access-image {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .access-image img {
+    width: 100%;
+    height: auto;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    text-align: center;
+  }
+
+  .access-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .access-card {
+    background: rgba(255, 255, 255, 0.92);
+    padding: var(--spacing-xl) var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    border-left: 4px solid var(--color-primary-500);
+  }
+
+  .access-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
   }
 
   .access-number {
-    display: block;
-    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-md);
+    color: white;
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
   .access-card p {
     font-size: 1.1rem;
     line-height: 1.6;
+    color: var(--color-gray-700);
+    font-weight: 500;
   }
 
-  /* 조직도 */
-  .organization-chart {
-    margin-top: var(--spacing-3xl);
+  @media screen and (max-width: 768px) {
+    .access-content {
+      flex-direction: column;
+    }
+
+    .access-image {
+      max-width: 100%;
+    }
   }
 
-  .org-level {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
-  }
+  /* 조직도 - 심플한 트리 스타일 */
 
-  .org-box {
-    padding: var(--spacing-md) var(--spacing-2xl);
-    border-radius: var(--radius-md);
-    font-weight: bold;
-    text-align: center;
-    min-width: 120px;
-  }
-
-  .org-primary {
-    background: var(--color-primary-700);
-    color: white;
-    font-size: 1.2rem;
-  }
-
-  .org-secondary {
-    background: var(--color-primary-600);
-    color: white;
-  }
-
-  .org-leader {
-    background: var(--color-accent-600);
-    color: white;
-  }
-
-  .org-committees {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
-    margin: var(--spacing-2xl) 0;
-    flex-wrap: wrap;
-  }
-
-  .committee-tag {
-    background: var(--color-secondary-500);
-    color: white;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
-  }
-
-  .org-departments {
+  .org-chart-multicol {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    max-width: 900px;
+    margin: var(--spacing-2xl) auto;
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border-left: 4px solid var(--color-accent-500);
+  }
+  .org-col {
+    display: flex;
+    flex-direction: column;
     gap: var(--spacing-lg);
   }
-
-  .org-department {
-    background: var(--color-bg-light);
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-md);
-    text-align: center;
-  }
-
-  .org-department h4 {
+  .org-title {
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--color-primary-600);
     margin-bottom: var(--spacing-md);
-    font-size: 1.1rem;
+  }
+  .org-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  .org-item {
+    font-size: 1rem;
+    color: var(--color-gray-700);
+    margin-left: 0;
+    padding-left: var(--spacing-lg);
+    line-height: 1.7;
+    font-weight: 500;
+    position: relative;
+    border-left: 2px solid var(--color-primary-200);
+  }
+  .org-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-primary-200);
+  }
+  .org-item > .org-subgroup {
+    margin-top: var(--spacing-xs);
+    margin-left: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    position: relative;
+  }
+  .org-item > .org-subgroup::before {
+    content: '';
+    position: absolute;
+    left: -var(--spacing-lg);
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--color-primary-200);
   }
 
-  .org-department p {
-    font-size: 0.9rem;
-    color: var(--color-gray-600);
+  /* 모바일에서도 2단 유지, 폰트/패딩만 축소 */
+  @media screen and (max-width: 768px) {
+    .org-chart-multicol {
+      padding: var(--spacing-md);
+      gap: var(--spacing-md);
+    }
+    .org-title {
+      font-size: 1.05rem;
+      margin-bottom: var(--spacing-xs);
+    }
+    .org-item {
+      font-size: 0.97rem;
+    }
+    .org-group {
+      gap: var(--spacing-xs);
+    }
+    .org-item > .org-subgroup {
+      margin-left: var(--spacing-md);
+    }
   }
+
+
+
+  /* 모바일 반응형 */
+  @media screen and (max-width: 768px) {
+    .org-chart {
+      padding: var(--spacing-md);
+    }
+
+    .org-tree strong {
+      font-size: 1.1rem;
+    }
+
+    .org-tree ul {
+      padding-left: var(--spacing-lg);
+    }
+
+    .org-tree li {
+      padding-left: var(--spacing-md);
+    }
+  }
+
+
+
+
+
 
   .org-notes {
-    margin-top: var(--spacing-3xl);
-    padding: var(--spacing-xl);
+    width: 100%;
+    max-width: 900px;
+    margin: var(--spacing-3xl) auto 0 auto;
+    padding: var(--spacing-3xl);
     background: var(--color-accent-50);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--color-accent-500);
   }
 
   .org-notes p {
@@ -892,6 +1073,17 @@ import MainLayout from '../layouts/MainLayout.astro';
   }
 
   @media (max-width: 768px) {
+    .cycle-content {
+      flex-direction: column;
+    }
+
+    .cycle-image {
+      max-width: 100%;
+    }
+
+    .gangnam-grid,
+    .philosophy-grid,
+    .feature-grid,
     .access-grid,
     .location-grid {
       grid-template-columns: 1fr;

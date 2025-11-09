@@ -82,6 +82,29 @@ const events = [
       </div>
     </section>
 
+    <!-- 연간 주요 일정 -->
+    <section id="annual-schedule" class="content-section">
+      <div class="container">
+        <h2 class="section-title clickable-title">연간 주요 일정</h2>
+        <div class="annual-schedule-grid">
+          <div class="schedule-card">
+            <div class="schedule-month">2월</div>
+            <div class="schedule-content">
+              <h3>이사회</h3>
+              <p>정기 이사회가 매년 2월에 개최됩니다.</p>
+            </div>
+          </div>
+          <div class="schedule-card">
+            <div class="schedule-month">3월</div>
+            <div class="schedule-content">
+              <h3>총회</h3>
+              <p>조합원 정기총회가 매년 3월에 개최됩니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 행사일정 -->
     <section id="events" class="content-section bg-light">
       <div class="container">
@@ -244,6 +267,59 @@ const events = [
   .board-item p {
     color: var(--color-gray-700);
     line-height: 1.6;
+  }
+
+  /* 연간 주요 일정 */
+  .annual-schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+    margin-top: var(--spacing-2xl);
+  }
+
+  .schedule-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    transition: all 0.3s ease;
+  }
+
+  .schedule-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .schedule-month {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
+    color: white;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .schedule-content {
+    padding: var(--spacing-2xl);
+    flex: 1;
+  }
+
+  .schedule-content h3 {
+    color: var(--color-primary-600);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+  }
+
+  .schedule-content p {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    font-size: 1.05rem;
   }
 
   /* 행사일정 */
@@ -451,7 +527,8 @@ const events = [
   @media (max-width: 1024px) {
     .events-grid,
     .form-container,
-    .benefits-grid {
+    .benefits-grid,
+    .annual-schedule-grid {
       grid-template-columns: 1fr;
     }
   }
