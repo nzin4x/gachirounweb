@@ -54,18 +54,18 @@ import MainLayout from '../layouts/MainLayout.astro';
         <h2 class="section-title clickable-title">재가방문요양사업</h2>
         
         <div class="detail-cards">
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>서비스 내용 및 대상</h3>
             <p><strong>대상:</strong> 65세 이상 장기요양등급 수급자</p>
             <p><strong>내용:</strong> 식사 및 복약 지원, 개인위생 및 신체활동 보조, 가사 및 일상생활 지원</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>전문 인력 확보 및 교육</h3>
             <p>전문 요양보호사 채용 및 관리, 정기적인 직무 교육, 요양보호사·이용인 인권교육, 스트레스 관리 프로그램</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>품질 관리 시스템</h3>
             <p>서비스 만족도 조사, 케어 플랜 수립 및 평가, 보호자 소통 채널, 이용인 인권 위원회 운영</p>
           </div>
@@ -80,22 +80,22 @@ import MainLayout from '../layouts/MainLayout.astro';
         <h2 class="section-title clickable-title">장애인활동지원사업</h2>
 
         <div class="detail-cards">
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>서비스 범위 및 특징</h3>
             <p>일상생활 및 사회활동 지원, 개인별 맞춤 서비스, 24시간 활동지원 서비스, 이용인 중심의 품질 관리</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>장애인 권리 증진</h3>
             <p>자기결정권 존중, 맞춤형 지원계획 수립, 정기 인권교육, 권리 옹호 시스템 구축</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>지역사회 연계</h3>
             <p>장애인 단체 협력 네트워크, 자원 연계 및 활용, 가족 지원 프로그램, 장애이해 캠페인</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>전문 인력 확보 및 교육</h3>
             <p>활동지원사 양성 교육, 정기 보수교육 및 역량강화, 활동지원사·이용인 인권교육, 직원 복지 향상</p>
           </div>
@@ -110,27 +110,27 @@ import MainLayout from '../layouts/MainLayout.astro';
         <h2 class="section-title clickable-title">아동청소년성장지원사업</h2>
 
         <div class="detail-cards">
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>청소년 인권보호사업</h3>
             <p>금연 지도 및 계도, 학교폭력·마약·도박·딥페이크 근절 캠페인을 통해 청소년의 건강하고 안전한 성장 환경을 조성합니다.</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>안전한 학교주변 환경조성</h3>
             <p>유해업소 청소년 출입 점검 및 등하굣길 도로안전 개선사업으로 청소년들이 안심하고 생활할 수 있는 환경을 만듭니다.</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>건강한 시민, 사회참여</h3>
             <p>아동청소년 자원봉사 연계 및 아동장애인과의 1:1 결연 후원을 통해 사회적 책임감과 공동체 의식을 함양합니다.</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>환경교육 및 기후위기 캠페인</h3>
             <p>환경보호 교육 프로그램과 지역사회 기후위기 대응 활동으로 미래 세대의 환경 감수성을 키웁니다.</p>
           </div>
 
-          <div class="detail-card">
+          <div class="detail-card unified-card">
             <h3>예술로 연결되는 정서적 회복</h3>
             <p>아동청소년/학부모 오케스트라 운영 지원 및 역사문화탐방을 통해 정서적 안정과 문화 감수성을 증진합니다.</p>
           </div>
@@ -262,43 +262,18 @@ import MainLayout from '../layouts/MainLayout.astro';
     padding-bottom: var(--spacing-4xl);
   }
 
+  /* detail-card는 unified-card 사용 */
   .detail-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
   }
 
   .detail-card {
-    background: rgba(255, 255, 255, 0.4);
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    border-left: 4px solid var(--color-primary-500);
-    transition: all 0.3s ease;
+    /* unified-card 스타일 사용 (global.css) */
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
-  }
-
-  .detail-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .detail-card h3 {
-    color: var(--color-primary-600);
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-md);
-    font-weight: 700;
-  }
-
-  .detail-card p {
-    line-height: 1.7;
-    color: var(--color-gray-700);
-  }
-
-  .detail-card strong {
-    color: var(--color-primary-600);
-    font-weight: 600;
   }
 
   /* 배경 이미지 */
@@ -361,6 +336,30 @@ import MainLayout from '../layouts/MainLayout.astro';
     .section-bg-image {
       width: 200px;
       height: 200px;
+    }
+    
+    /* 주요사업 카드 컴팩트하게 */
+    .services-grid {
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+    
+    .service-card {
+      padding: var(--spacing-md);
+      border-top-width: 3px;
+    }
+    
+    .service-card h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .service-card li {
+      padding: var(--spacing-xs) 0 var(--spacing-xs) var(--spacing-sm);
+      border-left-width: 2px;
+      margin-bottom: var(--spacing-xs);
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
   }
 </style>

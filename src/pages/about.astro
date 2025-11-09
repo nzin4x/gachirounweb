@@ -16,7 +16,7 @@ import historyData from '../data/history.json';
             <img src="/images/about-gachi.png" alt="가치로운 로고 의미" />
           </div>
           
-          <div class="logo-description">
+          <div class="logo-description unified-card">
             <p class="logo-text">
               ㉧ '가치로운'의 초성 <span class="highlight-orange">'ㄱ'</span>과 <span class="highlight-yellow">'ㅊ'</span>을 사람 형상으로 표현하여 <strong class="highlight-bold-orange">'같이'</strong>의 의미를 담았으며, 이는 이용자·지역사회·우리 이웃들과의 <strong class="highlight-bold-orange">동행</strong>을 나타냅니다.
             </p>
@@ -100,7 +100,7 @@ import historyData from '../data/history.json';
         <h2 class="section-title clickable-title">경영철학 & 비전</h2>
 
         <div class="philosophy-grid">
-          <div class="philosophy-box">
+          <div class="philosophy-box unified-card">
             <h4>🌼 경영철학 (Philosophy)</h4>
             <p class="highlight">"우리 같이 가치롭게"</p>
             <p>
@@ -111,7 +111,7 @@ import historyData from '../data/history.json';
             <p>🧡 주황 = 열정과 따뜻함<br />💛 노랑 = 희망과 즐거움</p>
           </div>
 
-          <div class="philosophy-box">
+          <div class="philosophy-box unified-card">
             <h4>🌿 미션 (Mission)</h4>
             <p class="highlight">"모두가 존중받으며 성장하는 지역공동체를 만든다."</p>
             <ul>
@@ -120,7 +120,7 @@ import historyData from '../data/history.json';
             </ul>
           </div>
 
-          <div class="philosophy-box">
+          <div class="philosophy-box unified-card">
             <h4>🌻 비전 (Vision)</h4>
             <p class="highlight">"사람 중심, 가치 중심, 지역 중심의 지속가능한 복지 생태계 구축"</p>
             <p><strong>복지 순환모델 4단계</strong></p>
@@ -128,7 +128,7 @@ import historyData from '../data/history.json';
             <p>세대와 계층이 연결되어 서로의 손을 잡고 함께 성장하는 구조 🌿</p>
           </div>
 
-          <div class="philosophy-box">
+          <div class="philosophy-box unified-card">
             <h4>💫 핵심가치 (Core Values)</h4>
             <ul>
               <li>🤝 같이 (With) — 함께하는 동행과 참여</li>
@@ -190,18 +190,18 @@ import historyData from '../data/history.json';
           <div class="access-image">
             <img src="/images/gachi-in-gangnam.png" alt="가치로운 강남구 위치" />
           </div>
-          <div class="access-grid">
-            <div class="access-card">
-              <span class="access-number">01</span>
-              <p>선릉역 1번출구<br />지하철 바로 연결</p>
+          <div class="access-simple">
+            <div class="access-item">
+              <span class="access-icon">🚇</span>
+              <span class="access-text">선릉역 1번출구 지하철 바로 연결</span>
             </div>
-            <div class="access-card">
-              <span class="access-number">02</span>
-              <p>지하철 2호선 /<br />수인분당선</p>
+            <div class="access-item">
+              <span class="access-icon">🚉</span>
+              <span class="access-text">지하철 2호선 / 수인분당선</span>
             </div>
-            <div class="access-card">
-              <span class="access-number">03</span>
-              <p>강남구 중북부<br />유일한 기관</p>
+            <div class="access-item">
+              <span class="access-icon">📍</span>
+              <span class="access-text">강남구 중북부 유일한 기관</span>
             </div>
           </div>
         </div>
@@ -470,18 +470,16 @@ import historyData from '../data/history.json';
     box-shadow: var(--shadow-lg);
   }
 
+  /* logo-description은 unified-card 스타일 사용 */
   .logo-description {
     width: 100%;
-    max-width: 900px;
     background: var(--color-accent-50);
-    padding: var(--spacing-3xl);
-    border-radius: var(--radius-lg);
-    border-left: 4px solid var(--color-accent-500);
+    border-left-color: var(--color-accent-500);
   }
+  
   .logo-text {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.9;
-    margin-bottom: var(--spacing-lg);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-md);
     color: var(--color-gray-800);
   }
 
@@ -511,7 +509,7 @@ import historyData from '../data/history.json';
     }
 
     .logo-description {
-      padding: var(--spacing-2xl);
+      padding: var(--spacing-md) !important;
     }
   }
 
@@ -519,15 +517,16 @@ import historyData from '../data/history.json';
   .necessity-list {
     list-style: none;
     padding: 0;
-    margin: var(--spacing-2xl) 0;
+    margin: var(--spacing-lg) 0;
   }
 
   .necessity-list li {
-    padding: var(--spacing-md) 0 var(--spacing-md) var(--spacing-xl);
-    border-left: 4px solid var(--color-primary-600);
-    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-md);
+    border-left: 3px solid var(--color-primary-500);
+    margin-bottom: var(--spacing-xs);
     background: var(--color-gray-50);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
+    line-height: 1.7;
   }
 
   /* 인사말 */
@@ -600,73 +599,65 @@ import historyData from '../data/history.json';
   }
 
   .philosophy-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
-    margin: var(--spacing-3xl) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
   }
 
+  /* philosophy-box는 unified-card 사용 */
   .philosophy-box {
-    background: rgba(255, 255, 255, 0.92);
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
-    border-left: 4px solid var(--color-accent-500);
-    transition: all 0.3s ease;
-  }
-
-  .philosophy-box:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .philosophy-box h4 {
-    color: var(--color-primary-600);
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.3rem;
   }
 
   .philosophy-box .highlight {
     background: var(--color-accent-100);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-md);
-    font-weight: bold;
-    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    margin: var(--spacing-sm) 0;
     display: block;
+    color: var(--color-primary-700);
   }
 
   .philosophy-box ul {
-    list-style: none;
-    padding: 0;
+    margin: var(--spacing-sm) 0;
+    padding-left: var(--spacing-lg);
   }
 
   .philosophy-box li {
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--color-gray-100);
-  }
-
-  .philosophy-box li:last-child {
-    border-bottom: none;
+    padding: var(--spacing-xs) 0;
+    line-height: 1.7;
   }
 
   .slogan-box {
     text-align: center;
     background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-accent-600) 100%);
     color: white;
-    padding: var(--spacing-3xl);
+    padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
+    border: none;
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.2);
+    margin-top: var(--spacing-xl);
   }
 
   .slogan-box h4 {
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    font-size: 1.25rem;
+    color: white;
   }
 
   .slogan {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: var(--spacing-lg) 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: var(--spacing-md) 0;
+    line-height: 1.4;
+  }
+  
+  .slogan-box p {
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
   }
 
   /* 가치로운 강남구 */
@@ -771,49 +762,30 @@ import historyData from '../data/history.json';
     box-shadow: var(--shadow-md);
   }
 
-  .access-grid {
+  /* 간소화된 접근성 스타일 */
+  .access-simple {
     flex: 1;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
   }
 
-  .access-card {
-    background: rgba(255, 255, 255, 0.92);
-    padding: var(--spacing-xl) var(--spacing-2xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    text-align: left;
+  .access-item {
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-    border-left: 4px solid var(--color-primary-500);
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    color: var(--color-gray-800);
+    line-height: 1.6;
   }
 
-  .access-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .access-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
+  .access-icon {
     font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
-    border-radius: 50%;
     flex-shrink: 0;
   }
 
-  .access-card p {
-    line-height: 1.6;
-    color: var(--color-gray-700);
+  .access-text {
+    font-size: 0.95rem;
     font-weight: 500;
   }
 
@@ -895,24 +867,48 @@ import historyData from '../data/history.json';
     background: var(--color-primary-200);
   }
 
-  /* 모바일에서도 2단 유지, 폰트/패딩만 축소 */
+  /* 모바일: PC와 동일한 형태, 폰트/들여쓰기만 축소 */
   @media screen and (max-width: 768px) {
     .org-chart-multicol {
-      padding: var(--spacing-md);
+      padding: var(--spacing-sm);
       gap: var(--spacing-md);
+      grid-template-columns: 1fr 1fr;
     }
+    
+    .org-col {
+      gap: var(--spacing-sm);
+    }
+    
     .org-title {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       margin-bottom: var(--spacing-xs);
     }
-    .org-item {
-      font-size: 0.97rem;
-    }
+    
     .org-group {
       gap: var(--spacing-xs);
     }
+    
+    .org-item {
+      font-size: 0.8rem;
+      padding-left: var(--spacing-sm);
+      line-height: 1.5;
+    }
+    
+    .org-item::before {
+      width: 2px;
+      background: var(--color-primary-200);
+    }
+    
     .org-item > .org-subgroup {
-      margin-left: var(--spacing-md);
+      margin-top: var(--spacing-xs);
+      margin-left: var(--spacing-sm);
+      gap: var(--spacing-xs);
+    }
+    
+    .org-item > .org-subgroup::before {
+      left: calc(-1 * var(--spacing-sm));
+      width: 2px;
+      background: var(--color-primary-200);
     }
   }
 
@@ -968,23 +964,33 @@ import historyData from '../data/history.json';
 
   .location-info h3 {
     color: var(--color-primary-600);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.125rem;
+    font-weight: 600;
   }
 
   .info-item {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    padding-left: 0;
   }
 
   .info-item strong {
-    display: block;
+    display: inline-block;
     color: var(--color-primary-600);
-    margin-bottom: var(--spacing-xs);
+    margin-right: var(--spacing-xs);
+    min-width: 60px;
+    font-weight: 600;
+  }
+
+  .info-item p {
+    display: inline;
+    margin: 0;
   }
 
   .info-item a {
     color: var(--color-primary-600);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .info-item a:hover {
@@ -992,24 +998,30 @@ import historyData from '../data/history.json';
   }
 
   .access-info {
-    margin-top: var(--spacing-2xl);
-    padding: var(--spacing-lg);
-    background: var(--color-bg-light);
-    border-radius: var(--radius-md);
+    margin-top: var(--spacing-lg);
+    padding-left: 0;
   }
 
   .access-info h4 {
     color: var(--color-primary-600);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.125rem;
+    font-weight: 600;
   }
 
   .access-info ul {
     list-style: none;
     padding: 0;
+    margin: 0;
   }
 
   .access-info li {
-    padding: var(--spacing-xs) 0;
+    padding: var(--spacing-xs) 0 var(--spacing-xs) var(--spacing-md);
+    border-left: 3px solid var(--color-primary-400);
+    margin-bottom: var(--spacing-xs);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-sm);
+    line-height: 1.6;
   }
 
   .location-map {
@@ -1084,6 +1096,32 @@ import historyData from '../data/history.json';
     .access-grid,
     .location-grid {
       grid-template-columns: 1fr;
+    }
+    
+    /* 모바일 여백 최적화 */
+    .slogan-box {
+      padding: var(--spacing-lg);
+    }
+    
+    .slogan-box h4 {
+      font-size: 1.125rem;
+    }
+    
+    .slogan {
+      font-size: 1.25rem;
+    }
+    
+    .access-grid {
+      gap: var(--spacing-md);
+    }
+    
+    .location-grid {
+      gap: var(--spacing-xl);
+    }
+    
+    .org-notes {
+      padding: var(--spacing-md) !important;
+      margin-top: var(--spacing-xl);
     }
   }
 </style>

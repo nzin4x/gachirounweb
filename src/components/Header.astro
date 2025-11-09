@@ -76,6 +76,18 @@ const navItems = navigation;
     display: flex;
     align-items: center;
   }
+
+  @media (max-width: 768px) {
+    .nav {
+      align-items: flex-end;
+    }
+    .logo {
+      align-items: flex-end;
+    }
+    .header-phone {
+      align-items: flex-end;
+    }
+  }
   
   .logo-img {
     height: 50px;
@@ -106,6 +118,32 @@ const navItems = navigation;
     background-color: var(--color-primary-50);
     transform: scale(1.05);
   }
+
+    /* 모바일: 전화번호를 로고 바로 오른쪽에 붙임 */
+    @media (max-width: 768px) {
+      .nav {
+        flex-wrap: nowrap;
+      }
+      .logo {
+        margin-right: var(--spacing-xs);
+      }
+      .header-phone {
+        order: 1;
+        margin-left: 0;
+        margin-right: auto;
+        padding: 0;
+        font-size: 1rem;
+        background: none;
+        border-radius: 0;
+        gap: 2px;
+      }
+      .mobile-menu-toggle {
+        order: 2;
+      }
+      .nav-menu {
+        order: 3;
+      }
+    }
   
   /* 모바일 메뉴 열렸을 때 body 스크롤 방지 */
   body.menu-open {
