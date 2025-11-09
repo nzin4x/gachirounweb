@@ -99,6 +99,7 @@ const navItems = navigation;
     border-radius: var(--radius-md);
     transition: all 0.2s ease;
     text-decoration: none;
+    white-space: nowrap;
   }
   
   .header-phone:hover {
@@ -114,9 +115,19 @@ const navItems = navigation;
   .phone-icon {
     font-size: 1.3rem;
   }
-  
   .phone-number {
     letter-spacing: 0.5px;
+  }
+  @media (max-width: 768px) {
+    .header-phone {
+      font-size: 0.9rem;
+    }
+    .phone-icon {
+      font-size: 1em;
+    }
+    .phone-number {
+      font-size: 0.9em;
+    }
   }
   
   .mobile-menu-toggle {
