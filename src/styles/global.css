@@ -534,9 +534,9 @@ a:hover {
 
   /* 왼쪽에 세로 선 추가 */
   .timeline-line {
-    left: 80px;
+    left: 84px;
     width: 2px;
-    background: var(--color-gray-300);
+    background: var(--color-primary-500);
   }
 
   /* 아이템 레이아웃 재구성 */
