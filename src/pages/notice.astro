@@ -90,8 +90,11 @@ const events = [
           {events.map((event) => (
             <div class="event-card">
               <div class="event-date">
-                <span class="month">{event.date.split('-')[1]}월</span>
-                <span class="day">{event.date.split('-')[2]}일</span>
+                <span class="year">{event.date.split('-')[0]}년</span>
+                <div class="date-main">
+                  <span class="month">{event.date.split('-')[1]}월</span>
+                  <span class="day">{event.date.split('-')[2]}일</span>
+                </div>
               </div>
               <div class="event-content">
                 <h3>{event.title}</h3>
@@ -267,16 +270,25 @@ const events = [
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 100px;
+    min-width: 110px;
+    gap: var(--spacing-xs);
   }
 
-  .event-date .month {
-    font-size: 1rem;
-    margin-bottom: var(--spacing-xs);
+  .event-date .year {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    font-weight: 500;
   }
 
+  .event-date .date-main {
+    display: flex;
+    gap: 4px;
+    align-items: baseline;
+  }
+
+  .event-date .month,
   .event-date .day {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
 
@@ -461,6 +473,22 @@ const events = [
     .event-date {
       min-width: auto;
       padding: var(--spacing-lg);
+      flex-direction: row;
+      gap: var(--spacing-md);
+      justify-content: center;
+    }
+    
+    .event-date .year {
+      font-size: 0.875rem;
+    }
+    
+    .event-date .date-main {
+      gap: 6px;
+    }
+    
+    .event-date .month,
+    .event-date .day {
+      font-size: 1.75rem;
       flex-direction: row;
       gap: var(--spacing-md);
     }
