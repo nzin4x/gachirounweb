@@ -448,11 +448,12 @@ const hasFloatingNav = floatingNavItems.length > 0;
   }
   
   .floating-nav.collapsed {
-    transform: translateY(-50%) translateX(-100%);
+    transform: translateY(-50%) translateX(calc(-100% + px));
   }
   
   .floating-nav.collapsed .floating-nav-toggle {
-    right: -8px;
+    overflow: visible;
+    z-index: 10;
   }
   
   .floating-nav-content {
