@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
       
       <div class="footer-section">
         <ul class="footer-contact">
-          <li>📍 (06192) 서울시 강남구 테헤란로 406 샹제리제센터 A동 C111 (대치동)</li>
+          <li>📍 (06192) 서울시 강남구 테헤란로 406 샹제리제센터 A동 C111호 (대치동)</li>
           <li>📞 <a href="tel:02-6952-4756">02-6952-4756</a></li>
           <li>📠 02-6592-4757</li>
           <li>📧 <a href="mailto:gachiroun@gmail.com">gachiroun@gmail.com</a></li>
@@ -55,8 +55,8 @@ const currentYear = new Date().getFullYear();
 
 <style>
   .footer {
-    background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-900) 100%);
-    color: white;
+    background: #ffe08a;
+    color: #111827;
     padding: var(--spacing-3xl) 0 var(--spacing-xl);
     margin-top: var(--spacing-3xl);
   }
@@ -107,7 +107,7 @@ const currentYear = new Date().getFullYear();
   }
   
   .footer-links a {
-    color: white;
+    color: #111827;
     opacity: 0.9;
     transition: opacity 0.2s ease;
   }
@@ -115,6 +115,7 @@ const currentYear = new Date().getFullYear();
   .footer-links a:hover {
     opacity: 1;
     text-decoration: underline;
+    color: #000;
   }
   
   .footer-contact li {
@@ -123,7 +124,7 @@ const currentYear = new Date().getFullYear();
   }
   
   .footer-contact a {
-    color: white;
+    color: #111827;
     text-decoration: none;
     transition: opacity 0.2s ease;
   }
@@ -131,6 +132,7 @@ const currentYear = new Date().getFullYear();
   .footer-contact a:hover {
     opacity: 1;
     text-decoration: underline;
+    color: #000;
   }
   
   .social-links {
@@ -146,14 +148,15 @@ const currentYear = new Date().getFullYear();
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    background-color: rgba(0,0,0,0.07);
+    color: #111827;
     transition: all 0.3s ease;
   }
   
   .social-icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0,0,0,0.13);
     transform: translateY(-3px);
+    color: #000;
   }
   
   .social-icon svg {
@@ -166,7 +169,7 @@ const currentYear = new Date().getFullYear();
     justify-content: space-between;
     align-items: center;
     padding-top: var(--spacing-xl);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid rgba(0,0,0,0.13);
     font-size: 0.9rem;
   }
   
@@ -177,13 +180,14 @@ const currentYear = new Date().getFullYear();
   }
   
   .footer-legal a {
-    color: white;
+    color: #111827;
     opacity: 0.9;
   }
   
   .footer-legal a:hover {
     opacity: 1;
     text-decoration: underline;
+    color: #000;
   }
   
   /* 모바일 */
@@ -191,16 +195,17 @@ const currentYear = new Date().getFullYear();
     .footer {
       padding: var(--spacing-2xl) 0 var(--spacing-lg);
     }
-    
     .footer-content {
       grid-template-columns: 1fr;
       gap: var(--spacing-xl);
     }
-    
     .footer-bottom {
       flex-direction: column;
       gap: var(--spacing-md);
       text-align: center;
+    }
+    .footer-contact li {
+      font-size: 0.8rem;
     }
   }
 </style>
