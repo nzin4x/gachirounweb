@@ -43,13 +43,60 @@ const hasFloatingNav = floatingNavItems.length > 0;
     
     <!-- 플로팅 네비게이션 -->
     <aside id="floatingNav" class="floating-nav hidden collapsed">
+      <div class="floating-nav-header">
+        <button class="floating-nav-pin" aria-label="네비게이션 고정(PIN)">
+          <span class="pin-icon">📌</span>
+        </button>
+      </div>
       <button class="floating-nav-toggle" aria-label="네비게이션 토글">
-        <span class="toggle-icon">📑</span>
+        <span class="toggle-icon">�</span>
       </button>
       <div class="floating-nav-content">
         <!-- 동적으로 채워집니다 -->
       </div>
     </aside>
+
+<style is:global>
+  .floating-nav-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0.25rem 0.5rem 0 0.5rem;
+    box-sizing: border-box;
+    position: relative;
+    min-height: 32px;
+  }
+  .floating-nav-pin {
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin-top: 0;
+    margin-right: 0;
+    width: 28px;
+    height: 32px;
+    background: white;
+    border: 1px solid var(--color-primary-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.08);
+    transition: all 0.2s;
+    z-index: 2;
+    font-size: 1.1rem;
+    color: var(--color-primary-500);
+    opacity: 0.85;
+  }
+  .floating-nav-pin.active {
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+    border-color: var(--color-primary-400);
+    opacity: 1;
+  }
+</style>
     
     <!-- 플로팅 네비게이션 데이터 (숨김) -->
     {hasFloatingNav && (
@@ -200,57 +247,109 @@ const hasFloatingNav = floatingNavItems.length > 0;
           updateActiveNav();
         }
         
-        // 토글 버튼 기능 + 플로팅 네비 전체 영역 클릭 시 열기
+        // PIN 버튼 기능 추가
         const toggleButton = floatingNav?.querySelector('.floating-nav-toggle');
-        
+        const pinButton = floatingNav?.querySelector('.floating-nav-pin');
+        let isPinned = localStorage.getItem('floatingNavPinned') === 'true';
+        function updatePinUI() {
+          if (isPinned) {
+            floatingNav?.classList.add('pinned');
+            pinButton?.classList.add('active');
+          } else {
+            floatingNav?.classList.remove('pinned');
+            pinButton?.classList.remove('active');
+          }
+        }
+        updatePinUI();
+
+        pinButton?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          isPinned = !isPinned;
+          localStorage.setItem('floatingNavPinned', isPinned ? 'true' : 'false');
+          updatePinUI();
+        });
+
         // 플로팅 네비게이션 전체 영역 클릭 시 (닫혀있을 때만 열기)
         floatingNav?.addEventListener('click', (e) => {
           const isCollapsed = floatingNav?.classList.contains('collapsed');
-          
-          // 닫혀있을 때만 열기, 링크 클릭은 제외
-          if (isCollapsed && !(e.target as HTMLElement).closest('.floating-nav-item')) {
+          const target = e.target as HTMLElement;
+          const isToggle = target.closest('.floating-nav-toggle');
+          const isContent = target.closest('.floating-nav-content');
+          const isNavItem = target.closest('.floating-nav-item');
+          const isPin = target.closest('.floating-nav-pin');
+          if (
+            isCollapsed &&
+            !isNavItem &&
+            !isContent &&
+            !isPin
+          ) {
             e.preventDefault();
             e.stopPropagation();
             floatingNav?.classList.remove('collapsed');
             localStorage.setItem('floatingNavCollapsed', 'false');
           }
         });
-        
+
         // 토글 버튼만 클릭 시 열고/닫기 토글
         toggleButton?.addEventListener('click', (e) => {
           e.stopPropagation();
           floatingNav?.classList.toggle('collapsed');
-          
-          // localStorage에 상태 저장
           const isCollapsed = floatingNav?.classList.contains('collapsed');
           localStorage.setItem('floatingNavCollapsed', isCollapsed ? 'true' : 'false');
         });
-        
-        // 페이지 로드 시 저장된 상태 복원 (데스크탑만)
-        const isMobile = window.innerWidth <= 1024;
-        if (isMobile) {
-          // 모바일에서는 항상 접힌 상태로 시작
-          floatingNav?.classList.add('collapsed');
-          
-          // 모바일에서 본문 클릭 시 플로팅 네비게이션 닫기
-          document.addEventListener('click', (e) => {
-            const target = e.target as HTMLElement;
-            const isNavClick = floatingNav?.contains(target);
-            const isToggleClick = toggleButton?.contains(target);
-            
-            // 네비게이션이 열려있고, 네비게이션이나 토글 버튼 클릭이 아닌 경우
-            if (!floatingNav?.classList.contains('collapsed') && 
-                !isNavClick && 
-                !isToggleClick) {
-              floatingNav?.classList.add('collapsed');
-            }
-          });
-        } else {
-          // 데스크탑에서는 저장된 상태 복원
-          const savedState = localStorage.getItem('floatingNavCollapsed');
-          if (savedState === 'false') {
-            floatingNav?.classList.remove('collapsed');
+
+        // 모바일/PC 모두 본문 클릭 시 닫기 (PIN 해제 시에만)
+        document.addEventListener('click', (e) => {
+          if (isPinned) return;
+          const target = e.target as HTMLElement;
+          const isNavClick = floatingNav?.contains(target);
+          const isToggleClick = toggleButton?.contains(target);
+          const isPinClick = pinButton?.contains(target);
+          if (!floatingNav?.classList.contains('collapsed') && !isNavClick && !isToggleClick && !isPinClick) {
+            floatingNav?.classList.add('collapsed');
+            localStorage.setItem('floatingNavCollapsed', 'true');
           }
+        });
+
+        // 페이지 로드 시 저장된 상태 복원
+        const savedState = localStorage.getItem('floatingNavCollapsed');
+        if (isPinned) {
+          floatingNav?.classList.remove('collapsed');
+        } else if (savedState === 'false') {
+          floatingNav?.classList.remove('collapsed');
+        } else {
+          floatingNav?.classList.add('collapsed');
+        }
+        
+        // 맨 위로 버튼 동작
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        const footer = document.querySelector('.footer');
+        
+        if (scrollToTopBtn && footer) {
+          // 스크롤 시 버튼 표시/숨김
+          let scrollTimeout: number;
+          window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = window.setTimeout(() => {
+              const footerRect = footer.getBoundingClientRect();
+              const windowHeight = window.innerHeight;
+              
+              // 푸터가 화면에 보이기 시작하면 버튼 표시
+              if (footerRect.top <= windowHeight) {
+                scrollToTopBtn.classList.remove('hidden');
+              } else {
+                scrollToTopBtn.classList.add('hidden');
+              }
+            }, 50);
+          });
+          
+          // 버튼 클릭 시 맨 위로 스크롤
+          scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          });
         }
       });
     </script>
@@ -307,8 +406,12 @@ const hasFloatingNav = floatingNavItems.length > 0;
     justify-content: center;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    z-index: 1;
+    z-index: 2;
     overflow: hidden;
+  }
+
+  .floating-nav.pinned {
+    box-shadow: 0 0 0 3px var(--color-primary-200);
   }
   
   .floating-nav-toggle:hover {
@@ -457,6 +560,67 @@ const hasFloatingNav = floatingNavItems.length > 0;
     }
   }
   
+  /* 맨 위로 버튼 */
+  .scroll-to-top {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    transition: all 0.3s ease;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .scroll-to-top.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+  }
+  
+  .scroll-to-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+  }
+  
+  .scroll-to-top .scroll-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .scroll-to-top {
+      right: 1rem;
+      bottom: 1rem;
+      width: 48px;
+      height: 48px;
+    }
+    
+    .scroll-to-top .scroll-icon {
+      font-size: 1.25rem;
+    }
+  }
+
   /* clickable-title 전역 스타일 */
   .clickable-title {
     cursor: pointer;
