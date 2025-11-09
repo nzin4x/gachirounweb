@@ -74,34 +74,48 @@
     gap: var(--spacing-xl);
   }
 }
-/* 로컬 웹폰트: Arita Dotum / Arita Buri (Medium 파일만 사용, 굵기는 weight로 조절) */
+/* 로컬 웹폰트: Arita Dotum / Arita Buri (SemiBold 기본 사용) */
 @font-face {
   font-family: 'Arita-dotum';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/AritaDotumKR-Medium.woff') format('woff');
+  src: url('/fonts/AritaDotumKR-SemiBold.woff') format('woff');
 }
 @font-face {
   font-family: 'Arita-dotum';
   font-style: normal;
-  font-weight: 700; /* Bold도 동일 파일 재사용 */
+  font-weight: 600;
   font-display: swap;
-  src: url('/fonts/AritaDotumKR-Medium.woff') format('woff');
+  src: url('/fonts/AritaDotumKR-SemiBold.woff') format('woff');
+}
+@font-face {
+  font-family: 'Arita-dotum';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/AritaDotumKR-Bold.woff') format('woff');
 }
 @font-face {
   font-family: 'Arita-buri';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/AritaBuriKR-Medium.woff') format('woff');
+  src: url('/fonts/AritaBuriKR-SemiBold.woff') format('woff');
 }
 @font-face {
   font-family: 'Arita-buri';
   font-style: normal;
-  font-weight: 700; /* Bold도 동일 파일 재사용 */
+  font-weight: 600;
   font-display: swap;
-  src: url('/fonts/AritaBuriKR-Medium.woff') format('woff');
+  src: url('/fonts/AritaBuriKR-SemiBold.woff') format('woff');
+}
+@font-face {
+  font-family: 'Arita-buri';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/AritaBuriKR-Bold.woff') format('woff');
 }
 
 /* CSS Reset */

@@ -83,6 +83,38 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
             }, 1000); // 1초 후 재개
           });
         });
+        
+        // 섹션 제목 클릭 시 URL 복사 (전역 적용)
+        document.querySelectorAll('.clickable-title').forEach(title => {
+          title.addEventListener('click', async (e) => {
+            const titleElement = e.target as HTMLElement;
+            const section = titleElement.closest('section');
+            if (!section?.id) return;
+            
+            const url = `${window.location.origin}${window.location.pathname}#${section.id}`;
+            
+            try {
+              await navigator.clipboard.writeText(url);
+              
+              // 복사 성공 피드백 - 작은 텍스트로 우측에 표시
+              let feedback = titleElement.querySelector('.copy-feedback');
+              if (!feedback) {
+                feedback = document.createElement('span');
+                feedback.className = 'copy-feedback';
+                titleElement.appendChild(feedback);
+              }
+              
+              feedback.textContent = '복사됨 ✓';
+              feedback.classList.add('show');
+              
+              setTimeout(() => {
+                feedback?.classList.remove('show');
+              }, 2000);
+            } catch (err) {
+              console.error('URL 복사 실패:', err);
+            }
+          });
+        });
       });
     </script>
   </body>
@@ -96,5 +128,38 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
   /* 섹션 스크롤 애니메이션 */
   section[id] {
     scroll-margin-top: 80px; /* 헤더 높이만큼 여백 */
+  }
+  
+  /* clickable-title 전역 스타일 */
+  .clickable-title {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    transition: color 0.2s ease;
+  }
+
+  .clickable-title:hover {
+    color: var(--color-primary-500);
+  }
+
+  .clickable-title:hover::after {
+    content: '🔗';
+    margin-left: 0.5rem;
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+  
+  .clickable-title .copy-feedback {
+    font-size: 0.75rem;
+    color: var(--color-secondary-600);
+    margin-left: 0.5rem;
+    font-weight: 400;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    vertical-align: middle;
+  }
+  
+  .clickable-title .copy-feedback.show {
+    opacity: 1;
   }
 </style>
