@@ -89,17 +89,13 @@ const events = [
         <div class="annual-schedule-grid">
           <div class="schedule-card">
             <div class="schedule-month">2월</div>
-            <div class="schedule-content">
-              <h3>이사회</h3>
-              <p>정기 이사회가 매년 2월에 개최됩니다.</p>
-            </div>
+            <h3>이사회</h3>
+            <p>정기 이사회가 매년 2월에 개최됩니다.</p>
           </div>
           <div class="schedule-card">
             <div class="schedule-month">3월</div>
-            <div class="schedule-content">
-              <h3>총회</h3>
-              <p>조합원 정기총회가 매년 3월에 개최됩니다.</p>
-            </div>
+            <h3>총회</h3>
+            <p>조합원 정기총회가 매년 3월에 개최됩니다.</p>
           </div>
         </div>
       </div>
@@ -114,16 +110,12 @@ const events = [
             <div class="event-card">
               <div class="event-date">
                 <span class="year">{event.date.split('-')[0]}년</span>
-                <div class="date-main">
-                  <span class="month">{event.date.split('-')[1]}월</span>
-                  <span class="day">{event.date.split('-')[2]}일</span>
-                </div>
+                <span class="month">{event.date.split('-')[1]}월</span>
+                <span class="day">{event.date.split('-')[2]}일</span>
               </div>
-              <div class="event-content">
-                <h3>{event.title}</h3>
-                <p class="location">📍 {event.location}</p>
-                <p class="description">{event.description}</p>
-              </div>
+              <h3>{event.title}</h3>
+              <p class="location">📍 {event.location}</p>
+              <p class="description">{event.description}</p>
             </div>
           ))}
         </div>
@@ -239,12 +231,16 @@ const events = [
   }
 
   .board-item {
-    background: white;
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-lg);
+    background: var(--color-gray-50);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
-    border-left: 4px solid var(--color-primary-600);
+    border-top: 3px solid var(--color-primary-500);
+    transition: transform 0.2s ease;
+  }
+
+  .board-item:hover {
+    transform: translateY(-2px);
   }
 
   .board-header {
@@ -258,10 +254,23 @@ const events = [
     color: var(--color-primary-700);
     font-size: 1.2rem;
   }
+  
+  .board-header h3::before {
+    content: '📢 ';
+    font-size: 0.5em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+  }
 
   .board-header .date {
     color: var(--color-gray-500);
-    font-size: 0.9rem;
+  }
+  
+  .board-header .date::before {
+    content: '📅 ';
+    font-size: 0.3em;
+    margin-right: 0.4em;
+    vertical-align: middle;
   }
 
   .board-item p {
@@ -278,41 +287,37 @@ const events = [
   }
 
   .schedule-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-    display: flex;
-    align-items: stretch;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 3px solid var(--color-primary-500);
     transition: all 0.3s ease;
   }
 
   .schedule-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
   }
 
   .schedule-month {
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
-    color: white;
-    width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
+    color: var(--color-primary-500);
+    font-size: 1.5rem;
     font-weight: 700;
-    flex-shrink: 0;
+    margin-bottom: var(--spacing-md);
   }
-
-  .schedule-content {
-    padding: var(--spacing-2xl);
-    flex: 1;
+  
+  .schedule-month::before {
+    content: '📅 ';
+    font-size: 0.5em;
+    margin-right: 0.3em;
   }
 
   .schedule-content h3 {
-    color: var(--color-primary-600);
-    font-size: 1.5rem;
-    margin-bottom: var(--spacing-md);
+    color: var(--color-gray-900);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
     font-weight: 700;
   }
 
@@ -330,51 +335,49 @@ const events = [
   }
 
   .event-card {
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 3px solid var(--color-primary-500);
+    transition: all 0.3s ease;
+  }
+
+  .event-card:hover {
     background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-    display: flex;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
   }
 
   .event-date {
-    background: var(--color-primary-600);
-    color: white;
-    padding: var(--spacing-xl);
+    color: var(--color-primary-500);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 110px;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
+    align-items: baseline;
+  }
+  
+  .event-date::before {
+    content: '📅 ';
+    font-size: 0.5em;
+    margin-right: 0.2em;
+    align-self: center;
   }
 
   .event-date .year {
-    font-size: 0.75rem;
-    opacity: 0.9;
-    font-weight: 500;
-  }
-
-  .event-date .date-main {
-    display: flex;
-    gap: 4px;
-    align-items: baseline;
+    font-size: 0.875rem;
   }
 
   .event-date .month,
   .event-date .day {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-
-  .event-content {
-    padding: var(--spacing-xl);
-    flex: 1;
+    font-size: 1.125rem;
   }
 
   .event-content h3 {
-    color: var(--color-primary-700);
-    margin-bottom: var(--spacing-md);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
   }
 
   .event-content .location {
@@ -393,9 +396,10 @@ const events = [
     text-align: center;
     max-width: 800px;
     margin: var(--spacing-2xl) auto;
-    padding: var(--spacing-2xl);
-    background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-accent-50) 100%);
-    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: var(--color-accent-50);
+    border-radius: var(--radius-md);
+    border-top: 3px solid var(--color-accent-500);
   }
 
   .form-intro p {
@@ -411,16 +415,25 @@ const events = [
   }
 
   .form-info {
+    background: var(--color-gray-50);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border-top: 3px solid var(--color-primary-500);
+    transition: all 0.3s ease;
+  }
+  
+  .form-info:hover {
     background: white;
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
   }
 
   .form-info h3 {
-    color: var(--color-primary-600);
+    color: var(--color-gray-900);
     margin-bottom: var(--spacing-lg);
-    font-size: 1.4rem;
+    font-size: 1.25rem;
+    font-weight: 700;
   }
 
   .form-info ul {
@@ -429,23 +442,28 @@ const events = [
   }
 
   .form-info li {
-    padding: var(--spacing-md) 0;
-    border-bottom: 1px solid var(--color-gray-100);
+    padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-md);
+    position: relative;
   }
 
-  .form-info li:last-child {
-    border-bottom: none;
+  .form-info li::before {
+    content: '🌼';
+    position: absolute;
+    left: 0;
+    font-size: 0.5em;
+    top: 1.4em;
   }
 
   .form-info strong {
-    color: var(--color-primary-600);
+    color: var(--color-primary-500);
+    font-weight: 600;
   }
 
   .google-form-notice {
-    background: white;
-    padding: var(--spacing-3xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    background: var(--color-gray-50);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-md);
+    border-top: 3px solid var(--color-accent-500);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -500,28 +518,37 @@ const events = [
   }
 
   .benefit-card {
-    background: white;
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    background: var(--color-gray-50);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border-top: 3px solid var(--color-primary-500);
     text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
   }
 
   .benefit-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     display: block;
     margin-bottom: var(--spacing-md);
   }
 
   .benefit-card h4 {
-    color: var(--color-primary-600);
+    color: var(--color-gray-900);
     margin-bottom: var(--spacing-sm);
+    font-weight: 600;
   }
 
   .benefit-card p {
     color: var(--color-gray-600);
-    font-size: 1.1rem;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 
   @media (max-width: 1024px) {
@@ -533,7 +560,14 @@ const events = [
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 768px) and (min-width: 481px) {
+    /* 태블릿: 멀티컬럼 유지 */
+    .benefits-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
     .board-header {
       flex-direction: column;
       align-items: flex-start;
@@ -543,31 +577,14 @@ const events = [
       margin-top: var(--spacing-xs);
     }
 
-    .event-card {
-      flex-direction: column;
-    }
-
-    .event-date {
-      min-width: auto;
-      padding: var(--spacing-lg);
-      flex-direction: row;
-      gap: var(--spacing-md);
-      justify-content: center;
-    }
-    
-    .event-date .year {
-      font-size: 0.875rem;
-    }
-    
-    .event-date .date-main {
-      gap: 6px;
-    }
-    
-    .event-date .month,
-    .event-date .day {
-      font-size: 1.75rem;
-      flex-direction: row;
-      gap: var(--spacing-md);
+    .board-item,
+    .schedule-card,
+    .event-card,
+    .form-info,
+    .google-form-notice,
+    .benefit-card {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-top-width: 2px;
     }
   }
 </style>
@@ -594,4 +611,50 @@ const events = [
       });
     }
   });
+
+  // Dynamic title
+  const sectionTitles: Record<string, string> = {
+    'announcements': '공지사항',
+    'schedule': '연간 주요 일정',
+    'events': '행사 일정',
+    'volunteer': '봉사활동 신청',
+    'donation': '정기후원 신청'
+  };
+
+  function updateTitle() {
+    const hash = window.location.hash.replace('#', '') || 'announcements';
+    const sectionTitle = sectionTitles[hash] || '공지사항';
+    document.title = `안내사항 > ${sectionTitle} | 사회적협동조합 가치로운`;
+  }
+
+  window.addEventListener('hashchange', updateTitle);
+  
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const sections = document.querySelectorAll('section[id]');
+        let currentSection = 'announcements';
+        
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentSection = section.id;
+          }
+        });
+        
+        const newHash = '#' + currentSection;
+        if (window.location.hash !== newHash) {
+          history.replaceState(null, '', newHash);
+          updateTitle();
+        }
+        
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', updateTitle);
+  updateTitle();
 </script>

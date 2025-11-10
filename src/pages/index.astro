@@ -23,7 +23,7 @@ const slides = [
   },
 ];
 
-// 최근 활동 샘플 데이터
+// 최근 활동 샘플 데이터 (3개만 표시)
 const recentActivities = [
   {
     id: 1,
@@ -42,6 +42,12 @@ const recentActivities = [
     image: '/images/청소년지원.jpg',
     title: '창립총회 개최',
     date: '2025.07.17',
+  },
+  {
+    id: 'more',
+    isMore: true,
+    title: '더보기',
+    link: '/resources#activities',
   },
 ];
 
@@ -117,24 +123,31 @@ const upcomingEvents = [
         <h2 class="section-title clickable-title">최근 활동</h2>
         <div class="activities-grid">
           {recentActivities.map((activity) => (
-            <div class="activity-card">
-              <div class="activity-image">
-                <img 
-                  src={activity.image} 
-                  alt={activity.title}
-                  onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('no-image');"
-                />
-                <div class="placeholder-icon">📸</div>
+            activity.isMore ? (
+              <a href={activity.link} class="activity-card more-card">
+                <div class="more-content">
+                  <span class="more-icon">🌻</span>
+                  <h3>{activity.title}</h3>
+                  <p>더 많은 활동 보기</p>
+                </div>
+              </a>
+            ) : (
+              <div class="activity-card">
+                <div class="activity-image">
+                  <img 
+                    src={activity.image} 
+                    alt={activity.title}
+                    onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('no-image');"
+                  />
+                  <div class="placeholder-icon">📸</div>
+                </div>
+                <div class="activity-content">
+                  <h3>{activity.title}</h3>
+                  <p class="activity-date">{activity.date}</p>
+                </div>
               </div>
-              <div class="activity-content">
-                <h3>{activity.title}</h3>
-                <p class="activity-date">{activity.date}</p>
-              </div>
-            </div>
+            )
           ))}
-        </div>
-        <div class="section-footer">
-          <a href="/resources#activities" class="btn btn-outline">더 보기</a>
         </div>
       </div>
     </section>
@@ -359,18 +372,93 @@ const upcomingEvents = [
   }
 
   .activity-card {
-    background: white;
-    border-radius: var(--radius-lg);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: var(--shadow-md);
+    border-top: 3px solid var(--color-primary-500);
     transition: all 0.3s ease;
     position: relative;
     isolation: isolate; /* 각 카드의 독립성 확보 */
   }
 
   .activity-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
+  }
+
+  .more-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    text-decoration: none;
+    color: var(--color-gray-700);
+    grid-column: span 1;
+  }
+
+  .more-content {
+    text-align: center;
+    padding: var(--spacing-lg);
+  }
+
+  .more-icon {
+    font-size: 2.5rem;
+    display: inline-block;
+    margin-right: var(--spacing-sm);
+    color: var(--color-accent-500);
+    transition: transform 0.3s ease;
+    animation: rotate 4s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .more-card:hover .more-icon {
+    animation-duration: 1s;
+  }
+
+  .more-card h3 {
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--color-primary-600);
+    display: inline;
+  }
+
+  .more-card p {
+    font-size: 0.9rem;
+    color: var(--color-gray-600);
+    margin: var(--spacing-sm) 0 0 0;
+  }
+
+  /* PC: 더보기 카드 전체 너비 */
+  @media (min-width: 1025px) {
+    .more-card {
+      grid-column: 1 / -1;
+      min-height: 120px;
+    }
+  }
+
+  /* 모바일: 더보기 카드 높이 줄이기 */
+  @media (max-width: 480px) {
+    .more-card {
+      min-height: 100px;
+    }
+    
+    .more-icon {
+      font-size: 2rem;
+    }
+    
+    .more-card h3 {
+      font-size: 1.1rem;
+    }
   }
 
   .activity-image {
@@ -447,10 +535,10 @@ const upcomingEvents = [
   }
 
   .news-column {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-2xl);
-    box-shadow: var(--shadow-md);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 3px solid var(--color-primary-500);
   }
 
   .news-column .section-title {
@@ -541,6 +629,11 @@ const upcomingEvents = [
     
     .activity-content h3 {
       font-size: 1rem;
+    }
+
+    .news-column {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-top-width: 2px;
     }
   }
 </style>

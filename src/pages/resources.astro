@@ -95,7 +95,7 @@ const forms = [
           ))}
         </div>
 
-        <div class="more-info">
+        <div class="more-info simple-card">
           <p>
             📸 더 많은 활동 사진은 인스타그램에서 확인하세요!<br />
             <a href="#" class="social-link">@gachiroun_official</a>
@@ -108,9 +108,9 @@ const forms = [
     <section id="downloads" class="content-section bg-light">
       <div class="container">
         <h2 class="section-title clickable-title">서식 다운로드</h2>
-        <p class="section-description">
-          각종 신청서 및 안내 자료를 다운로드하실 수 있습니다.
-        </p>
+        <div class="section-intro simple-card">
+          <p>각종 신청서 및 안내 자료를 다운로드하실 수 있습니다.</p>
+        </div>
 
         <div class="forms-list">
           {forms.map((form) => (
@@ -140,8 +140,8 @@ const forms = [
           <ul>
             <li>모든 서식은 PDF 형식으로 제공됩니다.</li>
             <li>서식 작성 후 이메일 또는 방문 제출이 가능합니다.</li>
-            <li>문의사항: 02-6952-4756</li>
-            <li>이메일:gachiroun@gmail.com </li>
+            <li>문의사항: <a href="tel:02-6952-4756">02-6952-4756</a></li>
+            <li>이메일: <a href="mailto:gachiroun@gmail.com">gachiroun@gmail.com</a></li>
           </ul>
         </div>
       </div>
@@ -180,16 +180,18 @@ const forms = [
   }
 
   .activity-card {
-    background: white;
-    border-radius: var(--radius-lg);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-top: 3px solid var(--color-primary-500);
+    transition: all 0.3s ease;
   }
 
   .activity-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
   }
 
   .activity-image {
@@ -249,14 +251,25 @@ const forms = [
   .more-info {
     text-align: center;
     margin-top: var(--spacing-4xl);
-    padding: var(--spacing-2xl);
-    background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-accent-50) 100%);
-    border-radius: var(--radius-lg);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .more-info p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.8;
+  }
+
+  .section-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: var(--spacing-lg) auto var(--spacing-2xl);
+  }
+
+  .section-intro p {
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .social-link {
@@ -275,22 +288,28 @@ const forms = [
   }
 
   .form-item {
-    background: white;
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-lg);
+    background: var(--color-gray-50);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--color-primary-500);
     display: flex;
     align-items: center;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
+    transition: all 0.3s ease;
+  }
+
+  .form-item:hover {
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent-500);
+    transform: translateY(-2px);
   }
 
   .form-icon {
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
-    background: var(--color-primary-50);
-    border-radius: var(--radius-md);
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -306,18 +325,17 @@ const forms = [
 
   .form-category {
     display: inline-block;
-    background: var(--color-accent-500);
-    color: white;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--radius-sm);
-    font-size: 0.85rem;
-    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary-500);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
   }
 
   .form-info h3 {
-    color: var(--color-primary-700);
+    color: var(--color-gray-900);
     margin-bottom: var(--spacing-xs);
-    font-size: 1.2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
   }
 
   .form-info p {
@@ -346,16 +364,17 @@ const forms = [
 
   .download-notice {
     margin-top: var(--spacing-3xl);
-    padding: var(--spacing-2xl);
-    background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    border-top: 3px solid var(--color-accent-500);
   }
 
   .download-notice h3 {
-    color: var(--color-primary-600);
+    color: var(--color-gray-900);
     margin-bottom: var(--spacing-lg);
-    font-size: 1.3rem;
+    font-size: 1.25rem;
+    font-weight: 700;
   }
 
   .download-notice ul {
@@ -364,9 +383,25 @@ const forms = [
   }
 
   .download-notice li {
-    padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-lg);
-    border-left: 3px solid var(--color-accent-500);
-    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-md);
+    position: relative;
+  }
+
+  .download-notice li::before {
+    content: '🌼';
+    position: absolute;
+    left: 0;
+    font-size: 0.5em;
+    top: 0.6em;
+  }
+
+  .download-notice a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .download-notice a:hover {
+    text-decoration: underline;
   }
 
   @media (max-width: 1024px) {
@@ -380,13 +415,20 @@ const forms = [
       grid-template-columns: 1fr;
     }
 
+    .activity-card,
+    .form-item,
+    .download-notice {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-top-width: 2px;
+    }
+
     .form-item {
       flex-direction: column;
       text-align: center;
     }
 
     .form-icon {
-      margin-bottom: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
     }
 
     .form-download {
@@ -421,4 +463,47 @@ const forms = [
       });
     }
   });
+
+  // Dynamic title
+  const sectionTitles: Record<string, string> = {
+    'activities': '최근 활동',
+    'downloads': '자료실'
+  };
+
+  function updateTitle() {
+    const hash = window.location.hash.replace('#', '') || 'activities';
+    const sectionTitle = sectionTitles[hash] || '최근 활동';
+    document.title = `자료 > ${sectionTitle} | 사회적협동조합 가치로운`;
+  }
+
+  window.addEventListener('hashchange', updateTitle);
+  
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const sections = document.querySelectorAll('section[id]');
+        let currentSection = 'activities';
+        
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentSection = section.id;
+          }
+        });
+        
+        const newHash = '#' + currentSection;
+        if (window.location.hash !== newHash) {
+          history.replaceState(null, '', newHash);
+          updateTitle();
+        }
+        
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', updateTitle);
+  updateTitle();
 </script>
