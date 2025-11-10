@@ -560,11 +560,13 @@ const hasFloatingNav = floatingNavItems.length > 0;
     }
   }
   
-  /* 맨 위로 버튼 */
+
+  /* 맨 위로 버튼 - PC 중앙, 모바일/태블릿 우측 */
   .scroll-to-top {
     position: fixed;
-    right: 2rem;
+    left: 50%;
     bottom: 2rem;
+    transform: translate(-50%, 0);
     width: 56px;
     height: 56px;
     background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-500) 100%);
@@ -579,26 +581,25 @@ const hasFloatingNav = floatingNavItems.length > 0;
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transform: translateY(0);
   }
-  
+
   .scroll-to-top.hidden {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate(-50%, 20px);
     pointer-events: none;
   }
-  
+
   .scroll-to-top:hover {
-    transform: translateY(-4px);
+    transform: translate(-50%, -4px);
     box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
   }
-  
+
   .scroll-to-top .scroll-icon {
     font-size: 1.5rem;
     font-weight: bold;
     animation: bounce 2s ease-in-out infinite;
   }
-  
+
   @keyframes bounce {
     0%, 100% {
       transform: translateY(0);
@@ -607,15 +608,21 @@ const hasFloatingNav = floatingNavItems.length > 0;
       transform: translateY(-6px);
     }
   }
-  
+
+  /* 모바일/태블릿(최대 768px)에서는 우측 하단 */
   @media (max-width: 768px) {
     .scroll-to-top {
+      left: auto;
       right: 1rem;
       bottom: 1rem;
       width: 48px;
       height: 48px;
+      transform: translateY(0);
     }
-    
+    .scroll-to-top.hidden {
+      opacity: 0;
+      transform: translateY(20px);
+    }
     .scroll-to-top .scroll-icon {
       font-size: 1.25rem;
     }
