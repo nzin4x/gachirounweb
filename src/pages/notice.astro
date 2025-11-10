@@ -268,7 +268,7 @@ const events = [
   
   .board-header .date::before {
     content: '📅 ';
-    font-size: 0.3em;
+    font-size: 0.6em;
     margin-right: 0.4em;
     vertical-align: middle;
   }
@@ -303,7 +303,7 @@ const events = [
 
   .schedule-month {
     color: var(--color-primary-500);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: var(--spacing-md);
   }
@@ -311,12 +311,13 @@ const events = [
   .schedule-month::before {
     content: '📅 ';
     font-size: 0.5em;
+    top: 0.8em;
     margin-right: 0.3em;
   }
 
   .schedule-content h3 {
     color: var(--color-gray-900);
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     margin-bottom: var(--spacing-sm);
     font-weight: 700;
   }
@@ -360,7 +361,7 @@ const events = [
   
   .event-date::before {
     content: '📅 ';
-    font-size: 0.5em;
+    font-size: 0.6em;
     margin-right: 0.2em;
     align-self: center;
   }
@@ -615,7 +616,7 @@ const events = [
   // Dynamic title
   const sectionTitles: Record<string, string> = {
     'announcements': '공지사항',
-    'schedule': '연간 주요 일정',
+    'annual-schedule': '연간 주요 일정',
     'events': '행사 일정',
     'volunteer': '봉사활동 신청',
     'donation': '정기후원 신청'
@@ -635,11 +636,16 @@ const events = [
       window.requestAnimationFrame(() => {
         const sections = document.querySelectorAll('section[id]');
         let currentSection = 'announcements';
+        let closestDistance = Infinity;
         
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
+          const distance = Math.abs(rect.top - 150);
+          
+          // 섹션이 뷰포트 안에 있고, 기준점(150px)에 가장 가까운 섹션 선택
+          if (rect.top <= 150 && rect.bottom >= 150 && distance < closestDistance) {
             currentSection = section.id;
+            closestDistance = distance;
           }
         });
         
