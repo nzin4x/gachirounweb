@@ -437,11 +437,12 @@ a:hover {
 }
 
 .simple-card ul li::before {
-  content: '🌼';
+  content: '●';
   position: absolute;
   left: 0;
   top: 0.6em;
-  font-size: 0.5em;
+  font-size: 0.6em;
+  color: var(--color-primary-500);
 }
 
 /* 심플 리스트: border 없이 깔끔하게 */
@@ -460,13 +461,14 @@ a:hover {
 }
 
 .simple-list li::before {
-  content: "🌼";
+  content: "●";
   display: inline-block;
   width: 1em;
   margin-left: -1em;
-  font-size: 0.5em;
+  font-size: 0.6em;
   vertical-align: middle;
   margin-right: 0.3em;
+  color: var(--color-primary-500);
 }
 
 .bg-light .section-content {

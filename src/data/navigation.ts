@@ -76,3 +76,20 @@ export function getFloatingNavItems(pathname: string): NavItem[] {
   const subMenu = getSubMenu(pathname);
   return subMenu;
 }
+
+/**
+ * 스와이프 네비게이션을 위한 메인 섹션 목록
+ */
+export interface SwipeSection {
+  id: string;
+  name: string;
+  path: string;
+}
+
+export const swipeSections: SwipeSection[] = [
+  { id: 'home', name: '홈', path: '/' },
+  { id: 'about', name: '가치로운이란?', path: '/about' },
+  { id: 'services', name: '사업소개', path: '/services' },
+  { id: 'notice', name: '안내사항', path: '/notice' },
+  { id: 'resources', name: '자료실', path: '/resources' },
+];

@@ -76,6 +76,8 @@ homepage/
 │   │   │   └── SEO.astro
 │   │   └── react/          # React 컴포넌트
 │   │       ├── Slider.tsx
+│   │       ├── ThemeSwitcher.tsx
+│   │       ├── SwipeNavigator.tsx
 │   │       ├── Popup.tsx
 │   │       └── RecaptchaForm.tsx
 │   ├── layouts/            # 레이아웃
@@ -104,41 +106,53 @@ homepage/
 
 ## 🎨 디자인 시스템
 
-### 색상 팔레트 (가치로운 꽃 테마)
+### 테마 시스템
 
-**이미지 참조**: 가치로운 브랜드 이미지에서 주황과 노랑색 중심, 녹색 보조
+**2가지 전문적인 테마 제공**:
+
+1. **프로페셔널 블루 (Trust Blue)** - 기본 테마
+   - 신뢰와 안정을 상징하는 전문적인 테마
+   - Noto Sans KR 폰트 사용
+   - 남색(#1e40af) + 파랑(#0ea5e9) 조합
+
+2. **가치로운 오리지널 (Gachiroun Original)** - 대체 테마
+   - 따뜻하면서도 전문적인 소셜 케어 브랜드
+   - Arita-dotum 폰트 사용
+   - 코랄 오렌지(#f26538) + 앰버 골드(#f59e0b) 조합
+
+### 색상 팔레트 (가치로운 오리지널)
 
 ```css
 :root {
-  /* Primary - 주황색 (열정, 보람, 의의) */
-  --color-primary-50: #fff7ed;
-  --color-primary-100: #ffedd5;
-  --color-primary-200: #fed7aa;
-  --color-primary-300: #fdba74;
-  --color-primary-400: #fb923c;
-  --color-primary-500: #FF6B35;  /* 메인 주황 - "가"의 색상 */
-  --color-primary-600: #ea580c;
-  --color-primary-700: #c2410c;
+  /* Primary - 코랄 오렌지 (따뜻함, 전문성, 신뢰) */
+  --color-primary-50: #fff5f1;
+  --color-primary-100: #ffe8de;
+  --color-primary-200: #ffd4c3;
+  --color-primary-300: #ffb599;
+  --color-primary-400: #ff8961;
+  --color-primary-500: #f26538;  /* 메인 코랄 오렌지 - 차분하고 세련된 */
+  --color-primary-600: #e04d1f;
+  --color-primary-700: #b93d18;
   
-  /* Accent - 노랑색 (희망, 즐거움, 뜻) */
-  --color-accent-50: #fefce8;
-  --color-accent-100: #fef9c3;
-  --color-accent-200: #fef08a;
-  --color-accent-300: #fde047;
-  --color-accent-400: #facc15;
-  --color-accent-500: #FFB800;  /* 메인 노랑 - "갈"의 의미 */
-  --color-accent-600: #ca8a04;
-  --color-accent-700: #a16207;
+  /* Accent - 앰버 골드 (희망, 따뜻함, 신뢰) */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;  /* 메인 앰버 골드 - 차분하고 고급스러운 */
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
   
-  /* Secondary - 초록색 (성장, 생명, 노랑은 희망과 즐거움) */
-  --color-secondary-50: #f0fdf4;
-  --color-secondary-100: #dcfce7;
-  --color-secondary-200: #bbf7d0;
-  --color-secondary-300: #86efac;
-  --color-secondary-400: #4ade80;
-  --color-secondary-500: #22c55e;  /* 꽃잎 녹색 */
-  --color-secondary-600: #16a34a;
-  --color-secondary-700: #15803d;
+  /* Secondary - 테라코타 (안정, 지속가능성) */
+  --color-secondary-50: #fdf4f3;
+  --color-secondary-100: #fbe8e6;
+  --color-secondary-200: #f8d5d1;
+  --color-secondary-300: #f2b6ad;
+  --color-secondary-400: #e88c7d;
+  --color-secondary-500: #d96c54;  /* 차분한 테라코타 */
+  --color-secondary-600: #c65338;
+  --color-secondary-700: #a6402b;
   
   /* Neutral */
   --color-gray-50: #f9fafb;
@@ -154,9 +168,9 @@ homepage/
 ### 브랜드 의미
 
 **가치로운의 조성**: '가'(값) + '치'(값)
-- **주황색**: 열정, 보람, 의의를 나타냄
-- **노랑색**: 희망, 즐거움, 밝은 미래를 상징
-- **녹색**: 성장, 생명, 지속가능성을 의미 (보조색상)
+- **코랄 오렌지**: 열정과 따뜻함, 전문성과 신뢰를 나타냄
+- **앰버 골드**: 희망과 따뜻함, 품격있는 전문성을 상징
+- **테라코타**: 안정성, 지속가능성, 신뢰를 의미 (보조색상)
 
 ### 타이포그래피
 
@@ -319,7 +333,34 @@ export function trackEvent(eventName: string, params?: Record<string, any>) {
    - 한글 피하기 (영문 slug 사용)
    - 계층 구조 명확히
 
-## 🔒 보안 고려사항
+## � 모바일 기능
+
+### 스와이프 네비게이션
+
+모바일 환경에서 좌우 스와이프로 메인 메뉴 섹션 간 이동을 지원합니다.
+
+```typescript
+// src/components/react/SwipeNavigator.tsx
+// 터치 이벤트를 감지하여 섹션 간 네비게이션
+// - 왼쪽 스와이프: 다음 섹션으로 이동
+// - 오른쪽 스와이프: 이전 섹션으로 이동
+// - 최소 스와이프 거리: 50px
+// - 모바일 전용 (768px 이하)
+
+export default function SwipeNavigator({ sections }: SwipeNavigatorProps) {
+  // 터치 이벤트 핸들러 구현
+  // 페이지 전환 시 부드러운 애니메이션
+}
+```
+
+**섹션 순서**:
+1. 홈 (`/`)
+2. 가치로운이란? (`/about`)
+3. 사업소개 (`/services`)
+4. 안내사항 (`/notice`)
+5. 자료실 (`/resources`)
+
+## �🔒 보안 고려사항
 
 ### reCAPTCHA 구현
 
@@ -591,14 +632,17 @@ const content = await strapi.getPageContent(PAGE_ID);
 
 ---
 
-**Last Updated**: 2025-11-08 (23:30 KST)
+**Last Updated**: 2025-11-13
 
 **Recent Changes**:
-- ✅ 조직 소개 페이지 생성 (organization.astro) - 4단계 조직도, 거버넌스 구조
-- ✅ 개인정보 처리방침 페이지 생성 (privacy.astro) - 12개 조항, coophangang.kr 기반
-- ✅ 이용약관 페이지 생성 (terms.astro) - 8개 장 19개 조항, coophangang.kr 기반
-- ✅ 전체 URL 검증 완료: 14개 페이지 모두 200 OK 확인
-- ✅ URL 체크 스크립트 생성 (check-urls.sh)
+- ✅ **전문적 디자인 리뉴얼**: 모든 꽃 이모지(🌸💮🌼🌻)를 전문적인 기호(●, ▸)로 교체
+- ✅ **테마 시스템 업그레이드**: 
+  - "주황노랑꽃" → "가치로운 오리지널" (Gachiroun Original) 전문적 네이밍
+  - 코랄 오렌지(#f26538) + 앰버 골드(#f59e0b) 차분한 색상 조합
+  - "남색파랑신뢰" → "프로페셔널 블루" (Trust Blue) 명확한 네이밍
+- ✅ **모바일 스와이프 네비게이션**: 좌우 스와이프로 메인 섹션 간 이동 기능 추가 (SwipeNavigator.tsx)
+- ✅ **CSS 장식 요소 현대화**: 모든 페이지의 ::before 장식을 전문적인 기하학적 형태로 업데이트
+- ✅ **브랜드 메시지 개선**: "함께의 힘으로, 모두가 가치있는 삶을 만들어갑니다" 전문적 표현으로 변경
 - 테마 색상 변경: 주황(#FF6B35) + 노랑(#FFB800) + 녹색(보조)
 - 서비스 페이지 3개 전면 개편 (재가요양, 장애인활동지원, 아동청소년지원)
 - About 페이지 미션/비전/가치/특장점 상세화

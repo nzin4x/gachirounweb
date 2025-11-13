@@ -2,7 +2,8 @@
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getFloatingNavItems } from '../data/navigation';
+import SwipeNavigator from '../components/react/SwipeNavigator';
+import { getFloatingNavItems, swipeSections } from '../data/navigation';
 import '../styles/global.css';
 
 interface Props {
@@ -107,6 +108,9 @@ const hasFloatingNav = floatingNavItems.length > 0;
     <button id="scrollToTop" class="scroll-to-top hidden" aria-label="맨 위로">
       <span class="scroll-icon">↑</span>
     </button>
+    
+    <!-- 모바일 스와이프 네비게이션 -->
+    <SwipeNavigator sections={swipeSections} client:only="react" />
     
     <main>
       <slot />
