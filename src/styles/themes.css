@@ -1,0 +1,160 @@
+/* 테마 시스템 - 다중 테마 지원 */
+
+/* 기본 테마: 남색파랑신뢰 (Trust Blue) */
+:root,
+[data-theme="trust-blue"] {
+  /* Primary - 남색 (신뢰, 전문성) */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #1e40af; /* 메인 남색 */
+  --color-primary-600: #1e3a8a;
+  --color-primary-700: #1e3a8a;
+  --color-primary-800: #1e3a8a;
+  --color-primary-900: #172554;
+
+  /* Accent - 파랑 (신뢰, 안정) */
+  --color-accent-50: #f0f9ff;
+  --color-accent-100: #e0f2fe;
+  --color-accent-200: #bae6fd;
+  --color-accent-300: #7dd3fc;
+  --color-accent-400: #38bdf8;
+  --color-accent-500: #0ea5e9; /* 메인 파랑 */
+  --color-accent-600: #0284c7;
+  --color-accent-700: #0369a1;
+  --color-accent-800: #075985;
+  --color-accent-900: #0c4a6e;
+
+  /* Secondary - 청록 (성장, 안정) */
+  --color-secondary-50: #f0fdfa;
+  --color-secondary-100: #ccfbf1;
+  --color-secondary-200: #99f6e4;
+  --color-secondary-300: #5eead4;
+  --color-secondary-400: #2dd4bf;
+  --color-secondary-500: #14b8a6;
+  --color-secondary-600: #0d9488;
+  --color-secondary-700: #0f766e;
+  --color-secondary-800: #115e59;
+  --color-secondary-900: #134e4a;
+
+  /* Neutral */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Semantic Colors */
+  --color-text: var(--color-gray-900);
+  --color-text-light: var(--color-gray-600);
+  --color-bg: #ffffff;
+  --color-bg-light: var(--color-gray-50);
+  --color-border: var(--color-gray-200);
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 5rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+  /* 폰트 */
+  --font-primary: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-secondary: 'Noto Serif KR', serif;
+}
+
+/* 테마2: 가치로운 오리지널 (Gachiroun Original) - 따뜻하고 전문적인 소셜 케어 브랜드 */
+[data-theme="gachiroun-original"] {
+  /* Primary - 코랄 오렌지 (따뜻함, 전문성, 신뢰) */
+  --color-primary-50: #fff5f1;
+  --color-primary-100: #ffe8de;
+  --color-primary-200: #ffd4c3;
+  --color-primary-300: #ffb599;
+  --color-primary-400: #ff8961;
+  --color-primary-500: #f26538; /* 메인 코랄 오렌지 - 차분하고 세련된 */
+  --color-primary-600: #e04d1f;
+  --color-primary-700: #b93d18;
+  --color-primary-800: #97331a;
+  --color-primary-900: #7a2e19;
+
+  /* Accent - 앰버 골드 (희망, 따뜻함, 신뢰) */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b; /* 메인 앰버 골드 - 차분하고 고급스러운 */
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+
+  /* Secondary - 테라코타 (안정, 지속가능성) */
+  --color-secondary-50: #fdf4f3;
+  --color-secondary-100: #fbe8e6;
+  --color-secondary-200: #f8d5d1;
+  --color-secondary-300: #f2b6ad;
+  --color-secondary-400: #e88c7d;
+  --color-secondary-500: #d96c54; /* 차분한 테라코타 */
+  --color-secondary-600: #c65338;
+  --color-secondary-700: #a6402b;
+  --color-secondary-800: #893827;
+  --color-secondary-900: #713428;
+
+  /* Neutral */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Semantic Colors */
+  --color-text: var(--color-gray-900);
+  --color-text-light: var(--color-gray-600);
+  --color-bg: #ffffff;
+  --color-bg-light: var(--color-gray-50);
+  --color-border: var(--color-gray-200);
+
+  /* 폰트 */
+  --font-primary: 'Arita-dotum', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-secondary: 'Arita-buri', serif;
+}
+
+/* 폰트 적용 */
+html {
+  font-family: var(--font-primary);
+}
+
+.narrative,
+.greeting,
+.long-text {
+  font-family: var(--font-secondary);
+}
