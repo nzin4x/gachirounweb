@@ -11,6 +11,15 @@ const announcements = await (async () => {
     console.log('[SSR Debug] STRAPI_API_TOKEN_FULL length:', import.meta.env.STRAPI_API_TOKEN_FULL?.length || 0);
     console.log('[SSR Debug] STRAPI_API_TOKEN_READ length:', import.meta.env.STRAPI_API_TOKEN_READ?.length || 0);
 
+    // Check if required environment variables are set
+    if (!import.meta.env.STRAPI_URL) {
+      throw new Error('STRAPI_URL environment variable is not set. Please configure it in Cloudflare Pages settings.');
+    }
+
+    if (!import.meta.env.STRAPI_API_TOKEN_FULL && !import.meta.env.STRAPI_API_TOKEN_READ) {
+      throw new Error('No Strapi API token found. Please set STRAPI_API_TOKEN_FULL or STRAPI_API_TOKEN_READ in Cloudflare Pages settings.');
+    }
+
     const data = await strapiClient.getAnnouncements(10);
     console.log('[SSR Debug] Successfully fetched announcements:', data?.length || 0, 'items');
     return data;
@@ -28,7 +37,12 @@ const announcements = await (async () => {
       stack: e.stack,
       timestamp: new Date().toISOString(),
       url: import.meta.env.STRAPI_URL,
-      hasToken: !!(import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ)
+      hasToken: !!(import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ),
+      envVars: {
+        STRAPI_URL: import.meta.env.STRAPI_URL,
+        STRAPI_API_TOKEN_FULL: import.meta.env.STRAPI_API_TOKEN_FULL ? 'SET' : 'NOT_SET',
+        STRAPI_API_TOKEN_READ: import.meta.env.STRAPI_API_TOKEN_READ ? 'SET' : 'NOT_SET'
+      }
     };
 
     return [];
@@ -1065,6 +1079,12 @@ const events = [
     console.error('[Client Debug] Error stack:', window.strapiError.stack);
     console.error('[Client Debug] Strapi URL:', window.strapiError.url);
     console.error('[Client Debug] Has token:', window.strapiError.hasToken);
+    console.error('[Client Debug] Environment variables:', window.strapiError.envVars);
     console.error('[Client Debug] Timestamp:', window.strapiError.timestamp);
+
+    // Show user-friendly error message
+    if (window.strapiError.message.includes('environment variable')) {
+      console.error('[Client Debug] 🚨 환경 변수 설정 필요: Cloudflare Pages 대시보드에서 STRAPI_URL과 API 토큰을 설정하세요');
+    }
   }
 </script>
