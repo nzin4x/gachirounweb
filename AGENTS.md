@@ -707,10 +707,16 @@ const content = await strapi.getPageContent(PAGE_ID);
 - `src/pages/api/greeting.ts` - 서버 API 프록시 (토큰 보안 유지)
 - `src/pages/about.astro` - 명령 처리 로직
 
+## 🌐 환경 변수 & Cloudflare 바인딩
+
+- **Astro env API**: `astro.config.mjs`의 `env.schema`에 `STRAPI_URL`, `STRAPI_API_TOKEN`, `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`를 선언했고, 이를 통해 `astro:env/server`와 `astro:env/client`에서 타입안전하게 가져옵니다. `STRAPI_API_TOKEN`은 읽기 전용(read-only) 토큰을 Cloudflare Secrets로 등록하여 `astro:env/server`에서만 접근하도록 합니다.
+- **환경 변수 분류**: `astro:env/client`는 `PUBLIC_*` 이름 접두사의 공개 변수들만 포함되고, `astro:env/server`는 서버 전용 비공개/공개 변수와 secret을 처리합니다. Cloudflare Pages Functions와 Workers 모두에 값을 등록해야 하며, 빌드 단계와 런타임(Functions)에서 동일한 바인딩을 유지하세요.
+- **Cloudflare 설정 팁**: 민감한 값(`STRAPI_API_TOKEN`)은 Wrangler CLI로 `wrangler secret put STRAPI_API_TOKEN`처럼 등록하여 `astro:env/server`가 읽도록 합니다. 비공개 서버/secret 변수는 `context.locals`를 통해 Cloudflare 바인딩이나 Durable Objects/KV에도 노출 가능하므로, 필요한 경우 `wrangler types`로 타입을 생성하고 `env.d.ts`에 선언하세요.
+- **readonly 토큰 활용**: Strapi에서 발급한 read-only API 토큰만 `STRAPI_API_TOKEN`에 넣고, Cloudflare에 저장된 secret을 `src/lib/strapi.ts`에서 `astro:env/server`로 불러와 Strapi REST/GraphQL에 사용합니다. 클라이언트 측에서는 이 토큰을 절대 노출하지 않도록 하고, GraphQL/REST 호출은 모두 서버에서 프록시하거나 `fetch()`를 통해  server-only 엔드포인트를 호출하세요.
 **데이터 속성 규칙**:
 ```html
 <!-- Strapi 경로를 나타내는 속성 추가 -->
-<div data-strapi-path="single-types > greeting > title" id="greeting-title">
+**Last Updated**: 2025-11-16
   {content}
 </div>
 ```
@@ -760,9 +766,16 @@ useSubscription(SUBSCRIPTION, {
 - SSR 환경에서의 subscription 처리
 - 현재 폴링 방식이 관리자용으로는 충분함
 
+## 🌐 환경 변수 & Cloudflare 바인딩
+
+- **Astro env API**: `astro.config.mjs`의 `env.schema`에서 `STRAPI_URL`, `STRAPI_API_TOKEN`, `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`를 선언하여 `astro:env/server`/`client`에서 타입안전하게 가져옵니다. `STRAPI_API_TOKEN`은 읽기 전용 토큰을 Cloudflare Secrets로 등록하여 server에서만 접근하도록 합니다.
+- **환경 변수 분류**: `astro:env/client`는 `PUBLIC_` 접두사의 공개 변수만 제공하고, `astro:env/server`는 서버 전용(공개 + 시크릿) 변수를 처리합니다. Cloudflare Pages Functions와 Workers에 동일하게 등록하고, 빌드/런타임 모두에서 같은 바인딩을 유지하세요.
+- **Cloudflare 설정 팁**: 민감한 값은 Wrangler CLI(`wrangler secret put STRAPI_API_TOKEN`)로 등록하고, 필요한 바인딩 타입은 `wrangler types` → `env.d.ts`로 반영합니다. `context.locals`를 통해 직접 바인딩(예: KV, R2, Durable Objects)도 사용할 수 있습니다.
+- **readonly 토큰 활용**: Strapi에서 발급한 read-only API 토큰만 `STRAPI_API_TOKEN`으로 넣고, `src/lib/strapi.ts`에서 `astro:env/server`로 불러와 Strapi REST/GraphQL을 호출합니다. 클라이언트에서는 토큰을 노출하지 않고, `/api/*` 같은 서버 프록시를 통해만 데이터를 가져오세요.
+
 ---
 
-**Last Updated**: 2025-11-15
+**Last Updated**: 2025-11-16
 
 **Recent Changes**:
 - ✅ 전문적 디자인 리뉴얼: 모든 꽃 이모지를 기하학 기호로 교체, 브랜드 문구 개선
@@ -776,6 +789,7 @@ useSubscription(SUBSCRIPTION, {
 - ✅ GraphQL 스키마 구조 수정: `greeting` single type → `about { greeting { ... } }` nested 구조로 변경하여 실제 Strapi 스키마에 맞춤
 - ✅ Strapi Rich Text 변환: JSON 형태의 rich text를 HTML로 변환하는 `strapiRichTextToHtml()` 함수 추가하여 `[object Object]` 문제 해결
 - ✅ 실시간 업데이트 기능 추가: 명령 팔레트에서 30초 폴링 기반 자동 데이터 갱신 토글 기능 구현
+- ✅ 환경 변수 schema/Cloudflare secret 가이드: `STRAPI_URL`/`STRAPI_API_TOKEN`(secret server) 및 공개 변수 선언을 문서화하고, Cloudflare Functions 바인딩/secret 사용 가이드 정리
 
 **페이지 상태** (2025-11-08):
 ```

@@ -3,9 +3,9 @@
   errors?: any;
 }
 
-// Astro SSR uses import.meta.env, not process.env
+// 환경 변수 접근: import.meta.env 사용 (로컬/Cloudflare 모두 호환)
 const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-// Use FULL token for notices collection (needs authenticated access)
+// FULL 토큰 우선, 없으면 READ 토큰, 둘 다 없으면 기본 토큰 사용
 const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ || import.meta.env.STRAPI_API_TOKEN || '';
 
 // Startup validation

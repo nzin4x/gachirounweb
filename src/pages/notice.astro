@@ -16,8 +16,8 @@ const announcements = await (async () => {
       throw new Error('STRAPI_URL environment variable is not set. Please configure it in Cloudflare Pages settings.');
     }
 
-    if (!import.meta.env.STRAPI_API_TOKEN_FULL && !import.meta.env.STRAPI_API_TOKEN_READ) {
-      throw new Error('No Strapi API token found. Please set STRAPI_API_TOKEN_FULL or STRAPI_API_TOKEN_READ in Cloudflare Pages settings.');
+    if (!import.meta.env.STRAPI_API_TOKEN_FULL && !import.meta.env.STRAPI_API_TOKEN_READ && !import.meta.env.STRAPI_API_TOKEN) {
+      throw new Error('No Strapi API token found. Please set STRAPI_API_TOKEN_FULL, STRAPI_API_TOKEN_READ, or STRAPI_API_TOKEN in Cloudflare Pages settings.');
     }
 
     const data = await strapiClient.getAnnouncements(10);
@@ -37,11 +37,12 @@ const announcements = await (async () => {
       stack: e.stack,
       timestamp: new Date().toISOString(),
       url: import.meta.env.STRAPI_URL,
-      hasToken: !!(import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ),
+      hasToken: !!(import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ || import.meta.env.STRAPI_API_TOKEN),
       envVars: {
         STRAPI_URL: import.meta.env.STRAPI_URL,
         STRAPI_API_TOKEN_FULL: import.meta.env.STRAPI_API_TOKEN_FULL ? 'SET' : 'NOT_SET',
-        STRAPI_API_TOKEN_READ: import.meta.env.STRAPI_API_TOKEN_READ ? 'SET' : 'NOT_SET'
+        STRAPI_API_TOKEN_READ: import.meta.env.STRAPI_API_TOKEN_READ ? 'SET' : 'NOT_SET',
+        STRAPI_API_TOKEN: import.meta.env.STRAPI_API_TOKEN ? 'SET' : 'NOT_SET'
       }
     };
 
@@ -82,7 +83,7 @@ const events = [
 ];
 ---
 
-<MainLayout title="안내사항">
+<MainLayout title="안내사항" data-strapi-url={import.meta.env.STRAPI_URL || 'http://localhost:1337'}>
   <div class="page-container">
     <!-- 공지사항 -->
     <section id="announcements" class="content-section" data-strapi-path="announcements">
@@ -868,6 +869,8 @@ const events = [
   // Modal functionality
   let currentModalData: any = null;
 
+  const STRAPI_URL_CLIENT = document.documentElement.dataset.strapiUrl || 'http://localhost:1337';
+
   function openModal(title: string, body: string, photo: string) {
     const modalHTML = `
       <div class="modal-overlay" id="announcement-modal">
@@ -877,7 +880,7 @@ const events = [
             <button class="modal-close" aria-label="닫기">✕</button>
           </div>
           <div class="modal-body">
-            ${photo ? `<img src="${import.meta.env.STRAPI_URL || 'http://localhost:1337'}${photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
+            ${photo ? `<img src="${STRAPI_URL_CLIENT}${photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
             ${body}
           </div>
         </div>
@@ -1025,7 +1028,7 @@ const events = [
           const imageDiv = document.createElement('div');
           imageDiv.className = 'board-image';
           const img = document.createElement('img');
-          img.src = `${import.meta.env.STRAPI_URL || 'http://localhost:1337'}${item.photo}`;
+          img.src = `${STRAPI_URL_CLIENT}${item.photo}`;
           img.alt = item.photoAlt || item.title || '';
           imageDiv.appendChild(img);
           itemDiv.appendChild(imageDiv);

@@ -1,0 +1,7 @@
+# Local development secrets for wrangler dev
+# This file is loaded by wrangler dev and is in .gitignore
+# Copy this to .dev.vars and fill in your actual values
+
+STRAPI_API_TOKEN_FULL=your-full-access-token-here
+STRAPI_API_TOKEN_READ=your-read-only-token-here
+STRAPI_API_TOKEN=your-token-here

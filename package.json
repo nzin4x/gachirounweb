@@ -4,8 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "dev:wrangler": "wrangler pages dev --compatibility-date=2024-01-01 -- astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "wrangler pages dev dist",
     "astro": "astro",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=gachiroun-or-kr",
     "deploy:preview": "npm run build && wrangler pages dev dist"
