@@ -709,10 +709,61 @@ const content = await strapi.getPageContent(PAGE_ID);
 
 ## 🌐 환경 변수 & Cloudflare 바인딩
 
-- **Astro env API**: `astro.config.mjs`의 `env.schema`에 `STRAPI_URL`, `STRAPI_API_TOKEN`, `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`를 선언했고, 이를 통해 `astro:env/server`와 `astro:env/client`에서 타입안전하게 가져옵니다. `STRAPI_API_TOKEN`은 읽기 전용(read-only) 토큰을 Cloudflare Secrets로 등록하여 `astro:env/server`에서만 접근하도록 합니다.
-- **환경 변수 분류**: `astro:env/client`는 `PUBLIC_*` 이름 접두사의 공개 변수들만 포함되고, `astro:env/server`는 서버 전용 비공개/공개 변수와 secret을 처리합니다. Cloudflare Pages Functions와 Workers 모두에 값을 등록해야 하며, 빌드 단계와 런타임(Functions)에서 동일한 바인딩을 유지하세요.
-- **Cloudflare 설정 팁**: 민감한 값(`STRAPI_API_TOKEN`)은 Wrangler CLI로 `wrangler secret put STRAPI_API_TOKEN`처럼 등록하여 `astro:env/server`가 읽도록 합니다. 비공개 서버/secret 변수는 `context.locals`를 통해 Cloudflare 바인딩이나 Durable Objects/KV에도 노출 가능하므로, 필요한 경우 `wrangler types`로 타입을 생성하고 `env.d.ts`에 선언하세요.
-- **readonly 토큰 활용**: Strapi에서 발급한 read-only API 토큰만 `STRAPI_API_TOKEN`에 넣고, Cloudflare에 저장된 secret을 `src/lib/strapi.ts`에서 `astro:env/server`로 불러와 Strapi REST/GraphQL에 사용합니다. 클라이언트 측에서는 이 토큰을 절대 노출하지 않도록 하고, GraphQL/REST 호출은 모두 서버에서 프록시하거나 `fetch()`를 통해  server-only 엔드포인트를 호출하세요.
+### 환경 변수 접근 방식
+
+**현재 구현**: `import.meta.env` 사용 (로컬/Cloudflare 모두 호환)
+- `astro:env` API 대신 기존 `import.meta.env` 방식 사용
+- 로컬 개발과 Cloudflare Pages 배포 모두 지원
+- 별도의 스키마 선언 불필요
+
+### 로컬 개발 환경
+
+**방법 1: 기본 Astro 개발 (추천)**
+```bash
+npm run dev
+```
+- `.env.local` 파일 사용
+- `import.meta.env`로 접근
+
+**방법 2: Wrangler 로컬 개발 (Cloudflare 시뮬레이션)**
+```bash
+npm run dev:wrangler
+```
+- `.dev.vars` 파일 사용 (secrets)
+- `wrangler.toml` 파일 사용 (public vars)
+
+### Cloudflare Pages 배포 설정
+
+1. **빌드 환경 변수** (Settings > Environment variables > Build):
+   - `STRAPI_URL`, `STRAPI_API_TOKEN_READ`, `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`
+
+2. **Functions 환경 변수** (Settings > Environment variables > Functions):
+   - **중요**: 위와 동일한 변수를 Functions에도 등록 (SSR 런타임 접근용)
+
+3. **Wrangler CLI로 Secrets 등록**:
+```bash
+wrangler secret put STRAPI_API_TOKEN_READ --env production
+```
+
+### 토큰 우선순위
+
+```typescript
+const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN_FULL 
+  || import.meta.env.STRAPI_API_TOKEN_READ  // 권장
+  || import.meta.env.STRAPI_API_TOKEN       // fallback
+  || '';
+```
+
+### 보안 모범 사례
+
+- **Read-Only 토큰**: `STRAPI_API_TOKEN_READ` 사용 권장
+- **PUBLIC_ 접두사**: 클라이언트 노출 변수는 `PUBLIC_` 필수
+- **서버 프록시**: 클라이언트는 `/api/*` 엔드포인트를 통해 Strapi 접근
+- **Secrets 분리**: 민감한 값은 절대 클라이언트에 노출 금지
+
+### 상세 가이드
+
+전체 설정 가이드는 `CLOUDFLARE_ENV_GUIDE.md` 참고
 **데이터 속성 규칙**:
 ```html
 <!-- Strapi 경로를 나타내는 속성 추가 -->
@@ -766,13 +817,6 @@ useSubscription(SUBSCRIPTION, {
 - SSR 환경에서의 subscription 처리
 - 현재 폴링 방식이 관리자용으로는 충분함
 
-## 🌐 환경 변수 & Cloudflare 바인딩
-
-- **Astro env API**: `astro.config.mjs`의 `env.schema`에서 `STRAPI_URL`, `STRAPI_API_TOKEN`, `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`를 선언하여 `astro:env/server`/`client`에서 타입안전하게 가져옵니다. `STRAPI_API_TOKEN`은 읽기 전용 토큰을 Cloudflare Secrets로 등록하여 server에서만 접근하도록 합니다.
-- **환경 변수 분류**: `astro:env/client`는 `PUBLIC_` 접두사의 공개 변수만 제공하고, `astro:env/server`는 서버 전용(공개 + 시크릿) 변수를 처리합니다. Cloudflare Pages Functions와 Workers에 동일하게 등록하고, 빌드/런타임 모두에서 같은 바인딩을 유지하세요.
-- **Cloudflare 설정 팁**: 민감한 값은 Wrangler CLI(`wrangler secret put STRAPI_API_TOKEN`)로 등록하고, 필요한 바인딩 타입은 `wrangler types` → `env.d.ts`로 반영합니다. `context.locals`를 통해 직접 바인딩(예: KV, R2, Durable Objects)도 사용할 수 있습니다.
-- **readonly 토큰 활용**: Strapi에서 발급한 read-only API 토큰만 `STRAPI_API_TOKEN`으로 넣고, `src/lib/strapi.ts`에서 `astro:env/server`로 불러와 Strapi REST/GraphQL을 호출합니다. 클라이언트에서는 토큰을 노출하지 않고, `/api/*` 같은 서버 프록시를 통해만 데이터를 가져오세요.
-
 ---
 
 **Last Updated**: 2025-11-16
@@ -789,7 +833,7 @@ useSubscription(SUBSCRIPTION, {
 - ✅ GraphQL 스키마 구조 수정: `greeting` single type → `about { greeting { ... } }` nested 구조로 변경하여 실제 Strapi 스키마에 맞춤
 - ✅ Strapi Rich Text 변환: JSON 형태의 rich text를 HTML로 변환하는 `strapiRichTextToHtml()` 함수 추가하여 `[object Object]` 문제 해결
 - ✅ 실시간 업데이트 기능 추가: 명령 팔레트에서 30초 폴링 기반 자동 데이터 갱신 토글 기능 구현
-- ✅ 환경 변수 schema/Cloudflare secret 가이드: `STRAPI_URL`/`STRAPI_API_TOKEN`(secret server) 및 공개 변수 선언을 문서화하고, Cloudflare Functions 바인딩/secret 사용 가이드 정리
+- ✅ 환경 변수 관리 시스템 완성: `import.meta.env` 방식으로 통일, wrangler.toml 설정, 로컬(.env.local/.dev.vars) 및 Cloudflare Pages(Functions 환경 변수) 모두 지원, CLOUDFLARE_ENV_GUIDE.md 문서화 완료
 
 **페이지 상태** (2025-11-08):
 ```

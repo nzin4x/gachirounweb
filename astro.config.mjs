@@ -13,6 +13,13 @@ export default defineConfig({
   vite: {
     ssr: {
       external: ['node:buffer', 'node:path', 'node:fs', 'node:os'],
+      noExternal: ['react', 'react-dom'],
+    },
+    resolve: {
+      alias: {
+        // MessageChannel polyfill for Cloudflare Workers
+        'node:worker_threads': 'node:worker_threads',
+      },
     },
   },
 });
