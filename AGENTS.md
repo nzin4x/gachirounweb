@@ -657,11 +657,14 @@ const content = await strapi.getPageContent(PAGE_ID);
 
 #### 예시:
 ```markdown
-**Last Updated**: 2025-11-08
+**Last Updated**: 2025-11-15
 **Recent Changes**:
 - 테마 색상을 주황/노랑으로 변경 (기존: 분홍/자몽)
 - 아동청소년지원 페이지 4개 프로그램 카테고리로 확장
 - 모든 서비스 페이지에 상세 컨텐츠 추가
+- 공지사항 페이지 Strapi collection type 통합 (SSR + 실시간 업데이트)
+- getAnnouncements() 함수 추가 및 GraphQL 쿼리 구현
+- /api/announcements 엔드포인트 추가 (서버 사이드 프록시)
 ```
 
 ### 문서 작성 원칙:
@@ -785,7 +788,7 @@ useSubscription(SUBSCRIPTION, {
 ✓ /services/elderly - 재가방문요양사업 (4서비스, 6등급, 절차)
 ✓ /services/disability - 장애인활동지원 (4서비스, 본인부담금, 교육)
 ✓ /services/youth - 아동청소년지원 (4카테고리 12프로그램)
-✓ /notice - 공지사항 (준비중)
+✓ /notice - 공지사항 (Strapi collection type, 실시간 업데이트)
 ✓ /recruit - 채용 안내 (준비중)
 ✓ /privacy - 개인정보 처리방침 (12조항 완료)
 ✓ /terms - 이용약관 (8장 19조항 완료)

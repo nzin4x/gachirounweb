@@ -70,7 +70,13 @@ export default function CommandPalette({ onRefreshData, onToggleDataPaths, onTog
       label: '📥 데이터 재조회',
       description: '현재 페이지의 라이브 데이터를 새로고침 없이 다시 가져옵니다',
       action: () => {
-        window.postMessage({ type: 'refetch-greeting' }, '*');
+        // Send appropriate message based on current page
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('/about')) {
+          window.postMessage({ type: 'refetch-greeting' }, '*');
+        } else if (currentPath.includes('/notice')) {
+          window.postMessage({ type: 'refetch-announcements' }, '*');
+        }
         onRefreshData?.();
         setIsOpen(false);
       },
