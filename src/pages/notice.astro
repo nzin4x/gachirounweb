@@ -6,10 +6,31 @@ import CommandPalette from '../components/react/CommandPalette';
 // Strapi API: announcements (collection type) - fields: title, body, photo, createdAt
 const announcements = await (async () => {
   try {
+    console.log('[SSR Debug] Starting Strapi announcements fetch...');
+    console.log('[SSR Debug] STRAPI_URL:', import.meta.env.STRAPI_URL);
+    console.log('[SSR Debug] STRAPI_API_TOKEN_FULL length:', import.meta.env.STRAPI_API_TOKEN_FULL?.length || 0);
+    console.log('[SSR Debug] STRAPI_API_TOKEN_READ length:', import.meta.env.STRAPI_API_TOKEN_READ?.length || 0);
+
     const data = await strapiClient.getAnnouncements(10);
+    console.log('[SSR Debug] Successfully fetched announcements:', data?.length || 0, 'items');
     return data;
   } catch (e) {
-    console.warn('Failed to load announcements from Strapi:', e);
+    console.error('[SSR Debug] Failed to load announcements from Strapi:', e);
+    console.error('[SSR Debug] Error details:', {
+      message: e.message,
+      stack: e.stack,
+      name: e.name
+    });
+
+    // Store error info for client-side debugging
+    globalThis.strapiError = {
+      message: e.message,
+      stack: e.stack,
+      timestamp: new Date().toISOString(),
+      url: import.meta.env.STRAPI_URL,
+      hasToken: !!(import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ)
+    };
+
     return [];
   }
 })();
@@ -849,8 +870,6 @@ const events = [
       </div>
     `;
 
-    console.log('[Modal Debug] Inserting modal HTML into body...');
-    console.log('[Modal Debug] Inserting modal HTML into body...');
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     document.body.style.overflow = 'hidden';
 
@@ -892,27 +911,20 @@ const events = [
     const viewMoreButtons = document.querySelectorAll('.btn-view-more');
     viewMoreButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        console.log('[Modal Debug] Button clicked!');
         e.stopPropagation();
-        if (isModalOpen()) {
-          console.log('[Modal Debug] Modal already open, skipping...');
-          return;
-        }
+        if (isModalOpen()) return;
         const target = e.currentTarget as HTMLElement;
         const title = target.dataset.title || '';
         const body = target.dataset.body || '';
         const photo = target.dataset.photo || '';
-        console.log('[Modal Debug] Opening modal via button:', { title, body, photo });
         openModal(title, body, photo);
       });
     });
 
     // 제목 클릭 시 (버튼 클릭 트리거)
     const titles = document.querySelectorAll('.announcement-title');
-    console.log('[Modal Debug] Found .announcement-title elements:', titles.length);
     titles.forEach(title => {
       title.addEventListener('click', (e) => {
-        console.log('[Modal Debug] Title clicked!');
         e.stopPropagation();
         if (isModalOpen()) return;
         const target = e.currentTarget as HTMLElement;
@@ -926,10 +938,8 @@ const events = [
 
     // board-item 전체 클릭 시 (내부 버튼/제목 클릭 제외)
     const boardItems = document.querySelectorAll('.board-item');
-    console.log('[Modal Debug] Found .board-item elements:', boardItems.length);
     boardItems.forEach(item => {
       item.addEventListener('click', (e) => {
-        console.log('[Modal Debug] Board item clicked!');
         // 내부에서 이미 처리된 경우 무시
         if (isModalOpen()) return;
         // 버튼/제목 클릭 시에는 이 이벤트가 실행되지 않도록 위에서 stopPropagation 처리
@@ -938,7 +948,6 @@ const events = [
         const btn = target.querySelector('.btn-view-more') as HTMLElement | null;
         const body = btn?.dataset.body || '';
         const photo = btn?.dataset.photo || '';
-        console.log('[Modal Debug] Opening modal via board-item:', { title, body, photo });
         openModal(title, body, photo);
       });
     });
@@ -1047,5 +1056,15 @@ const events = [
       toast.style.animation = 'fadeOut 0.3s ease';
       setTimeout(() => toast.remove(), 300);
     }, 3000);
+  }
+
+  // Client-side debugging for SSR errors
+  if (typeof window !== 'undefined' && window.strapiError) {
+    console.error('[Client Debug] Strapi SSR Error detected:', window.strapiError);
+    console.error('[Client Debug] Error message:', window.strapiError.message);
+    console.error('[Client Debug] Error stack:', window.strapiError.stack);
+    console.error('[Client Debug] Strapi URL:', window.strapiError.url);
+    console.error('[Client Debug] Has token:', window.strapiError.hasToken);
+    console.error('[Client Debug] Timestamp:', window.strapiError.timestamp);
   }
 </script>

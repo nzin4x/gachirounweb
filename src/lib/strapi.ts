@@ -14,26 +14,44 @@ console.log('[Strapi Init] Token length:', STRAPI_TOKEN ? STRAPI_TOKEN.length : 
 console.log('[Strapi Init] Token prefix:', STRAPI_TOKEN ? STRAPI_TOKEN.substring(0, 20) + '...' : 'NONE');
 
 async function graphql(query: string, variables?: Record<string, any>) {
-  const res = await fetch(`${STRAPI_URL.replace(/\/+$/, '')}/graphql`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
-    },
-    body: JSON.stringify({ query, variables }),
-  });
+  const url = `${STRAPI_URL.replace(/\/+$/, '')}/graphql`;
+  console.log('[Strapi GraphQL] Making request to:', url);
+  console.log('[Strapi GraphQL] Query:', query.substring(0, 100) + '...');
 
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Strapi GraphQL error: ${res.status} ${err}`);
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
+      },
+      body: JSON.stringify({ query, variables }),
+    });
+
+    console.log('[Strapi GraphQL] Response status:', res.status);
+    console.log('[Strapi GraphQL] Response headers:', Object.fromEntries(res.headers.entries()));
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('[Strapi GraphQL] HTTP Error:', res.status, err);
+      throw new Error(`Strapi GraphQL error: ${res.status} ${err}`);
+    }
+
+    const payload: GraphQLResponse = await res.json();
+    console.log('[Strapi GraphQL] Response payload keys:', Object.keys(payload));
+    console.log('[Strapi GraphQL] Has errors:', !!payload.errors);
+
+    if (payload.errors) {
+      console.error('[Strapi GraphQL] GraphQL Errors:', payload.errors);
+      throw new Error(`Strapi GraphQL error: ${JSON.stringify(payload.errors)}`);
+    }
+
+    console.log('[Strapi GraphQL] Success, data keys:', Object.keys(payload.data || {}));
+    return payload.data;
+  } catch (error) {
+    console.error('[Strapi GraphQL] Fetch failed:', error);
+    throw error;
   }
-
-  const payload: GraphQLResponse = await res.json();
-  if (payload.errors) {
-    throw new Error(`Strapi GraphQL error: ${JSON.stringify(payload.errors)}`);
-  }
-
-  return payload.data;
 }
 
 async function restGet(endpoint: string) {
@@ -156,7 +174,15 @@ export async function getAnnouncements(limit = 10) {
 
   try {
     console.log('[Strapi] Attempting GraphQL query: notices');
+    console.log('[Strapi] GraphQL endpoint:', `${STRAPI_URL.replace(/\/+$/, '')}/graphql`);
+    console.log('[Strapi] Request headers:', {
+      'Content-Type': 'application/json',
+      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN.substring(0, 20)}...` } : {})
+    });
+
     const data = await graphql(gql, { limit });
+    console.log('[Strapi] GraphQL response received, data structure:', Object.keys(data || {}));
+    console.log('[Strapi] Raw notices data:', data?.notices);
     
     if (Array.isArray(data?.notices)) {
       const announcements = data.notices.map((item: any, index: number) => ({
