@@ -53,20 +53,19 @@ const events = [
     <section id="announcements" class="content-section" data-strapi-path="announcements">
       <div class="container">
         <h2 class="section-title clickable-title">공지사항</h2>
-        <div class="board-list">
-          {announcements.length > 0 ? announcements.map((item) => (
+        <div class="board-list" id="announcement-list">
+          {announcements.length > 0 ? announcements.map((item: any) => (
             <div class="board-item" data-strapi-path={`announcements > ${item.id}`}>
               <div class="board-header">
-                <h3>{item.title}</h3>
+                <h3 class="announcement-title" data-id={item.id}>{item.title}</h3>
                 <span class="date">{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
               </div>
-              {item.photo && (
-                <div class="board-image">
-                  <img src={`${import.meta.env.STRAPI_URL || 'http://localhost:1337'}${item.photo}`} 
-                       alt={item.photoAlt || item.title} />
-                </div>
-              )}
-              <div class="board-content" set:html={item.body}></div>
+              <div class="board-preview">
+                {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
+              </div>
+              <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''}>
+                자세히 보기 →
+              </button>
             </div>
           )) : (
             <div class="no-announcements">
@@ -251,6 +250,12 @@ const events = [
   .board-header h3 {
     color: var(--color-primary-700);
     font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .board-header h3:hover {
+    color: var(--color-accent-600);
   }
   
   .board-header h3::before {
@@ -258,6 +263,133 @@ const events = [
     font-size: 0.5em;
     margin-right: 0.5em;
     vertical-align: middle;
+  }
+
+  .board-preview {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .btn-view-more {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-accent-500));
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-view-more:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(242, 101, 56, 0.3);
+  }
+
+  /* Modal Styles - Global to work with dynamically inserted HTML */
+  :global(.modal-overlay) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  :global(.modal-container) {
+    background: white;
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease-out;
+    overflow: hidden;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :global(.modal-header) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(to right, var(--color-primary-50), var(--color-accent-50));
+  }
+
+  :global(.modal-title) {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+  }
+
+  :global(.modal-close) {
+    background: transparent;
+    border: none;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: var(--color-gray-500);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s;
+    padding: 0;
+    line-height: 1;
+  }
+
+  :global(.modal-close:hover) {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-gray-900);
+    transform: scale(1.1);
+  }
+
+  :global(.modal-body) {
+    padding: 2rem;
+    overflow-y: auto;
+    flex: 1;
+    line-height: 1.7;
+  }
+
+  :global(.modal-body p) {
+    margin-bottom: 1rem;
+    color: var(--color-gray-700);
+  }
+
+  :global(.modal-body strong) {
+    color: var(--color-gray-900);
+    font-weight: 600;
   }
 
   .board-header .date {
@@ -697,6 +829,124 @@ const events = [
 
   document.addEventListener('DOMContentLoaded', updateTitle);
   updateTitle();
+
+  // Modal functionality
+  let currentModalData: any = null;
+
+  function openModal(title: string, body: string, photo: string) {
+    console.log('[Modal Debug] openModal called with:', { title, body, photo });
+    const modalHTML = `
+      <div class="modal-overlay" id="announcement-modal">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h2 class="modal-title">${title}</h2>
+            <button class="modal-close" aria-label="닫기">✕</button>
+          </div>
+          <div class="modal-body">
+            ${photo ? `<img src="${import.meta.env.STRAPI_URL || 'http://localhost:1337'}${photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
+            ${body}
+          </div>
+        </div>
+      </div>
+    `;
+
+    console.log('[Modal Debug] Inserting modal HTML into body...');
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+
+    const modal = document.getElementById('announcement-modal');
+    console.log('[Modal Debug] Modal element found:', modal);
+    const closeBtn = modal?.querySelector('.modal-close');
+    const overlay = modal; // modal element itself is the overlay
+
+    closeBtn?.addEventListener('click', closeModal);
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', handleEscape);
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('announcement-modal');
+    if (modal) {
+      modal.remove();
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscape);
+    }
+  }
+
+  function handleEscape(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  }
+
+  // Attach event listeners to "자세히 보기" buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('[Modal Debug] DOMContentLoaded fired, attaching event listeners...');
+    
+    // Modal 중복 방지 플래그
+    function isModalOpen() {
+      return !!document.getElementById('announcement-modal');
+    }
+
+    // 자세히 보기 버튼 클릭 시
+    const viewMoreButtons = document.querySelectorAll('.btn-view-more');
+    console.log('[Modal Debug] Found .btn-view-more buttons:', viewMoreButtons.length);
+    viewMoreButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        console.log('[Modal Debug] Button clicked!');
+        e.stopPropagation();
+        if (isModalOpen()) {
+          console.log('[Modal Debug] Modal already open, skipping...');
+          return;
+        }
+        const target = e.currentTarget as HTMLElement;
+        const title = target.dataset.title || '';
+        const body = target.dataset.body || '';
+        const photo = target.dataset.photo || '';
+        console.log('[Modal Debug] Opening modal via button:', { title, body, photo });
+        openModal(title, body, photo);
+      });
+    });
+
+    // 제목 클릭 시 (버튼 클릭 트리거)
+    const titles = document.querySelectorAll('.announcement-title');
+    console.log('[Modal Debug] Found .announcement-title elements:', titles.length);
+    titles.forEach(title => {
+      title.addEventListener('click', (e) => {
+        console.log('[Modal Debug] Title clicked!');
+        e.stopPropagation();
+        if (isModalOpen()) return;
+        const target = e.currentTarget as HTMLElement;
+        const id = target.dataset.id;
+        const btn = document.querySelector(`.btn-view-more[data-id="${id}"]`) as HTMLElement;
+        if (btn) {
+          btn.click();
+        }
+      });
+    });
+
+    // board-item 전체 클릭 시 (내부 버튼/제목 클릭 제외)
+    const boardItems = document.querySelectorAll('.board-item');
+    console.log('[Modal Debug] Found .board-item elements:', boardItems.length);
+    boardItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        console.log('[Modal Debug] Board item clicked!');
+        // 내부에서 이미 처리된 경우 무시
+        if (isModalOpen()) return;
+        // 버튼/제목 클릭 시에는 이 이벤트가 실행되지 않도록 위에서 stopPropagation 처리
+        const target = item;
+        const title = target.querySelector('.announcement-title')?.textContent || '';
+        const btn = target.querySelector('.btn-view-more') as HTMLElement | null;
+        const body = btn?.dataset.body || '';
+        const photo = btn?.dataset.photo || '';
+        console.log('[Modal Debug] Opening modal via board-item:', { title, body, photo });
+        openModal(title, body, photo);
+      });
+    });
+  });
 
   // Admin tools: Announcements refetch
   // Listen for command palette actions
