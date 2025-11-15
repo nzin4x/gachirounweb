@@ -1,6 +1,19 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import historyData from '../data/history.json';
+import strapiClient from '../lib/strapi';
+import CommandPalette from '../components/react/CommandPalette';
+
+// Strapi API: greeting (single type) - fields: title, body, writtenby
+const greetingData = await (async () => {
+  try {
+    const g = await strapiClient.getGreeting();
+    return g;
+  } catch (e) {
+    console.warn('Failed to load greeting from Strapi:', e);
+    return null;
+  }
+})();
 ---
 
 <MainLayout title="가치로운이란?">
@@ -47,28 +60,42 @@ import historyData from '../data/history.json';
     </section>
 
     <!-- 인사말 -->
-    <section id="greeting" class="content-section bg-light">
+    <section id="greeting" class="content-section bg-light" data-strapi-path="single-types > about > greeting">
       <div class="container">
         <h2 class="section-title clickable-title">인사말</h2>
-        <div class="greeting-content">
-          <h3>"우리 같이, 가치롭게."</h3>
-          <p>
-            사회적협동조합 가치로운은 서로 돌보고 함께 성장하는 마음으로 시작된 공동체입니다. 
-            우리는 사람과 사람 사이의 온기를 잇고, 삶의 모든 순간에 '가치'를 더하고자 합니다.
-          </p>
-          <p>
-            작은 손길 하나, 따뜻한 말 한마디가 누군가의 하루를 바꿀 수 있다고 믿습니다. 
-            그래서 우리는 복지와 교육, 돌봄과 나눔의 현장에서 사람 중심의 변화를 만들어가고 있습니다.
-          </p>
-          <p>
-            대표와 부대표, 그리고 모든 조합원은 '같이의 가치'를 실천하며 서로의 삶에 빛이 되는 
-            여정을 함께 걷고 있습니다.
-          </p>
-          <p>
-            오늘도 누군가의 하루가 조금 더 따뜻하고, 조금 더 가치로워지길 바랍니다.
-          </p>
-          <p class="signature">사회적협동조합 가치로운 발기인 일동</p>
-        </div>
+            <div class="greeting-content">
+              {greetingData && greetingData.title ? (
+                <h3 data-strapi-path="single-types > about > greeting > title" id="greeting-title">{greetingData.title}</h3>
+              ) : (
+                <h3 data-strapi-path="single-types > about > greeting > title" id="greeting-title">"우리 같이, 가치롭게." 하드코드</h3>
+              )}
+
+              {greetingData && greetingData.body ? (
+                // body is now converted to HTML in strapi.ts
+                <div data-strapi-path="single-types > about > greeting > body" id="greeting-body" set:html={greetingData.body} />
+              ) : (
+                <div data-strapi-path="single-types > about > greeting > body" id="greeting-body">
+                <>
+                  <p>
+                    사회적협동조합 가치로운은 서로 돌보고 함께 성장하는 마음으로 시작된 공동체입니다. 
+                    우리는 사람과 사람 사이의 온기를 잇고, 삶의 모든 순간에 '가치'를 더하고자 합니다.
+                  </p>
+                  <p>
+                    작은 손길 하나, 따뜻한 말 한마디가 누군가의 하루를 바꿀 수 있다고 믿습니다. 
+                    그래서 우리는 복지와 교육, 돌봄과 나눔의 현장에서 사람 중심의 변화를 만들어가고 있습니다.
+                  </p>
+                  <p>
+                    대표와 부대표, 그리고 모든 조합원은 '같이의 가치'를 실천하며 서로의 삶에 빛이 되는 
+                    여정을 함께 걷고 있습니다.
+                  </p>
+                  <p>
+                    오늘도 누군가의 하루가 조금 더 따뜻하고, 조금 더 가치로워지길 바랍니다.
+                  </p>
+                </div>
+              )}
+
+              <p class="signature" data-strapi-path="single-types > about > greeting > writtenby" id="greeting-writtenby">{greetingData?.writtenby ?? '사회적협동조합 가치로운 발기인 일동'}</p>
+            </div>
       </div>
     </section>
 
@@ -359,6 +386,9 @@ import historyData from '../data/history.json';
       </div>
     </section>
   </div>
+
+  <!-- Command Palette for Admin Tools -->
+  <CommandPalette client:load />
 </MainLayout>
 
 <style>
@@ -1261,4 +1291,222 @@ import historyData from '../data/history.json';
 
   document.addEventListener('DOMContentLoaded', updateTitle);
   updateTitle();
+
+  // Admin tools: Data refetch and path overlay
+  let showingDataPaths = false;
+  let liveUpdatesEnabled = false;
+  let liveUpdateInterval: number | null = null;
+  let pathLabelRaf: number | null = null;
+  type PathLabelEntry = {
+    element: HTMLElement;
+    label: HTMLElement;
+  };
+  const pathLabels: PathLabelEntry[] = [];
+
+  // Listen for command palette actions
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === 'refetch-greeting') {
+      refetchGreeting();
+    } else if (e.data?.type === 'toggle-data-paths') {
+      toggleDataPaths();
+    } else if (e.data?.type === 'toggle-live-updates') {
+      toggleLiveUpdates();
+    }
+  });
+
+  async function refetchGreeting() {
+    try {
+      console.log('[Admin] Refetching greeting data...');
+      const response = await fetch('/api/greeting');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('[Admin] Received data:', data);
+
+      // Update DOM elements
+      const titleEl = document.getElementById('greeting-title');
+      const bodyEl = document.getElementById('greeting-body');
+      const writtenbyEl = document.getElementById('greeting-writtenby');
+
+      if (titleEl && data.title) {
+        titleEl.textContent = data.title;
+      }
+      if (bodyEl && data.body) {
+        bodyEl.innerHTML = data.body;
+      }
+      if (writtenbyEl && data.writtenby) {
+        writtenbyEl.textContent = data.writtenby;
+      }
+
+      // Show success toast
+      showToast('✅ 데이터가 성공적으로 갱신되었습니다!');
+    } catch (error) {
+      console.error('[Admin] Failed to refetch:', error);
+      showToast('❌ 데이터 갱신 실패: ' + (error instanceof Error ? error.message : String(error)));
+    }
+  }
+
+  function toggleDataPaths() {
+    if (showingDataPaths) {
+      // Hide data paths
+      pathLabels.forEach(entry => entry.label.remove());
+      pathLabels.length = 0;
+      showingDataPaths = false;
+      showToast('📍 데이터 위치 표시가 꺼졌습니다');
+    } else {
+      // Show data paths
+      const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-strapi-path]'));
+      if (!elements.length) {
+        showToast('⚠️ 표시할 데이터 위치가 없습니다. data-strapi-path 속성을 확인하세요.');
+        return;
+      }
+
+      // Determine Strapi admin base URL
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const strapiBaseUrl = isLocal 
+        ? 'http://localhost:1337' 
+        : 'https://faithful-dog-1d263d2e88.strapiapp.com';
+
+      elements.forEach((element) => {
+        const path = element.getAttribute('data-strapi-path');
+        if (!path) return;
+
+        // Convert path to Strapi admin URL
+        const pathParts = path.split(' > ');
+        let adminUrl = '';
+        let displayPath = path;
+
+        if (pathParts.length >= 3) {
+          const [type, apiName, contentType, ...fieldParts] = pathParts;
+          
+          if (type === 'single-types') {
+            adminUrl = `${strapiBaseUrl}/admin/content-manager/single-types/api::${apiName}.${apiName}`;
+          } else if (type === 'collection-types') {
+            // For collection types, we need an ID, but for now just show the list
+            adminUrl = `${strapiBaseUrl}/admin/content-manager/collection-types/api::${apiName}.${contentType}`;
+          }
+          
+          // Add field info for better UX
+          if (fieldParts.length > 0) {
+            displayPath = `${path} → 편집`;
+          }
+        }
+
+        const label = document.createElement('div');
+        label.textContent = displayPath;
+        label.style.cssText = `
+          position: absolute;
+          background: rgba(255, 165, 56, 0.92);
+          color: #fff;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: bold;
+          z-index: 9999;
+          cursor: pointer;
+          border: 2px solid #ff6b35;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+          max-width: 320px;
+          word-wrap: break-word;
+          pointer-events: auto;
+        `;
+
+        label.addEventListener('click', () => {
+          const copyText = adminUrl || path;
+          navigator.clipboard.writeText(copyText).then(() => {
+            showToast(`📋 Strapi 편집 URL이 클립보드에 복사되었습니다`);
+            // Optionally open in new tab
+            if (adminUrl) {
+              window.open(adminUrl, '_blank');
+            }
+          }).catch(() => {
+            showToast('⚠️ URL 복사에 실패했습니다.');
+          });
+        });
+
+        document.body.appendChild(label);
+        const entry: PathLabelEntry = { element, label };
+        pathLabels.push(entry);
+        positionDataPathLabel(entry);
+      });
+
+      showingDataPaths = true;
+      showToast(`📍 ${elements.length}개의 데이터 위치가 표시되었습니다 (클릭하여 경로 복사)`);
+    }
+
+    // Notify CommandPalette of status change
+    window.postMessage({ type: 'data-paths-status-changed', enabled: showingDataPaths }, '*');
+  }
+
+  function positionDataPathLabel(entry: PathLabelEntry) {
+    const rect = entry.element.getBoundingClientRect();
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const scrollX = window.scrollX || document.documentElement.scrollLeft;
+    const offsetY = Math.max(0, rect.top + scrollY - 28);
+    const offsetX = scrollX + rect.left;
+    entry.label.style.top = `${offsetY}px`;
+    entry.label.style.left = `${offsetX}px`;
+  }
+
+  function schedulePathLabelUpdate() {
+    if (!showingDataPaths) return;
+    if (pathLabelRaf !== null) return;
+    pathLabelRaf = window.requestAnimationFrame(() => {
+      pathLabelRaf = null;
+      pathLabels.forEach(positionDataPathLabel);
+    });
+  }
+
+  window.addEventListener('scroll', schedulePathLabelUpdate);
+  window.addEventListener('resize', schedulePathLabelUpdate);
+
+  function toggleLiveUpdates() {
+    liveUpdatesEnabled = !liveUpdatesEnabled;
+    
+    if (liveUpdatesEnabled) {
+      // Start polling every 30 seconds
+      liveUpdateInterval = window.setInterval(() => {
+        console.log('[Live Updates] Checking for changes...');
+        refetchGreeting();
+      }, 30000);
+      showToast('🟢 실시간 업데이트가 켜졌습니다 (30초마다 확인)');
+    } else {
+      // Stop polling
+      if (liveUpdateInterval) {
+        clearInterval(liveUpdateInterval);
+        liveUpdateInterval = null;
+      }
+      showToast('🔴 실시간 업데이트가 꺼졌습니다');
+    }
+
+    // Notify CommandPalette of status change
+    window.postMessage({ type: 'live-update-status-changed', enabled: liveUpdatesEnabled }, '*');
+  }
+
+  function showToast(message: string) {
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 1rem 1.5rem;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      z-index: 10000;
+      animation: fadeIn 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.animation = 'fadeOut 0.3s ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
 </script>

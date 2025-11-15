@@ -2,19 +2,78 @@
 
 > AI 에이전트가 이 프로젝트를 이해하고 작업하기 위한 상세 가이드
 
-## 📋 프로젝트 컨텍스트
+## 📝 문서 유지관리 정책
 
-### 프로젝트 유형
-- **카테고리**: 사회복지 단체 홈페이지 (소개형 웹사이트)
-- **목적**: 사회적협동조합 가치로운(gachiroun.or.kr)의 활동 소개 및 홍보
-- **주요 사용자**: 일반 대중, 활동지원사 구직자, 서비스 이용자
+**중요: 주요 개선 또는 아키텍처 변경 사항은 반드시 이 문서(AGENTS.md)에 기록해야 합니다.**
 
-### 핵심 요구사항
-1. **SSR (Server-Side Rendering)**: SEO 최적화를 위한 필수 요구사항
-2. **반응형 디자인**: PC와 모바일 모두 지원
-3. **동적 컨텐츠**: Strapi CMS를 통한 컨텐츠 관리
-4. **폼 관리**: 활동지원사 구직신청 (Google Forms 또는 Strapi)
-5. **Analytics**: Google Analytics 4 통합
+### 업데이트가 필요한 경우
+- 새로운 기능 추가 (명령 팔레트, API 엔드포인트, 관리자 도구 등)
+- 아키텍처 변경 (디렉토리 구조, 라이브러리 추가, 빌드 프로세스 변경)
+- 디자인 시스템 변경 (색상, 폰트, 테마, 컴포넌트 패턴)
+- 보안 정책 변경 (토큰 관리, API 보안, 인증 방식)
+- 개발 워크플로우 변경 (환경 변수, 배포 절차, 테스트 방법)
+- 데이터 페칭 전략 변경 (SSR/SSG, GraphQL/REST, 캐싱 정책)
+
+### 문서화 원칙
+1. **명확성**: 다른 AI 에이전트가 읽고 즉시 이해할 수 있도록 작성
+2. **구체성**: 추상적 설명보다 코드 예시와 파일 경로 제공
+3. **최신성**: 변경 즉시 반영 (커밋 전 필수)
+4. **완전성**: 새로운 개발자/에이전트가 이 문서만으로 프로젝트 파악 가능해야 함
+
+### 업데이트 절차
+```markdown
+1. 해당 섹션을 찾거나 새 섹션 생성
+2. 변경 내용을 명확하게 기술 (코드 예시 포함)
+3. "Last Updated" 날짜 갱신
+4. "Recent Changes"에 요약 추가
+5. 관련 파일 경로와 사용법 명시
+```
+
+---
+
+## 🔒 보안 고려사항
+**Production** (`https://faithful-dog-1d263d2e88.strapiapp.com`)
+- Full: `f67c28ce21e065b51db8c80231de80e3d7909bfe971a5a69119df290dacdc13e828bcd6f5f24e2ebdd7c3200b33152339b34cdd8ef5eda0be0188b16a7c8c414a913d77158db22d6ef8c28bf822cf17cbb88a6ec309c217ae4160fe052ff179e58ceb05f21f35e04c9b4e5e479224e9bc547486aafa2a08a03f2ef038d2e480f`
+- Read: `cffc222adc5ca64ae04d7ce3e196733731250e15741ef89ebd7f738a290876007e93ddbc082323c505571bb811f2c28e80afe3e9d82c01aee5e216e2dfd10ea93646ce439ab19fd89e10cc060407b4374f5fb27fce7e90ee51dcf98ba310494a0ece89d094fe824c58191a6d383c98f65c22cf6e53916c7217a88351fb971f5e`
+
+**Local** (`http://localhost:1337`)
+- Full: `79a9d5d5b9d0bdb1e6f8ab434e478ce2048606bd0a67b800a129a63fc7de1dd6e5b7a434338ff317ace397fe519b63aaad9747252ec332a1b6d4a7892b1318f2f57ecfd1be935c159a21ac70834d5faffbe570d698dc90d25ed476a31c26903acb261e9b7089dc2d84dad22704aea1cbddb8a8fea4703b79be43c615002f0900`
+- Read: `2a8c4b98326f43e2858c5f3c56687da6599c734727279df45a41d24ec8b265ba534545c7a9b58cb2d3e669b410c0925998c515c51b6c671516a2c7f5c8b35327e6b69861a4352f152d93e59161b7339c1bce0ec1f4223407e5d8af4f342d85ac11e4d438589b9f555367da60182c2c9fe8ef182f682895e1908baaa491520817`
+
+### GraphQL 운영 지침
+
+- **Introspection On**: GraphQL Playground에서 스키마 탐색 가능.
+- **로컬 우선 개발**: `graphql` endpoint는 `http://localhost:1337/graphql`.
+- **프로덕션 배포**: Cloudflare Pages SSR에서 fetch 시 production endpoint 사용.
+- **스키마 확장 가이드**: 필요한 타입이 없으면 아래 템플릿을 Strapi 개발자에게 전달.
+
+```graphql
+# 예) 공지사항 리스트 타입 추가 요청
+type Notice {
+  id: ID!
+  title: String!
+  slug: String!
+  publishedAt: DateTime!
+  summary: String
+  body: JSON
+}
+
+type Query {
+  notices(limit: Int = 10, sort: String = "publishedAt:desc"): [Notice!]!
+}
+
+# Mutation 예시 (필요 시)
+input NoticeInput {
+  title: String!
+  summary: String
+  body: JSON
+  publishedAt: DateTime
+}
+
+type Mutation {
+  createNotice(data: NoticeInput!): Notice!
+}
+```
 
 ## 🏗 아키텍처 설계
 
@@ -77,7 +136,6 @@ homepage/
 │   │   └── react/          # React 컴포넌트
 │   │       ├── Slider.tsx
 │   │       ├── ThemeSwitcher.tsx
-│   │       ├── SwipeNavigator.tsx
 │   │       ├── Popup.tsx
 │   │       └── RecaptchaForm.tsx
 │   ├── layouts/            # 레이아웃
@@ -285,6 +343,15 @@ const notices = await strapi.getNotices({ page: 1, pageSize: 10 });
 </div>
 ```
 
+### 섹션별 API 주석 규칙
+
+- 모든 Astro/React 섹션 컴포넌트 상단에 `// Strapi API: <엔드포인트>` 주석을 추가한다.
+  - 예) `// Strapi API: /api/home-hero?populate=slides`.
+- 다중 데이터를 fetch할 경우, 주석에 배열로 명시한다.
+  - 예) `// Strapi API: [/api/notices, /api/events]`.
+- 명령 팔레트 액션 "API 경로 표시" 실행 시, 현재 파일의 주석을 읽어 UI에 오버레이한다 (구현 예정).
+- 주석 변경 시 `AGENTS.md`와 `src/lib/strapi.ts` 타입 정의도 함께 업데이트한다.
+
 ## 📊 Google Analytics 연동
 
 ### 구현 패턴
@@ -333,34 +400,7 @@ export function trackEvent(eventName: string, params?: Record<string, any>) {
    - 한글 피하기 (영문 slug 사용)
    - 계층 구조 명확히
 
-## � 모바일 기능
-
-### 스와이프 네비게이션
-
-모바일 환경에서 좌우 스와이프로 메인 메뉴 섹션 간 이동을 지원합니다.
-
-```typescript
-// src/components/react/SwipeNavigator.tsx
-// 터치 이벤트를 감지하여 섹션 간 네비게이션
-// - 왼쪽 스와이프: 다음 섹션으로 이동
-// - 오른쪽 스와이프: 이전 섹션으로 이동
-// - 최소 스와이프 거리: 50px
-// - 모바일 전용 (768px 이하)
-
-export default function SwipeNavigator({ sections }: SwipeNavigatorProps) {
-  // 터치 이벤트 핸들러 구현
-  // 페이지 전환 시 부드러운 애니메이션
-}
-```
-
-**섹션 순서**:
-1. 홈 (`/`)
-2. 가치로운이란? (`/about`)
-3. 사업소개 (`/services`)
-4. 안내사항 (`/notice`)
-5. 자료실 (`/resources`)
-
-## �🔒 보안 고려사항
+## 🔒 보안 고려사항
 
 ### reCAPTCHA 구현
 
@@ -632,21 +672,107 @@ const content = await strapi.getPageContent(PAGE_ID);
 
 ---
 
-**Last Updated**: 2025-11-13
+## 🛠 관리자 도구 (Admin Tools)
+
+### 명령 팔레트 (Command Palette)
+
+프로젝트에는 관리자와 개발자를 위한 명령 팔레트 시스템이 구현되어 있습니다.
+
+#### 접근 방법
+- **데스크톱**: `Ctrl + Shift + P` (Windows/Linux) 또는 `Cmd + Shift + P` (Mac)
+- **모바일**: 푸터 로고를 더블탭
+
+#### 사용 가능한 명령
+
+1. **📥 데이터 재조회**
+   - 현재 페이지의 라이브 데이터를 새로고침 없이 다시 가져옵니다
+   - `/api/greeting` 엔드포인트를 호출하여 Strapi에서 최신 데이터를 가져옵니다
+   - DOM을 직접 업데이트하여 페이지 새로고침 없이 변경사항을 반영합니다
+   - 성공/실패 시 토스트 메시지로 결과를 표시합니다
+
+2. **📍 데이터 위치 보기**
+   - Strapi에서 수정할 위치를 화면에 오버레이로 표시합니다
+   - `data-strapi-path` 속성이 있는 모든 요소 위에 경로 라벨을 표시합니다
+   - 라벨을 클릭하면 Strapi 경로가 클립보드에 복사됩니다
+   - 예: `single-types > greeting > title`
+
+#### 구현 세부사항
+
+**파일 구조**:
+- `src/components/react/CommandPalette.tsx` - React 컴포넌트
+- `src/components/react/CommandPalette.css` - 스타일링
+- `src/pages/api/greeting.ts` - 서버 API 프록시 (토큰 보안 유지)
+- `src/pages/about.astro` - 명령 처리 로직
+
+**데이터 속성 규칙**:
+```html
+<!-- Strapi 경로를 나타내는 속성 추가 -->
+<div data-strapi-path="single-types > greeting > title" id="greeting-title">
+  {content}
+</div>
+```
+
+**보안 고려사항**:
+- 모든 Strapi API 호출은 서버 측 프록시(`/api/*`)를 통해 이루어집니다
+- 토큰은 절대 클라이언트에 노출되지 않습니다 (`process.env`로만 접근)
+- 클라이언트와 서버 간 통신은 `postMessage` API를 사용합니다
+
+### GraphQL 실시간 업데이트 (Subscription vs Polling)
+
+**GraphQL Subscription의 장점**:
+- 서버에서 데이터 변경 시 즉시 클라이언트에 푸시
+- WebSocket 연결로 실시간 양방향 통신
+- 불필요한 폴링(polling) 제거로 네트워크 효율성 향상
+
+**현재 구현 (Polling 기반)**:
+- 30초마다 자동으로 데이터 확인 및 업데이트
+- 명령 팔레트에서 "🟢 실시간 업데이트 켜기/🔴 끄기"로 제어
+- 간단한 구현으로 안정성 보장
+
+**Subscription 구현 계획 (향후 확장)**:
+```typescript
+// Apollo Client 또는 urql 사용
+const SUBSCRIPTION = gql`
+  subscription OnGreetingUpdate {
+    greetingUpdated {
+      title
+      body
+      writtenby
+    }
+  }
+`;
+
+// React 컴포넌트에서
+useSubscription(SUBSCRIPTION, {
+  onData: ({ data }) => {
+    // 실시간으로 UI 업데이트
+    updateGreeting(data.greetingUpdated);
+  }
+});
+```
+
+**기술적 고려사항**:
+- WebSocket 연결 관리 (재연결, 에러 처리)
+- 클라이언트 라이브러리 추가 (번들 크기 증가)
+- SSR 환경에서의 subscription 처리
+- 현재 폴링 방식이 관리자용으로는 충분함
+
+---
+
+**Last Updated**: 2025-11-15
 
 **Recent Changes**:
-- ✅ **전문적 디자인 리뉴얼**: 모든 꽃 이모지(🌸💮🌼🌻)를 전문적인 기호(●, ▸)로 교체
-- ✅ **테마 시스템 업그레이드**: 
-  - "주황노랑꽃" → "가치로운 오리지널" (Gachiroun Original) 전문적 네이밍
-  - 코랄 오렌지(#f26538) + 앰버 골드(#f59e0b) 차분한 색상 조합
-  - "남색파랑신뢰" → "프로페셔널 블루" (Trust Blue) 명확한 네이밍
-- ✅ **모바일 스와이프 네비게이션**: 좌우 스와이프로 메인 섹션 간 이동 기능 추가 (SwipeNavigator.tsx)
-- ✅ **CSS 장식 요소 현대화**: 모든 페이지의 ::before 장식을 전문적인 기하학적 형태로 업데이트
-- ✅ **브랜드 메시지 개선**: "함께의 힘으로, 모두가 가치있는 삶을 만들어갑니다" 전문적 표현으로 변경
-- 테마 색상 변경: 주황(#FF6B35) + 노랑(#FFB800) + 녹색(보조)
-- 서비스 페이지 3개 전면 개편 (재가요양, 장애인활동지원, 아동청소년지원)
-- About 페이지 미션/비전/가치/특장점 상세화
-- 메인 페이지 비전/통계 섹션 추가
+- ✅ 전문적 디자인 리뉴얼: 모든 꽃 이모지를 기하학 기호로 교체, 브랜드 문구 개선
+- ✅ 테마 시스템 업그레이드: "주황노랑꽃" → "가치로운 오리지널", "남색파랑신뢰" → "프로페셔널 블루"
+- ✅ CSS 장식 요소 현대화: ::before 장식을 통일된 디자인 언어로 정비
+- ✅ Strapi Live Content 로드맵 수립: GraphQL/SSR 목표, API 키 관리, 스키마 확장 가이드 문서화
+- ✅ Cloudflare SSR 기반 데이터 패칭 전략 정의 (팩터별 독립 fetch 설계)
+- ✅ 관리자 명령 팔레트 구현: Ctrl+Shift+P 또는 푸터 더블탭으로 데이터 재조회 및 Strapi 경로 오버레이 기능 추가
+- ✅ 서버 API 프록시 추가: `/api/greeting` 엔드포인트로 안전한 클라이언트 데이터 페칭 지원
+- ✅ GraphQL 디버깅 로그 강화: Strapi 연결 문제 진단을 위한 상세 로깅 추가
+- ✅ GraphQL 스키마 구조 수정: `greeting` single type → `about { greeting { ... } }` nested 구조로 변경하여 실제 Strapi 스키마에 맞춤
+- ✅ Strapi Rich Text 변환: JSON 형태의 rich text를 HTML로 변환하는 `strapiRichTextToHtml()` 함수 추가하여 `[object Object]` 문제 해결
+- ✅ 실시간 업데이트 기능 추가: 명령 팔레트에서 30초 폴링 기반 자동 데이터 갱신 토글 기능 구현
 
 **페이지 상태** (2025-11-08):
 ```
