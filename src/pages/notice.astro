@@ -834,7 +834,6 @@ const events = [
   let currentModalData: any = null;
 
   function openModal(title: string, body: string, photo: string) {
-    console.log('[Modal Debug] openModal called with:', { title, body, photo });
     const modalHTML = `
       <div class="modal-overlay" id="announcement-modal">
         <div class="modal-container">
@@ -851,11 +850,11 @@ const events = [
     `;
 
     console.log('[Modal Debug] Inserting modal HTML into body...');
+    console.log('[Modal Debug] Inserting modal HTML into body...');
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     document.body.style.overflow = 'hidden';
 
     const modal = document.getElementById('announcement-modal');
-    console.log('[Modal Debug] Modal element found:', modal);
     const closeBtn = modal?.querySelector('.modal-close');
     const overlay = modal; // modal element itself is the overlay
 
@@ -884,8 +883,6 @@ const events = [
 
   // Attach event listeners to "자세히 보기" buttons
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('[Modal Debug] DOMContentLoaded fired, attaching event listeners...');
-    
     // Modal 중복 방지 플래그
     function isModalOpen() {
       return !!document.getElementById('announcement-modal');
@@ -893,7 +890,6 @@ const events = [
 
     // 자세히 보기 버튼 클릭 시
     const viewMoreButtons = document.querySelectorAll('.btn-view-more');
-    console.log('[Modal Debug] Found .btn-view-more buttons:', viewMoreButtons.length);
     viewMoreButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
         console.log('[Modal Debug] Button clicked!');
