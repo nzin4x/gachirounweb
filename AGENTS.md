@@ -711,10 +711,11 @@ const content = await strapi.getPageContent(PAGE_ID);
 
 ### 환경 변수 접근 방식
 
-**현재 구현**: `import.meta.env` 사용 (로컬/Cloudflare 모두 호환)
-- `astro:env` API 대신 기존 `import.meta.env` 방식 사용
-- 로컬 개발과 Cloudflare Pages 배포 모두 지원
-- 별도의 스키마 선언 불필요
+**현재 구현**: 하이브리드 방식 (빌드 타임 + 런타임)
+- **로컬 개발**: `import.meta.env` (`.env.local` 또는 `.dev.vars`)
+- **Cloudflare 빌드**: `import.meta.env` (빌드 시점 주입)
+- **Cloudflare 런타임(SSR)**: `Astro.locals.runtime.env` (Functions 환경 변수)
+- 모든 Strapi API 함수는 `env` 매개변수를 받아 환경별 접근 지원
 
 ### 로컬 개발 환경
 
@@ -828,12 +829,12 @@ useSubscription(SUBSCRIPTION, {
 - ✅ Strapi Live Content 로드맵 수립: GraphQL/SSR 목표, API 키 관리, 스키마 확장 가이드 문서화
 - ✅ Cloudflare SSR 기반 데이터 패칭 전략 정의 (팩터별 독립 fetch 설계)
 - ✅ 관리자 명령 팔레트 구현: Ctrl+Shift+P 또는 푸터 더블탭으로 데이터 재조회 및 Strapi 경로 오버레이 기능 추가
-- ✅ 서버 API 프록시 추가: `/api/greeting` 엔드포인트로 안전한 클라이언트 데이터 페칭 지원
+- ✅ 서버 API 프록시 추가: `/api/greeting`, `/api/announcements` 엔드포인트로 안전한 클라이언트 데이터 페칭 지원
 - ✅ GraphQL 디버깅 로그 강화: Strapi 연결 문제 진단을 위한 상세 로깅 추가
 - ✅ GraphQL 스키마 구조 수정: `greeting` single type → `about { greeting { ... } }` nested 구조로 변경하여 실제 Strapi 스키마에 맞춤
 - ✅ Strapi Rich Text 변환: JSON 형태의 rich text를 HTML로 변환하는 `strapiRichTextToHtml()` 함수 추가하여 `[object Object]` 문제 해결
 - ✅ 실시간 업데이트 기능 추가: 명령 팔레트에서 30초 폴링 기반 자동 데이터 갱신 토글 기능 구현
-- ✅ 환경 변수 관리 시스템 완성: `import.meta.env` 방식으로 통일, wrangler.toml 설정, 로컬(.env.local/.dev.vars) 및 Cloudflare Pages(Functions 환경 변수) 모두 지원, CLOUDFLARE_ENV_GUIDE.md 문서화 완료
+- ✅ 환경 변수 관리 시스템 완성: **Cloudflare runtime 환경 변수 접근 패턴 확립** (`Astro.locals.runtime.env`), 모든 Strapi API 함수에 `env` 매개변수 추가, wrangler.toml 설정, 로컬(.env.local/.dev.vars) 및 Cloudflare Pages(Functions 환경 변수) 모두 지원, CLOUDFLARE_ENV_GUIDE.md 문서화 완료
 
 **페이지 상태** (2025-11-08):
 ```

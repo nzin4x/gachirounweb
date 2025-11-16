@@ -4,18 +4,25 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "./dist"
 
-# Environment variables for local development (wrangler dev)
+# Environment variables (non-sensitive, committed to source control)
+# Cloudflare Pages reads from wrangler.toml for both local and production
 [vars]
 STRAPI_URL = "http://localhost:1337"
 PUBLIC_GA_ID = "GTM-MVL6P7N7"
 PUBLIC_RECAPTCHA_SITE_KEY = "test-key"
 
-# Secrets should be set via: wrangler secret put <SECRET_NAME>
-# For local dev, use .dev.vars file instead (see .dev.vars.example)
+# Production environment variables (override local values)
+[env.production.vars]
+STRAPI_URL = "https://faithful-dog-1d263d2e88.strapiapp.com"
+PUBLIC_GA_ID = "GTM-MVL6P7N7"
+PUBLIC_RECAPTCHA_SITE_KEY = "6LcXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-# Production environment (deployed to Cloudflare Pages)
-[env.production]
-# These will be overridden by Cloudflare Pages dashboard settings
+# Secrets (encrypted, managed separately)
+# Set locally in .dev.vars file (NOT committed):
+#   STRAPI_API_TOKEN_READ=your-local-token
+#
+# Set in production via Cloudflare dashboard or wrangler CLI:
+#   wrangler secret put STRAPI_API_TOKEN_READ --env production
 
 # KV Namespaces (if needed in future)
 # [[kv_namespaces]]
