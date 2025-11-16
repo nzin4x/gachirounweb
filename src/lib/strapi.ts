@@ -3,6 +3,54 @@
   errors?: any;
 }
 
+/**
+ * Strapi 경로 정보를 데이터에 자동으로 추가
+ * @param data - Strapi 응답 데이터
+ * @param path - Strapi 경로 (예: "single-types > about > greeting")
+ * @returns 경로 메타데이터가 추가된 데이터
+ */
+function addStrapiPath<T extends Record<string, any>>(
+  data: T, 
+  path: string
+): T & { _strapiPath: string; _strapiFields: Record<string, string> } {
+  // 데이터 객체의 모든 키를 추출하여 각 필드의 경로 자동 생성
+  const fields = Object.keys(data).reduce((acc, key) => {
+    // 메타데이터 필드는 제외
+    if (!key.startsWith('_')) {
+      acc[key] = `${path} > ${key}`;
+    }
+    return acc;
+  }, {} as Record<string, string>);
+  
+  return {
+    ...data,
+    _strapiPath: path,
+    _strapiFields: fields
+  };
+}
+
+/**
+ * Collection 타입 배열에 각 항목의 경로를 자동으로 추가
+ * @param items - Strapi collection 응답 배열
+ * @param collectionName - Collection 타입 이름 (예: "notices")
+ * @returns 경로 메타데이터가 추가된 배열
+ */
+function addStrapiPathToCollection<T extends { id: string | number }>(
+  items: T[],
+  collectionName: string
+): Array<T & { _strapiPath: string; _strapiFields: Record<string, string> }> {
+  return items.map(item => ({
+    ...item,
+    _strapiPath: `collection-types > ${collectionName} > ${item.id}`,
+    _strapiFields: Object.keys(item).reduce((acc, key) => {
+      if (key !== 'id') {
+        acc[key] = `collection-types > ${collectionName} > ${item.id} > ${key}`;
+      }
+      return acc;
+    }, {} as Record<string, string>)
+  }));
+}
+
 // Helper to get Strapi config from environment (supports both import.meta.env and Cloudflare runtime env)
 function getStrapiConfig(env?: any) {
   const actualEnv = env || import.meta.env;
@@ -108,16 +156,17 @@ export async function getGreeting(env?: any) {
   }`;
 
   try {
-    const result = await graphql(gql, undefined, env);
-    const data = await graphql(gql);
+    const data = await graphql(gql, undefined, env);
     if (data?.about?.greeting) {
       const greeting = data.about.greeting;
       console.log('[Strapi] GraphQL success:', { title: greeting.title, bodyType: typeof greeting.body, bodyValue: greeting.body });
-      return {
+      
+      // 자동 경로 태깅 적용 (Object.keys로 필드 경로 자동 생성)
+      return addStrapiPath({
         title: greeting.title || null,
         body: strapiRichTextToHtml(greeting.body) || null,
-        writtenby: greeting.writtenby || null,
-      };
+        writtenby: greeting.writtenby || null
+      }, 'single-types > about > greeting');
     }
     console.log('[Strapi] GraphQL returned empty data:', data);
   } catch (e) {
@@ -127,21 +176,31 @@ export async function getGreeting(env?: any) {
   // 2) Try REST `/api/about` (collection type)
   try {
     console.log('[Strapi] Trying REST /api/about...');
-    const r = await restGet('/api/about');
+    const r = await restGet('/api/about', env);
     // If collection type, Strapi returns { data: [ { attributes: { greeting: {...} } } ] }
     if (Array.isArray(r?.data) && r.data.length > 0) {
       const attrs = r.data[0].attributes;
       if (attrs?.greeting) {
         const g = attrs.greeting;
         console.log('[Strapi] REST success from /api/about');
-        return { title: g.title || null, body: strapiRichTextToHtml(g.body) || null, writtenby: g.writtenby || null };
+        
+        return addStrapiPath({
+          title: g.title || null,
+          body: strapiRichTextToHtml(g.body) || null,
+          writtenby: g.writtenby || null
+        }, 'single-types > about > greeting');
       }
     }
     // If single entry: { data: { attributes: { greeting: {...} } } }
     if (r?.data?.attributes?.greeting) {
       const g = r.data.attributes.greeting;
       console.log('[Strapi] REST success from /api/about (single)');
-      return { title: g.title || null, body: strapiRichTextToHtml(g.body) || null, writtenby: g.writtenby || null };
+      
+      return addStrapiPath({
+        title: g.title || null,
+        body: strapiRichTextToHtml(g.body) || null,
+        writtenby: g.writtenby || null
+      }, 'single-types > about > greeting');
     }
   } catch (e) {
     console.warn('[Strapi] REST /api/about failed:', e);
@@ -175,8 +234,9 @@ export async function getAnnouncements(limit = 10, env?: any) {
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
       }));
-      console.log(`[Strapi] GraphQL success: ${announcements.length} notices`);
-      return announcements;
+      
+      // 자동 경로 태깅 적용
+      return addStrapiPathToCollection(announcements, 'notices');
     }
     
     console.log('[Strapi] GraphQL returned empty data:', data);
@@ -200,7 +260,9 @@ export async function getAnnouncements(limit = 10, env?: any) {
         createdAt: item.attributes?.createdAt,
         updatedAt: item.attributes?.updatedAt,
       }));
-      return announcements;
+      
+      // 자동 경로 태깅 적용
+      return addStrapiPathToCollection(announcements, 'notices');
     }
   } catch (e) {
     console.warn('[Strapi] REST fallback failed');

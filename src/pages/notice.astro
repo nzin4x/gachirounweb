@@ -1003,43 +1003,48 @@ const events = [
         return;
       }
 
-      // Add new items
+      // Add new items (원본 HTML 구조와 동일하게 유지)
       data.forEach((item: any) => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'board-item';
-        itemDiv.setAttribute('data-strapi-path', `announcements > ${item.id}`);
+        itemDiv.setAttribute('data-strapi-path', `collection-types > notices > ${item.id}`);
 
+        // Board header
         const headerDiv = document.createElement('div');
         headerDiv.className = 'board-header';
 
         const title = document.createElement('h3');
+        title.className = 'announcement-title';
+        title.setAttribute('data-id', item.id);
+        title.setAttribute('data-strapi-path', `collection-types > notices > ${item.id} > title`);
         title.textContent = item.title || '';
 
         const dateSpan = document.createElement('span');
         dateSpan.className = 'date';
+        dateSpan.setAttribute('data-strapi-path', `collection-types > notices > ${item.id} > createdAt`);
         dateSpan.textContent = item.createdAt ? new Date(item.createdAt).toLocaleDateString('ko-KR') : '';
 
         headerDiv.appendChild(title);
         headerDiv.appendChild(dateSpan);
-
         itemDiv.appendChild(headerDiv);
 
-        // Add photo if exists
-        if (item.photo) {
-          const imageDiv = document.createElement('div');
-          imageDiv.className = 'board-image';
-          const img = document.createElement('img');
-          img.src = `${STRAPI_URL_CLIENT}${item.photo}`;
-          img.alt = item.photoAlt || item.title || '';
-          imageDiv.appendChild(img);
-          itemDiv.appendChild(imageDiv);
-        }
+        // Board preview (100자 요약)
+        const previewDiv = document.createElement('div');
+        previewDiv.className = 'board-preview';
+        previewDiv.setAttribute('data-strapi-path', `collection-types > notices > ${item.id} > body`);
+        const plainText = (item.body || '').replace(/<[^>]*>/g, '');
+        previewDiv.textContent = plainText.substring(0, 100) + '...';
+        itemDiv.appendChild(previewDiv);
 
-        // Add content
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'board-content';
-        contentDiv.innerHTML = item.body || '';
-        itemDiv.appendChild(contentDiv);
+        // View more button
+        const button = document.createElement('button');
+        button.className = 'btn-view-more';
+        button.setAttribute('data-id', item.id);
+        button.setAttribute('data-title', item.title || '');
+        button.setAttribute('data-body', item.body || '');
+        button.setAttribute('data-photo', item.photo || '');
+        button.textContent = '자세히 보기 →';
+        itemDiv.appendChild(button);
 
         boardList.appendChild(itemDiv);
       });
