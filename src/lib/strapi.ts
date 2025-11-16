@@ -3,17 +3,21 @@
   errors?: any;
 }
 
-// 환경 변수 접근: import.meta.env 사용 (로컬/Cloudflare 모두 호환)
-const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-// FULL 토큰 우선, 없으면 READ 토큰, 둘 다 없으면 기본 토큰 사용
-const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ || import.meta.env.STRAPI_API_TOKEN || '';
+// Helper to get Strapi config from environment (supports both import.meta.env and Cloudflare runtime env)
+function getStrapiConfig(env?: any) {
+  const actualEnv = env || import.meta.env;
+  const STRAPI_URL = actualEnv.STRAPI_URL || 'http://localhost:1337';
+  const STRAPI_TOKEN = actualEnv.STRAPI_API_TOKEN_FULL || actualEnv.STRAPI_API_TOKEN_READ || actualEnv.STRAPI_API_TOKEN || '';
+  
+  console.log('[Strapi Config] URL:', STRAPI_URL);
+  console.log('[Strapi Config] Token length:', STRAPI_TOKEN ? STRAPI_TOKEN.length : 0);
+  console.log('[Strapi Config] Token prefix:', STRAPI_TOKEN ? STRAPI_TOKEN.substring(0, 20) + '...' : 'NONE');
+  
+  return { STRAPI_URL, STRAPI_TOKEN };
+}
 
-// Startup validation
-console.log('[Strapi Init] URL:', STRAPI_URL);
-console.log('[Strapi Init] Token length:', STRAPI_TOKEN ? STRAPI_TOKEN.length : 0);
-console.log('[Strapi Init] Token prefix:', STRAPI_TOKEN ? STRAPI_TOKEN.substring(0, 20) + '...' : 'NONE');
-
-async function graphql(query: string, variables?: Record<string, any>) {
+async function graphql(query: string, variables?: Record<string, any>, env?: any) {
+  const { STRAPI_URL, STRAPI_TOKEN } = getStrapiConfig(env);
   const url = `${STRAPI_URL.replace(/\/+$/, '')}/graphql`;
   console.log('[Strapi GraphQL] Making request to:', url);
   console.log('[Strapi GraphQL] Query:', query.substring(0, 100) + '...');
@@ -54,7 +58,8 @@ async function graphql(query: string, variables?: Record<string, any>) {
   }
 }
 
-async function restGet(endpoint: string) {
+async function restGet(endpoint: string, env?: any) {
+  const { STRAPI_URL, STRAPI_TOKEN } = getStrapiConfig(env);
   const url = endpoint.startsWith('http') ? endpoint : `${STRAPI_URL.replace(/\/+$/, '')}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
   const res = await fetch(url, {
     headers: {
@@ -101,7 +106,8 @@ function strapiRichTextToHtml(richText: any): string {
   return String(richText);
 }
 
-export async function getGreeting() {
+export async function getGreeting(env?: any) {
+  const { STRAPI_URL } = getStrapiConfig(env);
   console.log('[Strapi] Fetching greeting from:', STRAPI_URL);
 
   // 1) Try GraphQL - based on working curl example: about { greeting { ... } }
@@ -116,7 +122,7 @@ export async function getGreeting() {
   }`;
 
   try {
-    console.log('[Strapi] Attempting GraphQL query...');
+    const result = await graphql(gql, undefined, env);
     const data = await graphql(gql);
     if (data?.about?.greeting) {
       const greeting = data.about.greeting;
@@ -158,7 +164,8 @@ export async function getGreeting() {
   return null;
 }
 
-export async function getAnnouncements(limit = 10) {
+export async function getAnnouncements(limit = 10, env?: any) {
+  const { STRAPI_URL, STRAPI_TOKEN } = getStrapiConfig(env);
   console.log('[Strapi] Fetching announcements from:', STRAPI_URL);
   console.log('[Strapi] Using token:', STRAPI_TOKEN ? `${STRAPI_TOKEN.substring(0, 20)}... (${STRAPI_TOKEN.length} chars)` : 'NONE');
 
@@ -180,7 +187,7 @@ export async function getAnnouncements(limit = 10) {
       ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN.substring(0, 20)}...` } : {})
     });
 
-    const data = await graphql(gql, { limit });
+    const data = await graphql(gql, { limit }, env);
     console.log('[Strapi] GraphQL response received, data structure:', Object.keys(data || {}));
     console.log('[Strapi] Raw notices data:', data?.notices);
     
@@ -208,7 +215,7 @@ export async function getAnnouncements(limit = 10) {
   try {
     console.log('[Strapi] Trying REST /api/notices...');
     const restUrl = `/api/notices?sort=createdAt:desc&pagination[limit]=${limit}`;
-    const r = await restGet(restUrl);
+    const r = await restGet(restUrl, env);
     
     if (Array.isArray(r?.data)) {
       const announcements = r.data.map((item: any) => ({

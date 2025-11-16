@@ -4,10 +4,14 @@ import historyData from '../data/history.json';
 import strapiClient from '../lib/strapi';
 import CommandPalette from '../components/react/CommandPalette';
 
+// Cloudflare runtime 환경 변수 접근
+const runtime = Astro.locals.runtime;
+const env = runtime?.env || import.meta.env;
+
 // Strapi API: greeting (single type) - fields: title, body, writtenby
 const greetingData = await (async () => {
   try {
-    const g = await strapiClient.getGreeting();
+    const g = await strapiClient.getGreeting(env);
     return g;
   } catch (e) {
     console.warn('Failed to load greeting from Strapi:', e);

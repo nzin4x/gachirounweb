@@ -3,24 +3,28 @@ import MainLayout from '../layouts/MainLayout.astro';
 import strapiClient from '../lib/strapi';
 import CommandPalette from '../components/react/CommandPalette';
 
+// Cloudflare runtime 환경 변수 접근
+const runtime = Astro.locals.runtime;
+const env = runtime?.env || import.meta.env;
+
 // Strapi API: announcements (collection type) - fields: title, body, photo, createdAt
 const announcements = await (async () => {
   try {
     console.log('[SSR Debug] Starting Strapi announcements fetch...');
-    console.log('[SSR Debug] STRAPI_URL:', import.meta.env.STRAPI_URL);
-    console.log('[SSR Debug] STRAPI_API_TOKEN_FULL length:', import.meta.env.STRAPI_API_TOKEN_FULL?.length || 0);
-    console.log('[SSR Debug] STRAPI_API_TOKEN_READ length:', import.meta.env.STRAPI_API_TOKEN_READ?.length || 0);
+    console.log('[SSR Debug] STRAPI_URL:', env.STRAPI_URL);
+    console.log('[SSR Debug] STRAPI_API_TOKEN_FULL length:', env.STRAPI_API_TOKEN_FULL?.length || 0);
+    console.log('[SSR Debug] STRAPI_API_TOKEN_READ length:', env.STRAPI_API_TOKEN_READ?.length || 0);
 
     // Check if required environment variables are set
-    if (!import.meta.env.STRAPI_URL) {
+    if (!env.STRAPI_URL) {
       throw new Error('STRAPI_URL environment variable is not set. Please configure it in Cloudflare Pages settings.');
     }
 
-    if (!import.meta.env.STRAPI_API_TOKEN_FULL && !import.meta.env.STRAPI_API_TOKEN_READ && !import.meta.env.STRAPI_API_TOKEN) {
+    if (!env.STRAPI_API_TOKEN_FULL && !env.STRAPI_API_TOKEN_READ && !env.STRAPI_API_TOKEN) {
       throw new Error('No Strapi API token found. Please set STRAPI_API_TOKEN_FULL, STRAPI_API_TOKEN_READ, or STRAPI_API_TOKEN in Cloudflare Pages settings.');
     }
 
-    const data = await strapiClient.getAnnouncements(10);
+    const data = await strapiClient.getAnnouncements(10, env);
     console.log('[SSR Debug] Successfully fetched announcements:', data?.length || 0, 'items');
     return data;
   } catch (e) {
@@ -36,13 +40,13 @@ const announcements = await (async () => {
       message: e.message,
       stack: e.stack,
       timestamp: new Date().toISOString(),
-      url: import.meta.env.STRAPI_URL,
-      hasToken: !!(import.meta.env.STRAPI_API_TOKEN_FULL || import.meta.env.STRAPI_API_TOKEN_READ || import.meta.env.STRAPI_API_TOKEN),
+      url: env.STRAPI_URL,
+      hasToken: !!(env.STRAPI_API_TOKEN_FULL || env.STRAPI_API_TOKEN_READ || env.STRAPI_API_TOKEN),
       envVars: {
-        STRAPI_URL: import.meta.env.STRAPI_URL,
-        STRAPI_API_TOKEN_FULL: import.meta.env.STRAPI_API_TOKEN_FULL ? 'SET' : 'NOT_SET',
-        STRAPI_API_TOKEN_READ: import.meta.env.STRAPI_API_TOKEN_READ ? 'SET' : 'NOT_SET',
-        STRAPI_API_TOKEN: import.meta.env.STRAPI_API_TOKEN ? 'SET' : 'NOT_SET'
+        STRAPI_URL: env.STRAPI_URL,
+        STRAPI_API_TOKEN_FULL: env.STRAPI_API_TOKEN_FULL ? 'SET' : 'NOT_SET',
+        STRAPI_API_TOKEN_READ: env.STRAPI_API_TOKEN_READ ? 'SET' : 'NOT_SET',
+        STRAPI_API_TOKEN: env.STRAPI_API_TOKEN ? 'SET' : 'NOT_SET'
       }
     };
 
@@ -83,7 +87,7 @@ const events = [
 ];
 ---
 
-<MainLayout title="안내사항" data-strapi-url={import.meta.env.STRAPI_URL || 'http://localhost:1337'}>
+<MainLayout title="안내사항" data-strapi-url={env.STRAPI_URL || 'http://localhost:1337'}>
   <div class="page-container">
     <!-- 공지사항 -->
     <section id="announcements" class="content-section" data-strapi-path="announcements">

@@ -8,16 +8,22 @@
 
 ### 1. 로컬 개발 (npm run dev)
 - `.env.local` 파일 사용
-- `import.meta.env`로 접근
+- **빌드 타임**: `import.meta.env`로 접근
+- **런타임(SSR)**: `Astro.locals.runtime.env` 또는 `import.meta.env` fallback
 
 ### 2. Wrangler 로컬 개발 (npm run dev:wrangler)
 - `.dev.vars` 파일 사용 (secrets)
 - `wrangler.toml` 파일 사용 (public vars)
 - Cloudflare 런타임 환경 시뮬레이션
+- **빌드 타임**: `import.meta.env`
+- **런타임(SSR)**: `Astro.locals.runtime.env`
 
 ### 3. Cloudflare Pages 프로덕션
 - Cloudflare 대시보드에서 환경 변수 설정
-- 빌드 환경 변수 + Functions 환경 변수
+- **빌드 환경 변수** (Settings > Environment variables > Build)
+- **Functions 환경 변수** (Settings > Environment variables > Functions) ← **필수!**
+- **빌드 타임**: `import.meta.env`로 접근 (빌드 시 주입)
+- **런타임(SSR)**: `Astro.locals.runtime.env`로만 접근 가능
 
 ## 🔧 로컬 개발 설정
 
@@ -117,13 +123,51 @@ STRAPI_API_TOKEN (fallback)
 ```
 
 ### 코드에서 접근 방법
+
+**중요**: Cloudflare Pages Functions(SSR)에서는 `import.meta.env`가 빌드 타임에만 주입됩니다. 런타임에서는 `Astro.locals.runtime.env`를 사용해야 합니다.
+
 ```typescript
-// src/lib/strapi.ts 또는 .astro 파일에서
-const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN_FULL 
-  || import.meta.env.STRAPI_API_TOKEN_READ 
-  || import.meta.env.STRAPI_API_TOKEN 
-  || '';
+// src/pages/about.astro 또는 API 엔드포인트에서
+---
+import strapiClient from '../lib/strapi';
+
+// Cloudflare runtime 환경 변수 접근
+const runtime = Astro.locals.runtime;
+const env = runtime?.env || import.meta.env;
+
+// env를 strapiClient에 전달
+const greeting = await strapiClient.getGreeting(env);
+---
+```
+
+```typescript
+// src/lib/strapi.ts (함수 기반으로 env 매개변수 받음)
+function getStrapiConfig(env?: any) {
+  const actualEnv = env || import.meta.env;
+  const STRAPI_URL = actualEnv.STRAPI_URL || 'http://localhost:1337';
+  const STRAPI_TOKEN = actualEnv.STRAPI_API_TOKEN_FULL 
+    || actualEnv.STRAPI_API_TOKEN_READ 
+    || actualEnv.STRAPI_API_TOKEN 
+    || '';
+  
+  return { STRAPI_URL, STRAPI_TOKEN };
+}
+
+export async function getGreeting(env?: any) {
+  const { STRAPI_URL, STRAPI_TOKEN } = getStrapiConfig(env);
+  // ...
+}
+```
+
+```typescript
+// src/pages/api/greeting.ts (API 엔드포인트)
+export const GET: APIRoute = async ({ request, locals }) => {
+  const runtime = locals.runtime;
+  const env = runtime?.env || import.meta.env;
+  
+  const greeting = await strapiClient.getGreeting(env);
+  // ...
+};
 ```
 
 ## 🧪 테스트

@@ -3,9 +3,13 @@
 import type { APIRoute } from 'astro';
 import strapiClient from '../../lib/strapi';
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async ({ request, locals }) => {
   try {
-    const greeting = await strapiClient.getGreeting();
+    // Cloudflare runtime 환경 변수 접근
+    const runtime = locals.runtime;
+    const env = runtime?.env || import.meta.env;
+    
+    const greeting = await strapiClient.getGreeting(env);
     
     if (!greeting) {
       return new Response(JSON.stringify({ error: 'No greeting data found' }), {
