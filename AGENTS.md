@@ -343,13 +343,76 @@ const notices = await strapi.getNotices({ page: 1, pageSize: 10 });
 </div>
 ```
 
-### 섹션별 API 주석 규칙
+### Strapi 데이터 경로 표시 시스템
+
+**목적**: 관리자가 Strapi에서 수정할 위치를 쉽게 찾을 수 있도록 시각적으로 표시
+
+#### data-strapi-path 속성 규칙
+
+모든 Strapi 데이터 바인딩 요소에 `data-strapi-path` 속성을 추가합니다.
+
+**형식**:
+```html
+<!-- Single Type -->
+<div data-strapi-path="single-types > about > greeting">
+  <h3 data-strapi-path="single-types > about > greeting > title">{title}</h3>
+  <div data-strapi-path="single-types > about > greeting > body">{body}</div>
+</div>
+
+<!-- Collection Type -->
+<section data-strapi-path="collection-types > notices">
+  {notices.map(item => (
+    <div data-strapi-path={`collection-types > notices > ${item.id}`}>
+      <h3 data-strapi-path={`collection-types > notices > ${item.id} > title`}>{item.title}</h3>
+      <div data-strapi-path={`collection-types > notices > ${item.id} > body`}>{item.body}</div>
+    </div>
+  ))}
+</section>
+```
+
+**명명 규칙**:
+- Single Type: `single-types > {typeName} > {fieldName}`
+- Collection Type: `collection-types > {typeName} > {id} > {fieldName}`
+- 섹션 전체: `collection-types > {typeName}` (ID 없음)
+
+#### 명령 팔레트 통합
+
+- `Ctrl+Shift+P` → "📍 데이터 위치 보기" 선택
+- 화면에 모든 `data-strapi-path` 요소 위에 경로 라벨 오버레이
+- 라벨 클릭 시 경로가 클립보드에 복사됨
+
+#### 구현 예시
+
+**about.astro** (Single Type):
+```astro
+<section data-strapi-path="single-types > about > greeting">
+  <h3 data-strapi-path="single-types > about > greeting > title">{greetingData.title}</h3>
+  <div data-strapi-path="single-types > about > greeting > body" set:html={greetingData.body} />
+</section>
+```
+
+**notice.astro** (Collection Type):
+```astro
+<section data-strapi-path="collection-types > notices">
+  {announcements.map(item => (
+    <div data-strapi-path={`collection-types > notices > ${item.id}`}>
+      <h3 data-strapi-path={`collection-types > notices > ${item.id} > title`}>{item.title}</h3>
+    </div>
+  ))}
+</section>
+```
+
+**주의사항**:
+- 모든 동적 데이터에 `data-strapi-path` 추가 (새 페이지 작성 시 필수)
+- 경로는 Strapi 관리자 패널의 실제 구조와 일치해야 함
+- 정적 컨텐츠는 `data-strapi-path` 불필요
+
+### 섹션별 API 주석 규칙 (구현 예정)
 
 - 모든 Astro/React 섹션 컴포넌트 상단에 `// Strapi API: <엔드포인트>` 주석을 추가한다.
   - 예) `// Strapi API: /api/home-hero?populate=slides`.
 - 다중 데이터를 fetch할 경우, 주석에 배열로 명시한다.
   - 예) `// Strapi API: [/api/notices, /api/events]`.
-- 명령 팔레트 액션 "API 경로 표시" 실행 시, 현재 파일의 주석을 읽어 UI에 오버레이한다 (구현 예정).
 - 주석 변경 시 `AGENTS.md`와 `src/lib/strapi.ts` 타입 정의도 함께 업데이트한다.
 
 ## 📊 Google Analytics 연동

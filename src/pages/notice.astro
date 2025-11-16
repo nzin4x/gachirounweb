@@ -87,17 +87,17 @@ const events = [
 <MainLayout title="안내사항" data-strapi-url={env.STRAPI_URL || 'http://localhost:1337'}>
   <div class="page-container">
     <!-- 공지사항 -->
-    <section id="announcements" class="content-section" data-strapi-path="announcements">
+    <section id="announcements" class="content-section" data-strapi-path="collection-types > notices">
       <div class="container">
         <h2 class="section-title clickable-title">공지사항</h2>
         <div class="board-list" id="announcement-list">
           {announcements.length > 0 ? announcements.map((item: any) => (
-            <div class="board-item" data-strapi-path={`announcements > ${item.id}`}>
+            <div class="board-item" data-strapi-path={`collection-types > notices > ${item.id}`}>
               <div class="board-header">
-                <h3 class="announcement-title" data-id={item.id}>{item.title}</h3>
-                <span class="date">{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
+                <h3 class="announcement-title" data-strapi-path={`collection-types > notices > ${item.id} > title`} data-id={item.id}>{item.title}</h3>
+                <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
               </div>
-              <div class="board-preview">
+              <div class="board-preview" data-strapi-path={`collection-types > notices > ${item.id} > body`}>
                 {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
               </div>
               <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''}>
