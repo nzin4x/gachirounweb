@@ -108,7 +108,7 @@ const events = [
                 </div>
                 {item.photo && (
                   <div class="board-thumbnail">
-                    <img src={`${env.STRAPI_URL}${item.photo}`} alt={item.photoAlt || item.title} />
+                    <img src={item.photo.startsWith('http') ? item.photo : `${env.STRAPI_URL}${item.photo}`} alt={item.photoAlt || item.title} />
                   </div>
                 )}
               </div>
@@ -939,7 +939,7 @@ const events = [
             </div>
           </div>
           <div class="modal-body">
-            ${photo ? `<img src="${STRAPI_URL_CLIENT}${photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
+            ${photo ? `<img src="${photo.startsWith('http') ? photo : STRAPI_URL_CLIENT + photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
             ${body}
           </div>
         </div>
@@ -1185,7 +1185,7 @@ const events = [
           thumbnailDiv.className = 'board-thumbnail';
           
           const img = document.createElement('img');
-          img.src = `https://faithful-dog-1d263d2e88.strapiapp.com${item.photo}`;
+          img.src = item.photo.startsWith('http') ? item.photo : `${STRAPI_URL_CLIENT}${item.photo}`;
           img.alt = item.photoAlt || item.title || '';
           
           thumbnailDiv.appendChild(img);
