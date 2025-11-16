@@ -4,26 +4,33 @@
 
 이 프로젝트는 **로컬 개발**과 **Cloudflare Pages 배포** 모두에서 작동하도록 설계되었습니다.
 
+**중요**: Cloudflare Pages는 `wrangler.toml`이 있으면 환경 변수를 소스 코드에서 관리합니다.
+- **비민감 정보**(STRAPI_URL, PUBLIC_GA_ID 등): `wrangler.toml` [vars] 섹션
+- **민감 정보**(API 토큰): Cloudflare Secrets (대시보드 또는 wrangler CLI)
+
 ## 📋 환경 변수 계층 구조
 
-### 1. 로컬 개발 (npm run dev)
-- `.env.local` 파일 사용
-- **빌드 타임**: `import.meta.env`로 접근
-- **런타임(SSR)**: `Astro.locals.runtime.env` 또는 `import.meta.env` fallback
+### 우선순위: wrangler.toml > .dev.vars > .env.local
 
-### 2. Wrangler 로컬 개발 (npm run dev:wrangler)
-- `.dev.vars` 파일 사용 (secrets)
-- `wrangler.toml` 파일 사용 (public vars)
-- Cloudflare 런타임 환경 시뮬레이션
-- **빌드 타임**: `import.meta.env`
-- **런타임(SSR)**: `Astro.locals.runtime.env`
+### 1. wrangler.toml (비민감 정보, Git 커밋)
+- `[vars]`: 로컬 개발용 환경 변수
+- `[env.production.vars]`: 프로덕션 배포용 환경 변수
+- **포함 항목**: STRAPI_URL, PUBLIC_GA_ID, PUBLIC_RECAPTCHA_SITE_KEY
+- Cloudflare Pages가 자동으로 읽어서 빌드 및 런타임에 주입
 
-### 3. Cloudflare Pages 프로덕션
-- Cloudflare 대시보드에서 환경 변수 설정
-- **빌드 환경 변수** (Settings > Environment variables > Build)
-- **Functions 환경 변수** (Settings > Environment variables > Functions) ← **필수!**
-- **빌드 타임**: `import.meta.env`로 접근 (빌드 시 주입)
-- **런타임(SSR)**: `Astro.locals.runtime.env`로만 접근 가능
+### 2. .dev.vars (민감 정보, Git 무시)
+- **로컬 개발 전용** Secrets 파일
+- **포함 항목**: STRAPI_API_TOKEN_READ
+- `npm run dev:wrangler` 실행 시 자동 로딩
+
+### 3. Cloudflare Secrets (프로덕션)
+- **Cloudflare 대시보드** → Settings → Variables and Secrets → Add Secret
+- 또는 **wrangler CLI**: `wrangler secret put STRAPI_API_TOKEN_READ`
+- **포함 항목**: STRAPI_API_TOKEN_READ (암호화 저장)
+
+### 4. 런타임 접근 방식
+- **빌드 타임**: `import.meta.env` (wrangler.toml [vars]에서 주입)
+- **런타임(SSR)**: `Astro.locals.runtime.env` (wrangler.toml + Secrets 병합)
 
 ## 🔧 로컬 개발 설정
 
@@ -66,40 +73,38 @@ npm run dev:wrangler
 
 ## ☁️ Cloudflare Pages 배포 설정
 
-### 1. 환경 변수 등록
+### 1. wrangler.toml 설정 (이미 완료)
 
-Cloudflare Pages 대시보드 → Settings → Environment variables
+프로덕션 환경 변수는 `wrangler.toml`에 정의되어 있습니다:
 
-#### Build 환경 변수 (빌드 시점)
-```
-STRAPI_URL = https://faithful-dog-1d263d2e88.strapiapp.com
-STRAPI_API_TOKEN_READ = <your-read-only-token>
-PUBLIC_GA_ID = GTM-MVL6P7N7
-PUBLIC_RECAPTCHA_SITE_KEY = <your-recaptcha-key>
-```
-
-#### Functions 환경 변수 (런타임)
-**중요**: 위와 동일한 변수를 Functions 섹션에도 등록해야 SSR에서 접근 가능합니다.
-
-```
-STRAPI_URL = https://faithful-dog-1d263d2e88.strapiapp.com
-STRAPI_API_TOKEN_READ = <your-read-only-token>
-PUBLIC_GA_ID = GTM-MVL6P7N7
-PUBLIC_RECAPTCHA_SITE_KEY = <your-recaptcha-key>
+```toml
+[env.production.vars]
+STRAPI_URL = "https://faithful-dog-1d263d2e88.strapiapp.com"
+PUBLIC_GA_ID = "GTM-MVL6P7N7"
+PUBLIC_RECAPTCHA_SITE_KEY = "your-key"
 ```
 
-### 2. Secrets 관리 (Wrangler CLI)
+**Git에 커밋되므로 민감 정보는 절대 포함하지 마세요!**
 
-민감한 토큰은 Wrangler CLI로 등록:
+### 2. Cloudflare Secret 등록 (필수)
 
+민감한 토큰은 Cloudflare Secret으로 등록:
+
+#### 방법 1: Wrangler CLI (추천)
 ```bash
-# 프로젝트 디렉토리에서 실행
-wrangler secret put STRAPI_API_TOKEN_READ --env production
+cd c:\lsrc\gachiroun\homepage
+npx wrangler secret put STRAPI_API_TOKEN_READ
 
-# 토큰 값 입력 프롬프트
-Enter the secret text you'd like assigned to the variable STRAPI_API_TOKEN_READ on the script named gachiroun-or-kr:
-***************
+# 프롬프트에서 토큰 값 붙여넣기:
+Enter a secret value: ***************
 ```
+
+#### 방법 2: Cloudflare 대시보드
+1. Cloudflare Pages → 프로젝트 선택
+2. Settings → Variables and Secrets
+3. "Add" → "Secret" 선택
+4. Name: `STRAPI_API_TOKEN_READ`, Value: 토큰 붙여넣기
+5. Deploy production 선택
 
 ### 3. 배포
 
@@ -194,22 +199,26 @@ npm run preview
 
 ## ⚠️ 주의사항
 
-1. **절대 커밋하지 말 것**:
-   - `.env.local`
-   - `.dev.vars`
-   - `wrangler.toml.local`
+1. **Git 커밋 규칙**:
+   - ✅ **커밋해야 함**: `wrangler.toml` (비민감 정보만)
+   - ❌ **절대 커밋 금지**: `.env.local`, `.dev.vars`
 
-2. **Read-Only 토큰 사용**:
-   - 프로덕션에는 `STRAPI_API_TOKEN_READ` 사용 권장
-   - `STRAPI_API_TOKEN_FULL`은 로컬 개발용
+2. **wrangler.toml 관리**:
+   - `[vars]`: 비민감 정보만 (URL, public API key)
+   - 토큰, password 등은 절대 포함 금지 → Secrets 사용
 
-3. **PUBLIC_ 접두사**:
-   - 클라이언트에 노출되는 변수는 반드시 `PUBLIC_` 접두사 사용
+3. **Cloudflare Secrets**:
+   - 프로덕션 토큰은 반드시 Cloudflare Secret으로 등록
+   - wrangler.toml이 있으면 대시보드 환경 변수 설정이 무시됨
+   - Secret만 대시보드에서 관리 가능
+
+4. **Read-Only 토큰 사용**:
+   - 프로덕션: `STRAPI_API_TOKEN_READ` (읽기 전용)
+   - 로컬 개발: `STRAPI_API_TOKEN_FULL` (편의상)
+
+5. **PUBLIC_ 접두사**:
+   - 클라이언트 노출 변수는 `PUBLIC_` 필수
    - 예: `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`
-
-4. **Cloudflare Functions 환경 변수**:
-   - SSR 페이지에서 환경 변수를 사용하려면 반드시 **Functions 환경 변수**에도 등록
-   - Build 환경 변수만 등록하면 런타임에 `undefined`
 
 ## 📚 참고 문서
 

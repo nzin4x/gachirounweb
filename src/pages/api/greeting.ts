@@ -2,13 +2,11 @@
 // This keeps Strapi tokens secure (server-side only)
 import type { APIRoute } from 'astro';
 import strapiClient from '../../lib/strapi';
+import { getEnv } from '../../lib/env';
 
 export const GET: APIRoute = async ({ request, locals }) => {
   try {
-    // Cloudflare runtime 환경 변수 접근
-    const runtime = locals.runtime;
-    const env = runtime?.env || import.meta.env;
-    
+    const env = getEnv(locals);
     const greeting = await strapiClient.getGreeting(env);
     
     if (!greeting) {

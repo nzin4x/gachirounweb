@@ -2,18 +2,15 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import strapiClient from '../lib/strapi';
 import CommandPalette from '../components/react/CommandPalette';
+import { getEnv } from '../lib/env';
 
-// Cloudflare runtime 환경 변수 접근
-const runtime = Astro.locals.runtime;
-const env = runtime?.env || import.meta.env;
+// 환경 변수 공통 헬퍼 사용
+const env = getEnv(Astro.locals);
 
 // Strapi API: announcements (collection type) - fields: title, body, photo, createdAt
 const announcements = await (async () => {
   try {
-    console.log('[SSR Debug] Starting Strapi announcements fetch...');
-    console.log('[SSR Debug] STRAPI_URL:', env.STRAPI_URL);
-    console.log('[SSR Debug] STRAPI_API_TOKEN_FULL length:', env.STRAPI_API_TOKEN_FULL?.length || 0);
-    console.log('[SSR Debug] STRAPI_API_TOKEN_READ length:', env.STRAPI_API_TOKEN_READ?.length || 0);
+    console.log('[SSR] Fetching announcements...');
 
     // Check if required environment variables are set
     if (!env.STRAPI_URL) {
@@ -21,11 +18,11 @@ const announcements = await (async () => {
     }
 
     if (!env.STRAPI_API_TOKEN_FULL && !env.STRAPI_API_TOKEN_READ && !env.STRAPI_API_TOKEN) {
-      throw new Error('No Strapi API token found. Please set STRAPI_API_TOKEN_FULL, STRAPI_API_TOKEN_READ, or STRAPI_API_TOKEN in Cloudflare Pages settings.');
+      throw new Error('No Strapi API token found. Please configure Strapi token.');
     }
 
     const data = await strapiClient.getAnnouncements(10, env);
-    console.log('[SSR Debug] Successfully fetched announcements:', data?.length || 0, 'items');
+    console.log('[SSR] Fetched', data?.length || 0, 'announcements');
     return data;
   } catch (e) {
     console.error('[SSR Debug] Failed to load announcements from Strapi:', e);

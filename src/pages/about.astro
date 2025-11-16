@@ -3,10 +3,10 @@ import MainLayout from '../layouts/MainLayout.astro';
 import historyData from '../data/history.json';
 import strapiClient from '../lib/strapi';
 import CommandPalette from '../components/react/CommandPalette';
+import { getEnv } from '../lib/env';
 
-// Cloudflare runtime 환경 변수 접근
-const runtime = Astro.locals.runtime;
-const env = runtime?.env || import.meta.env;
+// 환경 변수 공통 헬퍼 사용
+const env = getEnv(Astro.locals);
 
 // Strapi API: greeting (single type) - fields: title, body, writtenby
 const greetingData = await (async () => {
@@ -14,7 +14,7 @@ const greetingData = await (async () => {
     const g = await strapiClient.getGreeting(env);
     return g;
   } catch (e) {
-    console.warn('Failed to load greeting from Strapi:', e);
+    console.warn('[About] Failed to load greeting from Strapi');
     return null;
   }
 })();
@@ -71,7 +71,7 @@ const greetingData = await (async () => {
               {greetingData && greetingData.title ? (
                 <h3 data-strapi-path="single-types > about > greeting > title" id="greeting-title">{greetingData.title}</h3>
               ) : (
-                <h3 data-strapi-path="single-types > about > greeting > title" id="greeting-title">"우리 같이, 가치롭게." 하드코드</h3>
+                <h3 data-strapi-path="single-types > about > greeting > title" id="greeting-title">"우리 같이, 가치롭게."</h3>
               )}
 
               {greetingData && greetingData.body ? (

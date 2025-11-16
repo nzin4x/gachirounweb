@@ -9,18 +9,12 @@ function getStrapiConfig(env?: any) {
   const STRAPI_URL = actualEnv.STRAPI_URL || 'http://localhost:1337';
   const STRAPI_TOKEN = actualEnv.STRAPI_API_TOKEN_FULL || actualEnv.STRAPI_API_TOKEN_READ || actualEnv.STRAPI_API_TOKEN || '';
   
-  console.log('[Strapi Config] URL:', STRAPI_URL);
-  console.log('[Strapi Config] Token length:', STRAPI_TOKEN ? STRAPI_TOKEN.length : 0);
-  console.log('[Strapi Config] Token prefix:', STRAPI_TOKEN ? STRAPI_TOKEN.substring(0, 20) + '...' : 'NONE');
-  
   return { STRAPI_URL, STRAPI_TOKEN };
 }
 
 async function graphql(query: string, variables?: Record<string, any>, env?: any) {
   const { STRAPI_URL, STRAPI_TOKEN } = getStrapiConfig(env);
   const url = `${STRAPI_URL.replace(/\/+$/, '')}/graphql`;
-  console.log('[Strapi GraphQL] Making request to:', url);
-  console.log('[Strapi GraphQL] Query:', query.substring(0, 100) + '...');
 
   try {
     const res = await fetch(url, {
@@ -32,25 +26,19 @@ async function graphql(query: string, variables?: Record<string, any>, env?: any
       body: JSON.stringify({ query, variables }),
     });
 
-    console.log('[Strapi GraphQL] Response status:', res.status);
-    console.log('[Strapi GraphQL] Response headers:', Object.fromEntries(res.headers.entries()));
-
     if (!res.ok) {
       const err = await res.text();
-      console.error('[Strapi GraphQL] HTTP Error:', res.status, err);
-      throw new Error(`Strapi GraphQL error: ${res.status} ${err}`);
+      console.error('[Strapi GraphQL] HTTP Error:', res.status);
+      throw new Error(`Strapi GraphQL error: ${res.status}`);
     }
 
     const payload: GraphQLResponse = await res.json();
-    console.log('[Strapi GraphQL] Response payload keys:', Object.keys(payload));
-    console.log('[Strapi GraphQL] Has errors:', !!payload.errors);
 
     if (payload.errors) {
-      console.error('[Strapi GraphQL] GraphQL Errors:', payload.errors);
+      console.error('[Strapi GraphQL] Errors:', payload.errors);
       throw new Error(`Strapi GraphQL error: ${JSON.stringify(payload.errors)}`);
     }
 
-    console.log('[Strapi GraphQL] Success, data keys:', Object.keys(payload.data || {}));
     return payload.data;
   } catch (error) {
     console.error('[Strapi GraphQL] Fetch failed:', error);
@@ -107,8 +95,6 @@ function strapiRichTextToHtml(richText: any): string {
 }
 
 export async function getGreeting(env?: any) {
-  const { STRAPI_URL } = getStrapiConfig(env);
-  console.log('[Strapi] Fetching greeting from:', STRAPI_URL);
 
   // 1) Try GraphQL - based on working curl example: about { greeting { ... } }
   const gql = `query Greeting {
@@ -165,9 +151,6 @@ export async function getGreeting(env?: any) {
 }
 
 export async function getAnnouncements(limit = 10, env?: any) {
-  const { STRAPI_URL, STRAPI_TOKEN } = getStrapiConfig(env);
-  console.log('[Strapi] Fetching announcements from:', STRAPI_URL);
-  console.log('[Strapi] Using token:', STRAPI_TOKEN ? `${STRAPI_TOKEN.substring(0, 20)}... (${STRAPI_TOKEN.length} chars)` : 'NONE');
 
   // GraphQL query for notices collection type (Strapi field name: notices)
   const gql = `query GetNotices {
@@ -180,16 +163,7 @@ export async function getAnnouncements(limit = 10, env?: any) {
   }`;
 
   try {
-    console.log('[Strapi] Attempting GraphQL query: notices');
-    console.log('[Strapi] GraphQL endpoint:', `${STRAPI_URL.replace(/\/+$/, '')}/graphql`);
-    console.log('[Strapi] Request headers:', {
-      'Content-Type': 'application/json',
-      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN.substring(0, 20)}...` } : {})
-    });
-
     const data = await graphql(gql, { limit }, env);
-    console.log('[Strapi] GraphQL response received, data structure:', Object.keys(data || {}));
-    console.log('[Strapi] Raw notices data:', data?.notices);
     
     if (Array.isArray(data?.notices)) {
       const announcements = data.notices.map((item: any, index: number) => ({
@@ -213,7 +187,6 @@ export async function getAnnouncements(limit = 10, env?: any) {
 
   // Fallback: try REST API
   try {
-    console.log('[Strapi] Trying REST /api/notices...');
     const restUrl = `/api/notices?sort=createdAt:desc&pagination[limit]=${limit}`;
     const r = await restGet(restUrl, env);
     
@@ -227,11 +200,10 @@ export async function getAnnouncements(limit = 10, env?: any) {
         createdAt: item.attributes?.createdAt,
         updatedAt: item.attributes?.updatedAt,
       }));
-      console.log(`[Strapi] REST success: ${announcements.length} notices`);
       return announcements;
     }
   } catch (e) {
-    console.warn('[Strapi] REST /api/notices failed:', e instanceof Error ? e.message : String(e));
+    console.warn('[Strapi] REST fallback failed');
   }
 
   return [];

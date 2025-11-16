@@ -723,28 +723,35 @@ const content = await strapi.getPageContent(PAGE_ID);
 ```bash
 npm run dev
 ```
-- `.env.local` 파일 사용
-- `import.meta.env`로 접근
+- `wrangler.toml` [vars] 섹션의 로컬 환경 변수 사용
+- `.dev.vars` 파일로 secrets 관리 (선택)
 
 **방법 2: Wrangler 로컬 개발 (Cloudflare 시뮬레이션)**
 ```bash
 npm run dev:wrangler
 ```
-- `.dev.vars` 파일 사용 (secrets)
-- `wrangler.toml` 파일 사용 (public vars)
+- `wrangler.toml` + `.dev.vars` 조합
+- Cloudflare Workers 런타임 환경 시뮬레이션
 
 ### Cloudflare Pages 배포 설정
 
-1. **빌드 환경 변수** (Settings > Environment variables > Build):
-   - `STRAPI_URL`, `STRAPI_API_TOKEN_READ`, `PUBLIC_GA_ID`, `PUBLIC_RECAPTCHA_SITE_KEY`
+**중요**: `wrangler.toml`이 있으면 환경 변수는 소스 코드로 관리됩니다.
 
-2. **Functions 환경 변수** (Settings > Environment variables > Functions):
-   - **중요**: 위와 동일한 변수를 Functions에도 등록 (SSR 런타임 접근용)
+1. **wrangler.toml 설정** (이미 완료):
+   - `[env.production.vars]`: 프로덕션 환경 변수 (비민감 정보)
+   - STRAPI_URL, PUBLIC_GA_ID, PUBLIC_RECAPTCHA_SITE_KEY
 
-3. **Wrangler CLI로 Secrets 등록**:
+2. **Cloudflare Secret 등록** (필수):
 ```bash
-wrangler secret put STRAPI_API_TOKEN_READ --env production
+npx wrangler secret put STRAPI_API_TOKEN_READ
 ```
+또는 Cloudflare 대시보드 → Settings → Variables and Secrets → Add Secret
+
+3. **Git 푸시로 자동 배포**:
+```bash
+git push origin master
+```
+Cloudflare Pages가 `wrangler.toml`을 읽어서 자동으로 환경 설정
 
 ### 토큰 우선순위
 
@@ -823,18 +830,16 @@ useSubscription(SUBSCRIPTION, {
 **Last Updated**: 2025-11-16
 
 **Recent Changes**:
-- ✅ 전문적 디자인 리뉴얼: 모든 꽃 이모지를 기하학 기호로 교체, 브랜드 문구 개선
-- ✅ 테마 시스템 업그레이드: "주황노랑꽃" → "가치로운 오리지널", "남색파랑신뢰" → "프로페셔널 블루"
-- ✅ CSS 장식 요소 현대화: ::before 장식을 통일된 디자인 언어로 정비
-- ✅ Strapi Live Content 로드맵 수립: GraphQL/SSR 목표, API 키 관리, 스키마 확장 가이드 문서화
-- ✅ Cloudflare SSR 기반 데이터 패칭 전략 정의 (팩터별 독립 fetch 설계)
-- ✅ 관리자 명령 팔레트 구현: Ctrl+Shift+P 또는 푸터 더블탭으로 데이터 재조회 및 Strapi 경로 오버레이 기능 추가
-- ✅ 서버 API 프록시 추가: `/api/greeting`, `/api/announcements` 엔드포인트로 안전한 클라이언트 데이터 페칭 지원
-- ✅ GraphQL 디버깅 로그 강화: Strapi 연결 문제 진단을 위한 상세 로깅 추가
-- ✅ GraphQL 스키마 구조 수정: `greeting` single type → `about { greeting { ... } }` nested 구조로 변경하여 실제 Strapi 스키마에 맞춤
-- ✅ Strapi Rich Text 변환: JSON 형태의 rich text를 HTML로 변환하는 `strapiRichTextToHtml()` 함수 추가하여 `[object Object]` 문제 해결
-- ✅ 실시간 업데이트 기능 추가: 명령 팔레트에서 30초 폴링 기반 자동 데이터 갱신 토글 기능 구현
-- ✅ 환경 변수 관리 시스템 완성: **Cloudflare runtime 환경 변수 접근 패턴 확립** (`Astro.locals.runtime.env`), 모든 Strapi API 함수에 `env` 매개변수 추가, wrangler.toml 설정, 로컬(.env.local/.dev.vars) 및 Cloudflare Pages(Functions 환경 변수) 모두 지원, CLOUDFLARE_ENV_GUIDE.md 문서화 완료
+- ✅ **환경 변수 관리 최종 완성**: `wrangler.toml` 중심 전략으로 전환
+  - 비민감 정보(STRAPI_URL, PUBLIC_* 등)는 `wrangler.toml` [vars]에 Git 커밋
+  - 민감 정보(API 토큰)는 Cloudflare Secrets로 분리 관리
+  - `Astro.locals.runtime.env`로 런타임 환경 변수 접근 (빌드/런타임 통합)
+  - Cloudflare Pages 대시보드 환경 변수 설정 제거 (wrangler.toml 우선)
+- ✅ Cloudflare runtime 환경 변수 접근 패턴 확립: 모든 Strapi API 함수에 `env` 매개변수 추가
+- ✅ 실시간 업데이트 기능: 명령 팔레트 Ctrl+Shift+P로 데이터 재조회, Strapi 경로 오버레이
+- ✅ GraphQL 스키마 수정: `about { greeting { ... } }` nested 구조로 실제 Strapi 스키마 반영
+- ✅ Strapi Rich Text 변환: `strapiRichTextToHtml()` 함수로 JSON → HTML 변환
+- ✅ 서버 API 프록시: `/api/greeting`, `/api/announcements` 엔드포인트 추가
 
 **페이지 상태** (2025-11-08):
 ```
