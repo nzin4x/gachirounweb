@@ -216,6 +216,11 @@ export async function getAnnouncements(limit = 10, env?: any) {
     notices(sort: "createdAt:desc") {
       title
       body
+      photo {
+        url
+        name
+        alternativeText
+      }
       createdAt
       updatedAt
     }
@@ -229,8 +234,8 @@ export async function getAnnouncements(limit = 10, env?: any) {
         id: `notice-${index}`, // Generate ID since Strapi doesn't provide one
         title: item.title || '',
         body: strapiRichTextToHtml(item.body) || '',
-        photo: null, // Not available in this schema
-        photoAlt: '',
+        photo: item.photo?.url || null,
+        photoAlt: item.photo?.alternativeText || item.photo?.name || '',
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
       }));

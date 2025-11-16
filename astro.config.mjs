@@ -13,7 +13,6 @@ export default defineConfig({
   vite: {
     ssr: {
       external: ['node:buffer', 'node:path', 'node:fs', 'node:os'],
-      noExternal: ['react', 'react-dom'],
     },
     resolve: {
       alias: {

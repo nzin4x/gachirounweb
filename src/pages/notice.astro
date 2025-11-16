@@ -93,16 +93,25 @@ const events = [
         <div class="board-list" id="announcement-list">
           {announcements.length > 0 ? announcements.map((item: any) => (
             <div class="board-item" data-strapi-path={`collection-types > notices > ${item.id}`}>
-              <div class="board-header">
-                <h3 class="announcement-title" data-strapi-path={`collection-types > notices > ${item.id} > title`} data-id={item.id}>{item.title}</h3>
-                <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
+              <div class="board-content-wrapper">
+                <div class="board-text">
+                  <div class="board-header">
+                    <h3 class="announcement-title" data-strapi-path={`collection-types > notices > ${item.id} > title`} data-id={item.id}>{item.title}</h3>
+                    <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
+                  </div>
+                  <div class="board-preview" data-strapi-path={`collection-types > notices > ${item.id} > body`}>
+                    {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
+                  </div>
+                  <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''} data-photo-alt={item.photoAlt || ''}>
+                    자세히 보기 →
+                  </button>
+                </div>
+                {item.photo && (
+                  <div class="board-thumbnail">
+                    <img src={`${env.STRAPI_URL}${item.photo}`} alt={item.photoAlt || item.title} />
+                  </div>
+                )}
               </div>
-              <div class="board-preview" data-strapi-path={`collection-types > notices > ${item.id} > body`}>
-                {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
-              </div>
-              <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''}>
-                자세히 보기 →
-              </button>
             </div>
           )) : (
             <div class="no-announcements">
@@ -277,6 +286,31 @@ const events = [
     transform: translateY(-2px);
   }
 
+  .board-content-wrapper {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+  }
+
+  .board-text {
+    flex: 1;
+  }
+
+  .board-thumbnail {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--color-gray-200);
+  }
+
+  .board-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .board-header {
     display: flex;
     justify-content: space-between;
@@ -325,6 +359,17 @@ const events = [
   .btn-view-more:hover {
     transform: translateX(4px);
     box-shadow: 0 4px 12px rgba(242, 101, 56, 0.3);
+  }
+
+  @media (max-width: 480px) {
+    .board-content-wrapper {
+      flex-direction: column;
+    }
+
+    .board-thumbnail {
+      width: 100%;
+      height: 180px;
+    }
   }
 
   /* Modal Styles - Global to work with dynamically inserted HTML */
@@ -389,10 +434,11 @@ const events = [
     color: var(--color-gray-900);
   }
 
+  :global(.modal-share),
   :global(.modal-close) {
     background: transparent;
     border: none;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     cursor: pointer;
     color: var(--color-gray-500);
     width: 32px;
@@ -406,10 +452,19 @@ const events = [
     line-height: 1;
   }
 
+  :global(.modal-close) {
+    font-size: 1.75rem;
+  }
+
+  :global(.modal-share:hover),
   :global(.modal-close:hover) {
     background: rgba(0, 0, 0, 0.05);
     color: var(--color-gray-900);
     transform: scale(1.1);
+  }
+
+  :global(.modal-share:hover) {
+    color: var(--color-primary-600);
   }
 
   :global(.modal-body) {
@@ -872,13 +927,16 @@ const events = [
 
   const STRAPI_URL_CLIENT = document.documentElement.dataset.strapiUrl || 'http://localhost:1337';
 
-  function openModal(title: string, body: string, photo: string) {
+  function openModal(title: string, body: string, photo: string, noticeId?: string) {
     const modalHTML = `
       <div class="modal-overlay" id="announcement-modal">
         <div class="modal-container">
           <div class="modal-header">
             <h2 class="modal-title">${title}</h2>
-            <button class="modal-close" aria-label="닫기">✕</button>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="modal-share" aria-label="공유하기" title="공유하기">🔗</button>
+              <button class="modal-close" aria-label="닫기">✕</button>
+            </div>
           </div>
           <div class="modal-body">
             ${photo ? `<img src="${STRAPI_URL_CLIENT}${photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
@@ -891,16 +949,53 @@ const events = [
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     document.body.style.overflow = 'hidden';
 
+    // URL 라우팅: hash 업데이트
+    if (noticeId) {
+      window.history.pushState(null, '', `#notice-${noticeId}`);
+    }
+
     const modal = document.getElementById('announcement-modal');
     const closeBtn = modal?.querySelector('.modal-close');
+    const shareBtn = modal?.querySelector('.modal-share');
     const overlay = modal; // modal element itself is the overlay
 
     closeBtn?.addEventListener('click', closeModal);
+    shareBtn?.addEventListener('click', () => shareNotice(title, noticeId));
     overlay?.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal();
     });
 
     document.addEventListener('keydown', handleEscape);
+  }
+
+  async function shareNotice(title: string, noticeId?: string) {
+    const url = noticeId ? `${window.location.origin}${window.location.pathname}#notice-${noticeId}` : window.location.href;
+    
+    try {
+      // Web Share API 지원 확인
+      if (navigator.share) {
+        await navigator.share({
+          title: title,
+          text: `사회적협동조합 가치로운 - ${title}`,
+          url: url
+        });
+        showToast('✅ 공유되었습니다!');
+      } else {
+        // Fallback: 클립보드 복사
+        await navigator.clipboard.writeText(url);
+        showToast('✅ 링크가 클립보드에 복사되었습니다!');
+      }
+    } catch (error) {
+      console.error('Share failed:', error);
+      // 최종 fallback: 수동 선택
+      const input = document.createElement('input');
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      showToast('✅ 링크가 클립보드에 복사되었습니다!');
+    }
   }
 
   function closeModal() {
@@ -909,6 +1004,11 @@ const events = [
       modal.remove();
       document.body.style.overflow = 'unset';
       document.removeEventListener('keydown', handleEscape);
+      
+      // URL hash 제거 (notice 관련 hash만)
+      if (window.location.hash.startsWith('#notice-')) {
+        window.history.pushState(null, '', window.location.pathname + '#announcements');
+      }
     }
   }
 
@@ -932,10 +1032,11 @@ const events = [
         e.stopPropagation();
         if (isModalOpen()) return;
         const target = e.currentTarget as HTMLElement;
+        const id = target.dataset.id || '';
         const title = target.dataset.title || '';
         const body = target.dataset.body || '';
         const photo = target.dataset.photo || '';
-        openModal(title, body, photo);
+        openModal(title, body, photo, id);
       });
     });
 
@@ -964,12 +1065,33 @@ const events = [
         const target = item;
         const title = target.querySelector('.announcement-title')?.textContent || '';
         const btn = target.querySelector('.btn-view-more') as HTMLElement | null;
+        const id = btn?.dataset.id || '';
         const body = btn?.dataset.body || '';
         const photo = btn?.dataset.photo || '';
-        openModal(title, body, photo);
+        openModal(title, body, photo, id);
       });
     });
+
+    // URL hash로 직접 접근 시 모달 자동 열기
+    checkHashAndOpenModal();
   });
+
+  function checkHashAndOpenModal() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#notice-')) {
+      const noticeId = hash.replace('#notice-', '');
+      const btn = document.querySelector(`.btn-view-more[data-id="${noticeId}"]`) as HTMLElement;
+      if (btn) {
+        const title = btn.dataset.title || '';
+        const body = btn.dataset.body || '';
+        const photo = btn.dataset.photo || '';
+        openModal(title, body, photo, noticeId);
+      }
+    }
+  }
+
+  // Hash 변경 시 모달 열기
+  window.addEventListener('hashchange', checkHashAndOpenModal);
 
   // Admin tools: Announcements refetch
   // Listen for command palette actions
@@ -1009,6 +1131,14 @@ const events = [
         itemDiv.className = 'board-item';
         itemDiv.setAttribute('data-strapi-path', `collection-types > notices > ${item.id}`);
 
+        // Content wrapper (텍스트 + 썸네일)
+        const wrapperDiv = document.createElement('div');
+        wrapperDiv.className = 'board-content-wrapper';
+
+        // Text section
+        const textDiv = document.createElement('div');
+        textDiv.className = 'board-text';
+
         // Board header
         const headerDiv = document.createElement('div');
         headerDiv.className = 'board-header';
@@ -1026,7 +1156,7 @@ const events = [
 
         headerDiv.appendChild(title);
         headerDiv.appendChild(dateSpan);
-        itemDiv.appendChild(headerDiv);
+        textDiv.appendChild(headerDiv);
 
         // Board preview (100자 요약)
         const previewDiv = document.createElement('div');
@@ -1034,7 +1164,7 @@ const events = [
         previewDiv.setAttribute('data-strapi-path', `collection-types > notices > ${item.id} > body`);
         const plainText = (item.body || '').replace(/<[^>]*>/g, '');
         previewDiv.textContent = plainText.substring(0, 100) + '...';
-        itemDiv.appendChild(previewDiv);
+        textDiv.appendChild(previewDiv);
 
         // View more button
         const button = document.createElement('button');
@@ -1043,9 +1173,26 @@ const events = [
         button.setAttribute('data-title', item.title || '');
         button.setAttribute('data-body', item.body || '');
         button.setAttribute('data-photo', item.photo || '');
+        button.setAttribute('data-photo-alt', item.photoAlt || '');
         button.textContent = '자세히 보기 →';
-        itemDiv.appendChild(button);
+        textDiv.appendChild(button);
 
+        wrapperDiv.appendChild(textDiv);
+
+        // Thumbnail (if exists)
+        if (item.photo) {
+          const thumbnailDiv = document.createElement('div');
+          thumbnailDiv.className = 'board-thumbnail';
+          
+          const img = document.createElement('img');
+          img.src = `https://faithful-dog-1d263d2e88.strapiapp.com${item.photo}`;
+          img.alt = item.photoAlt || item.title || '';
+          
+          thumbnailDiv.appendChild(img);
+          wrapperDiv.appendChild(thumbnailDiv);
+        }
+
+        itemDiv.appendChild(wrapperDiv);
         boardList.appendChild(itemDiv);
       });
 
