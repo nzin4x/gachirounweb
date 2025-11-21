@@ -13,7 +13,7 @@ PUBLIC_RECAPTCHA_SITE_KEY = "test-key"
 
 # Production environment variables (override local values)
 [env.production.vars]
-STRAPI_URL = "https://faithful-dog-1d263d2e88.strapiapp.com"
+STRAPI_URL = "https://gachiroun-strapi.onrender.com/"
 PUBLIC_GA_ID = "GTM-MVL6P7N7"
 PUBLIC_RECAPTCHA_SITE_KEY = "6LcXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 

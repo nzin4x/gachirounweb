@@ -1,4 +1,30 @@
-﻿interface GraphQLResponse {
+﻿// 연혁(Histories) Collection fetch 함수
+export async function getHistories(env?: any) {
+  const query = `
+    query {
+      histories(sort: "date:desc", filters: { show: { eq: true } }) {
+        documentId
+        date
+        title
+        description
+        link
+        linkText
+        show
+      }
+    }
+  `;
+  const data = await graphql(query, undefined, env);
+  if (!data?.histories) return [];
+  
+  // documentId를 id로 매핑 후 data-strapi-path 자동 태깅
+  const mappedHistories = data.histories.map((item: any) => ({
+    ...item,
+    id: item.documentId
+  }));
+  
+  return addStrapiPathToCollection(mappedHistories, 'histories');
+}
+interface GraphQLResponse {
   data?: any;
   errors?: any;
 }

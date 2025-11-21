@@ -1,12 +1,72 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import historyData from '../data/history.json';
+import { getHistories } from '../lib/strapi';
 import strapiClient from '../lib/strapi';
 import CommandPalette from '../components/react/CommandPalette';
 import { getEnv } from '../lib/env';
+import rawHistoryData from '../data/history.json';
 
 // 환경 변수 공통 헬퍼 사용
 const env = getEnv(Astro.locals);
+
+
+// Strapi API: histories (collection type) - fields: date, title, description, link, linkText, show
+const historyData: any[] = await (async () => {
+  try {
+    const list = await getHistories(env);
+    if (Array.isArray(list) && list.length > 0) {
+      console.log('[About] Loaded', list.length, 'histories from Strapi');
+      return list;
+    }
+    console.warn('[About] No histories from Strapi, using sample data');
+    // Fallback: 샘플 데이터 사용 (show === true만, date 내림차순 정렬)
+    return rawHistoryData
+      .filter(item => item.show)
+      .sort((a, b) => {
+        const parseDate = (str: string) => {
+          const [y, m, d] = str.split('.').map(Number);
+          return new Date(y, (m || 1) - 1, d || 1).getTime();
+        };
+        return parseDate(b.date) - parseDate(a.date);
+      })
+      .map((item, idx) => ({
+        ...item,
+        id: `history-${idx}`,
+        _strapiPath: `collection-types > histories > history-${idx}`,
+        _strapiFields: {
+          date: `collection-types > histories > history-${idx} > date`,
+          title: `collection-types > histories > history-${idx} > title`,
+          description: `collection-types > histories > history-${idx} > description`,
+          link: `collection-types > histories > history-${idx} > link`,
+          linkText: `collection-types > histories > history-${idx} > linkText`
+        }
+      }));
+  } catch (e) {
+    console.error('[About] Failed to load histories:', e);
+    // 오류 시 샘플 데이터 사용
+    return rawHistoryData
+      .filter(item => item.show)
+      .sort((a, b) => {
+        const parseDate = (str: string) => {
+          const [y, m, d] = str.split('.').map(Number);
+          return new Date(y, (m || 1) - 1, d || 1).getTime();
+        };
+        return parseDate(b.date) - parseDate(a.date);
+      })
+      .map((item, idx) => ({
+        ...item,
+        id: `history-${idx}`,
+        _strapiPath: `collection-types > histories > history-${idx}`,
+        _strapiFields: {
+          date: `collection-types > histories > history-${idx} > date`,
+          title: `collection-types > histories > history-${idx} > title`,
+          description: `collection-types > histories > history-${idx} > description`,
+          link: `collection-types > histories > history-${idx} > link`,
+          linkText: `collection-types > histories > history-${idx} > linkText`
+        }
+      }));
+  }
+})();
 
 // Strapi API: greeting (single type) - fields: title, body, writtenby
 const greetingData = await (async () => {
@@ -304,7 +364,7 @@ const greetingData = await (async () => {
     </section>
 
     <!-- 연혁 -->
-    <section id="history" class="content-section">
+    <section id="history" class="content-section" data-strapi-path="collection-types > histories">
       <div class="container">
         <h2 class="section-title clickable-title">연혁</h2>
         <div class="section-content">
@@ -313,16 +373,16 @@ const greetingData = await (async () => {
           <div class="history-timeline history-pc">
             <div class="timeline-line"></div>
             {historyData.map((item, index) => (
-              <div class={`history-item ${index % 2 === 0 ? 'left' : 'right'}`}>
+              <div class={`history-item ${index % 2 === 0 ? 'left' : 'right'}`} data-strapi-path={item._strapiPath}>
                 {index % 2 === 0 ? (
                   <>
                     <div class="history-content">
-                      <span class="history-date">{item.date}</span>
-                      <h4>{item.title}</h4>
-                      {item.description && <p>{item.description}</p>}
+                      <span class="history-date" data-strapi-path={item._strapiFields.date}>{item.date}</span>
+                      <h4 data-strapi-path={item._strapiFields.title}>{item.title}</h4>
+                      {item.description && <p data-strapi-path={item._strapiFields.description}>{item.description}</p>}
                       {item.link && (
                         <p>
-                          <a href={item.link} target="_blank" rel="noopener noreferrer" data-type="external-event">
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" data-type="external-event" data-strapi-path={item._strapiFields.link}>
                             {item.linkText || '자세히 보기'}
                           </a>
                         </p>
@@ -334,12 +394,12 @@ const greetingData = await (async () => {
                   <>
                     <div class="timeline-dot"></div>
                     <div class="history-content">
-                      <span class="history-date">{item.date}</span>
-                      <h4>{item.title}</h4>
-                      {item.description && <p>{item.description}</p>}
+                      <span class="history-date" data-strapi-path={item._strapiFields.date}>{item.date}</span>
+                      <h4 data-strapi-path={item._strapiFields.title}>{item.title}</h4>
+                      {item.description && <p data-strapi-path={item._strapiFields.description}>{item.description}</p>}
                       {item.link && (
                         <p>
-                          <a href={item.link} target="_blank" rel="noopener noreferrer" data-type="external-event">
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" data-type="external-event" data-strapi-path={item._strapiFields.link}>
                             {item.linkText || '자세히 보기'}
                           </a>
                         </p>
