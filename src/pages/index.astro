@@ -1,6 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import Slider from '../components/react/Slider';
+import strapiClient from '../lib/strapi';
+import { getEnv } from '../lib/env';
 
 const slides = [
   {
@@ -51,24 +53,19 @@ const recentActivities = [
   },
 ];
 
-// 최근 공지사항 샘플
-const recentNotices = [
-  {
-    id: 1,
-    title: '2025년 활동지원사 모집 안내',
-    date: '2025.11.01',
-  },
-  {
-    id: 2,
-    title: '장애인활동지원사업 확대 운영',
-    date: '2025.10.25',
-  },
-  {
-    id: 3,
-    title: '재가방문요양 신규 이용자 안내',
-    date: '2025.10.15',
-  },
-];
+// 환경 변수 공통 헬퍼 사용
+const env = getEnv(Astro.locals);
+
+// Strapi에서 최근 공지사항 가져오기 (3개)
+const recentNotices = await (async () => {
+  try {
+    const data = await strapiClient.getAnnouncements(3, env);
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.warn('[Home] Failed to load recent notices from Strapi:', e);
+    return [];
+  }
+})();
 
 // 행사일정 샘플
 const upcomingEvents = [
@@ -122,32 +119,25 @@ const upcomingEvents = [
       <div class="container">
         <h2 class="section-title clickable-title">최근 활동</h2>
         <div class="activities-grid">
-          {recentActivities.map((activity) => (
-            activity.isMore ? (
-              <a href={activity.link} class="activity-card more-card">
-                <div class="more-content">
-                  <span class="more-icon">→</span>
-                  <h3>{activity.title}</h3>
-                  <p>더 많은 활동 보기</p>
-                </div>
-              </a>
-            ) : (
-              <div class="activity-card">
-                <div class="activity-image">
-                  <img 
-                    src={activity.image} 
-                    alt={activity.title}
-                    onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('no-image');"
-                  />
-                  <div class="placeholder-icon">📸</div>
-                </div>
-                <div class="activity-content">
-                  <h3>{activity.title}</h3>
-                  <p class="activity-date">{activity.date}</p>
-                </div>
+          {recentActivities.filter(a => !a.isMore).map((activity) => (
+            <div class="activity-card">
+              <div class="activity-image">
+                <img 
+                  src={activity.image} 
+                  alt={activity.title}
+                  onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('no-image');"
+                />
+                <div class="placeholder-icon">📸</div>
               </div>
-            )
+              <div class="activity-content">
+                <h3>{activity.title}</h3>
+                <p class="activity-date">{activity.date}</p>
+              </div>
+            </div>
           ))}
+        </div>
+        <div class="news-footer">
+          <a href="/resources#activities" class="btn btn-sm">더 보기 →</a>
         </div>
       </div>
     </section>
@@ -160,11 +150,11 @@ const upcomingEvents = [
           <div class="news-column">
             <h2 class="section-title clickable-title">공지사항</h2>
             <ul class="news-list">
-              {recentNotices.map((notice) => (
+              {recentNotices.map((notice: any, idx: number) => (
                 <li class="news-item">
-                  <a href={`/notice#announcements`}>
+                  <a href={`/notice#notice-notice-${idx}`}>
                     <span class="news-title">{notice.title}</span>
-                    <span class="news-date">{notice.date}</span>
+                    <span class="news-date">{notice.createdAt ? new Date(notice.createdAt).toLocaleDateString('ko-KR') : ''}</span>
                   </a>
                 </li>
               ))}
