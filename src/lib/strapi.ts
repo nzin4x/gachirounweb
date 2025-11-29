@@ -1,4 +1,47 @@
-﻿// 연혁(Histories) Collection fetch 함수
+﻿// 팝업(Popups) Collection fetch 함수
+export async function getPopups(env?: any): Promise<PopupItem[]> {
+  const now = new Date().toISOString();
+  const query = `
+    query {
+      popups(
+        sort: "updatedAt:desc", 
+        filters: { 
+          show: { eq: true },
+          startsAt: { lte: "${now}" },
+          endsAt: { gte: "${now}" }
+        }
+      ) {
+        documentId
+        title
+        body
+        photo {
+          url
+          name
+          alternativeText
+        }
+        link
+        linkText
+        show
+        startsAt
+        endsAt
+        updatedAt
+      }
+    }
+  `;
+  const data = await graphql(query, undefined, env);
+  if (!data?.popups) return [];
+  
+  // documentId를 id로 매핑 후 data-strapi-path 자동 태깅
+  const mappedPopups = data.popups.map((item: any) => ({
+    ...item,
+    id: item.documentId,
+    body: strapiRichTextToHtml(item.body) // JSON → HTML 변환
+  }));
+  
+  return addStrapiPathToCollection(mappedPopups, 'popups') as PopupItem[];
+}
+
+// 연혁(Histories) Collection fetch 함수
 export async function getHistories(env?: any) {
   const query = `
     query {
@@ -27,6 +70,27 @@ export async function getHistories(env?: any) {
 interface GraphQLResponse {
   data?: any;
   errors?: any;
+}
+
+interface StrapiPhoto {
+  url: string;
+  name?: string;
+  alternativeText?: string;
+}
+
+interface PopupItem {
+  id: string | number;
+  title: string;
+  body: string;
+  photo?: StrapiPhoto;
+  link?: string;
+  linkText?: string;
+  show?: boolean;
+  startsAt?: string;
+  endsAt?: string;
+  updatedAt?: string;
+  _strapiPath: string;
+  _strapiFields: Record<string, string>;
 }
 
 /**
@@ -307,4 +371,6 @@ export default {
   restGet,
   getGreeting,
   getAnnouncements,
+  getPopups,
+  getHistories,
 };

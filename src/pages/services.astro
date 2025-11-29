@@ -194,6 +194,9 @@ import MainLayout from '../layouts/MainLayout.astro';
   .service-card li {
     padding: var(--spacing-xs) 0;
     margin-bottom: var(--spacing-xs);
+    text-align: justify;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   
   .service-card li::before {
@@ -202,6 +205,29 @@ import MainLayout from '../layouts/MainLayout.astro';
     margin-right: 0.3em;
     vertical-align: middle;
     color: var(--color-primary-500);
+  }
+
+  /* simple-card 스타일 */
+  .simple-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .simple-card h3 {
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.2rem;
+  }
+
+  .simple-card p {
+    line-height: 1.7;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-sm);
+    text-align: justify;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   /* 상세 박스 */

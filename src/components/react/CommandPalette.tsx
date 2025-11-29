@@ -101,6 +101,31 @@ export default function CommandPalette({ onRefreshData, onToggleDataPaths, onTog
         setIsOpen(false);
       },
     },
+    {
+      id: 'clear-popup-cookies',
+      label: '🍪 팝업 쿠키 초기화',
+      description: '모든 "오늘 하루 보지 않기" 설정을 초기화하여 팝업을 다시 볼 수 있습니다',
+      action: () => {
+        // localStorage에서 hidePopup_ 시작하는 모든 항목 삭제
+        Object.keys(localStorage).forEach(key => {
+          if (key.startsWith('hidePopup_')) {
+            localStorage.removeItem(key);
+          }
+        });
+        
+        // 쿠키에서 hidePopup_ 시작하는 모든 항목 삭제
+        document.cookie.split(';').forEach(cookie => {
+          const cookieName = cookie.split('=')[0].trim();
+          if (cookieName.startsWith('hidePopup_')) {
+            document.cookie = `${cookieName}=; path=/; max-age=0`;
+            document.cookie = `${cookieName}=; path=/; domain=.gachiroun.or.kr; max-age=0`;
+          }
+        });
+        
+        alert('팝업 쿠키가 초기화되었습니다. 페이지를 새로고침하면 팝업이 다시 표시됩니다.');
+        setIsOpen(false);
+      },
+    },
   ];
 
   return (
