@@ -126,6 +126,16 @@ const upcomingEvents = [
             )}
             <button class="popup-btn btn-secondary popup-close-btn">오늘 하루 보지 않기</button>
           </div>
+
+          {/* 팝업 게시기간 표시 (더 작고 회색) */}
+          {popupData.startsAt && popupData.endsAt && (
+            <div class="popup-period">
+              <span>
+                게시기간: {new Date(popupData.startsAt).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                ~ {new Date(popupData.endsAt).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     )}
@@ -662,6 +672,15 @@ const upcomingEvents = [
       padding: var(--spacing-sm) var(--spacing-md);
       border-top-width: 2px;
     }
+  }
+
+  .popup-period {
+    text-align: left;
+    font-size: 0.75rem;
+    color: var(--color-gray-400);
+    margin: var(--spacing-xs) 0 var(--spacing-xs) 0;
+    letter-spacing: 0.01em;
+    font-weight: 400;
   }
 </style>
 
