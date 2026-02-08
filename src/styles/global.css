@@ -75,29 +75,38 @@
   }
 }
 
-/* 로컬 웹폰트: Arita Dotum / Arita Buri (SemiBold 기본 사용) */
+/* 로컬 웹폰트: 강원교육모두체 (GangwonEdu Modu) */
 @font-face {
-  font-family: 'Arita-dotum';
+  font-family: 'GangwonEdu Modu';
+  font-weight: 300;
   font-style: normal;
-  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/AritaDotumKR-SemiBold.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.otf') format('opentype'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Arita-dotum';
+  font-family: 'GangwonEdu Modu';
+  font-weight: 400; /* 400(Regular) 요청 시 Light로 대체 (제공된 폰트가 Light/Bold 뿐임) */
   font-style: normal;
-  font-weight: 600;
   font-display: swap;
-  src: url('/fonts/AritaDotumKR-SemiBold.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.otf') format('opentype'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Arita-dotum';
-  font-style: normal;
+  font-family: 'GangwonEdu Modu';
   font-weight: 700;
+  font-style: normal;
   font-display: swap;
-  src: url('/fonts/AritaDotumKR-Bold.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.otf') format('opentype'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -229,7 +238,7 @@
 
 /* 기본 스타일 */
 html {
-  font-family: 'Arita-dotum', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'GangwonEdu Modu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -257,14 +266,14 @@ h6 {
   /* Bold 효과: 같은 Medium 파일이지만 weight로 강조 */
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
-  font-family: 'Arita-dotum', sans-serif;
+  font-family: 'GangwonEdu Modu', sans-serif;
 }
 
 /* 서사/인사말 등 본문 내 특정 영역에서 사용할 부리체 */
 .narrative,
 .greeting,
 .long-text {
-  font-family: 'Arita-buri', 'Arita-dotum', serif;
+  font-family: 'Arita-buri', 'GangwonEdu Modu', serif;
   font-weight: 400;
 }
 

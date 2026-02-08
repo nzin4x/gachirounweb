@@ -9,7 +9,8 @@
   --color-primary-200: #bfdbfe;
   --color-primary-300: #93c5fd;
   --color-primary-400: #60a5fa;
-  --color-primary-500: #1e40af; /* 메인 남색 */
+  --color-primary-500: #1e40af;
+  /* 메인 남색 */
   --color-primary-600: #1e3a8a;
   --color-primary-700: #1e3a8a;
   --color-primary-800: #1e3a8a;
@@ -21,7 +22,8 @@
   --color-accent-200: #bae6fd;
   --color-accent-300: #7dd3fc;
   --color-accent-400: #38bdf8;
-  --color-accent-500: #0ea5e9; /* 메인 파랑 */
+  --color-accent-500: #0ea5e9;
+  /* 메인 파랑 */
   --color-accent-600: #0284c7;
   --color-accent-700: #0369a1;
   --color-accent-800: #075985;
@@ -94,7 +96,8 @@
   --color-primary-200: #ffd4c3;
   --color-primary-300: #ffb599;
   --color-primary-400: #ff8961;
-  --color-primary-500: #f26538; /* 메인 코랄 오렌지 - 차분하고 세련된 */
+  --color-primary-500: #f26538;
+  /* 메인 코랄 오렌지 - 차분하고 세련된 */
   --color-primary-600: #e04d1f;
   --color-primary-700: #b93d18;
   --color-primary-800: #97331a;
@@ -106,7 +109,8 @@
   --color-accent-200: #fde68a;
   --color-accent-300: #fcd34d;
   --color-accent-400: #fbbf24;
-  --color-accent-500: #f59e0b; /* 메인 앰버 골드 - 차분하고 고급스러운 */
+  --color-accent-500: #f59e0b;
+  /* 메인 앰버 골드 - 차분하고 고급스러운 */
   --color-accent-600: #d97706;
   --color-accent-700: #b45309;
   --color-accent-800: #92400e;
@@ -118,7 +122,8 @@
   --color-secondary-200: #f8d5d1;
   --color-secondary-300: #f2b6ad;
   --color-secondary-400: #e88c7d;
-  --color-secondary-500: #d96c54; /* 차분한 테라코타 */
+  --color-secondary-500: #d96c54;
+  /* 차분한 테라코타 */
   --color-secondary-600: #c65338;
   --color-secondary-700: #a6402b;
   --color-secondary-800: #893827;
@@ -144,7 +149,7 @@
   --color-border: var(--color-gray-200);
 
   /* 폰트 */
-  --font-primary: 'Arita-dotum', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-primary: 'GangwonEdu Modu', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-secondary: 'Arita-buri', serif;
 }
 
