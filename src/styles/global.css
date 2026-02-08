@@ -81,21 +81,21 @@
   font-weight: 300;
   font-style: normal;
   font-display: swap;
-  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff2') format('woff2'),
-       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff') format('woff'),
-       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.otf') format('opentype'),
-       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.ttf') format('truetype');
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.otf') format('opentype'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'GangwonEdu Modu';
-  font-weight: 400; /* 400(Regular) 요청 시 Light로 대체 (제공된 폰트가 Light/Bold 뿐임) */
+  font-weight: 400; /* 400(Regular) 요청 시에도 Bold로 표시 */
   font-style: normal;
   font-display: swap;
-  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff2') format('woff2'),
-       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff') format('woff'),
-       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.otf') format('opentype'),
-       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.ttf') format('truetype');
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.otf') format('opentype'),
+       url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -109,29 +109,7 @@
        url('https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Bold.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'Arita-buri';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/AritaBuriKR-SemiBold.woff') format('woff');
-}
 
-@font-face {
-  font-family: 'Arita-buri';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/AritaBuriKR-SemiBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Arita-buri';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/AritaBuriKR-Bold.woff') format('woff');
-}
 
 /* CSS Reset */
 *,
@@ -237,13 +215,18 @@
 }
 
 /* 기본 스타일 */
-html {
+html,
+button,
+input,
+select,
+textarea {
   font-family: 'GangwonEdu Modu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   color: var(--color-text);
+  font-weight: 700;
 }
 
 body {
@@ -273,8 +256,8 @@ h6 {
 .narrative,
 .greeting,
 .long-text {
-  font-family: 'Arita-buri', 'GangwonEdu Modu', serif;
-  font-weight: 400;
+  font-family: 'GangwonEdu Modu', sans-serif;
+  font-weight: 700;
 }
 
 /* 브랜드 강조: '가치', '가치로운' 등에 적용 */
@@ -422,7 +405,7 @@ a:hover {
   color: var(--color-gray-900);
   margin: 0 0 var(--spacing-sm) 0;
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .simple-card p {
@@ -601,7 +584,7 @@ a:hover {
   color: var(--color-gray-900);
   margin-bottom: var(--spacing-xs);
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.4;
 }
 
@@ -697,7 +680,7 @@ a:hover {
 
   .history-content h4 {
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-gray-900);
     margin: 0 0 var(--spacing-xs) 0;
   }

@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import CommandPalette from '../components/react/CommandPalette';
 ---
 
 <MainLayout title="사업소개">
@@ -140,6 +141,9 @@ import MainLayout from '../layouts/MainLayout.astro';
       <div class="section-bg-image youth-bg"></div>
     </section>
   </div>
+  
+  <!-- 명령 팔레트 -->
+  <CommandPalette client:load />
 </MainLayout>
 
 <style>

@@ -304,6 +304,7 @@ export async function getAnnouncements(limit = 10, env?: any) {
   // GraphQL query for notices collection type (Strapi field name: notices)
   const gql = `query GetNotices {
     notices(sort: "createdAt:desc") {
+      documentId
       title
       body
       photo {
@@ -320,8 +321,8 @@ export async function getAnnouncements(limit = 10, env?: any) {
     const data = await graphql(gql, { limit }, env);
     
     if (Array.isArray(data?.notices)) {
-      const announcements = data.notices.map((item: any, index: number) => ({
-        id: `notice-${index}`, // Generate ID since Strapi doesn't provide one
+      const announcements = data.notices.map((item: any) => ({
+        id: item.documentId || `notice-${Date.now()}`, // Use documentId from Strapi
         title: item.title || '',
         body: strapiRichTextToHtml(item.body) || '',
         photo: item.photo?.url || null,

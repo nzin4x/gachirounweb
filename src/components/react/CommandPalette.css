@@ -111,7 +111,7 @@
 
 .command-item-label {
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-gray-900);
 }
 
@@ -186,7 +186,7 @@
   background: rgba(242, 101, 56, 0.95);
   color: white;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   pointer-events: auto;

@@ -23,6 +23,25 @@ const announcements = await (async () => {
 
     const data = await strapiClient.getAnnouncements(10, env);
     console.log('[SSR] Fetched', data?.length || 0, 'announcements');
+    
+    // Log each announcement item
+    if (data && data.length > 0) {
+      console.log('[SSR] Announcements iteration:');
+      data.forEach((item: any, index: number) => {
+        console.log(`[SSR] Item ${index + 1}:`, {
+          id: item.id,
+          title: item.title,
+          bodyPreview: item.body?.replace(/<[^>]*>/g, '').substring(0, 50) + '...',
+          hasPhoto: !!item.photo,
+          photo: item.photo,
+          photoAlt: item.photoAlt,
+          createdAt: item.createdAt,
+          startDate: item.startDate,
+          endDate: item.endDate
+        });
+      });
+    }
+    
     return data;
   } catch (e) {
     console.error('[SSR Debug] Failed to load announcements from Strapi:', e);
@@ -95,7 +114,9 @@ const events = [
             <div class="board-item" data-strapi-path={`collection-types > notices > ${item.id}`}>
               <div class="board-header">
                 <h3 class="announcement-title" data-strapi-path={`collection-types > notices > ${item.id} > title`} data-id={item.id}>{item.title}</h3>
-                <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
+                <div class="date-info">
+                  <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
+                </div>
               </div>
               <div class="board-content-wrapper">
                 <div class="board-text">
@@ -103,7 +124,7 @@ const events = [
                     {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
                   </div>
                   <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''} data-photo-alt={item.photoAlt || ''}>
-                    자세히 보기 →
+                    자세히 보기
                   </button>
                 </div>
                 {item.photo && (
@@ -352,7 +373,7 @@ const events = [
     padding: var(--spacing-sm) var(--spacing-lg);
     border-radius: var(--radius-md);
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
@@ -475,7 +496,7 @@ const events = [
 
   :global(.modal-body strong) {
     color: var(--color-gray-900);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .board-header .date {
@@ -487,6 +508,25 @@ const events = [
     font-size: 0.6em;
     margin-right: 0.4em;
     vertical-align: middle;
+  }
+
+  .date-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    align-items: flex-end;
+  }
+
+  .date-range {
+    color: var(--color-primary-600);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .date-range::before {
+    content: '📆 ';
+    font-size: 0.8em;
+    margin-right: 0.3em;
   }
 
   .board-item p {
@@ -629,7 +669,7 @@ const events = [
   .event-content h3 {
     color: var(--color-gray-900);
     margin-bottom: var(--spacing-sm);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .event-content .location {
@@ -709,7 +749,7 @@ const events = [
 
   .form-info strong {
     color: var(--color-primary-500);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .google-form-notice {
@@ -795,7 +835,7 @@ const events = [
   .benefit-card h4 {
     color: var(--color-gray-900);
     margin-bottom: var(--spacing-sm);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .benefit-card p {

@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import CommandPalette from '../components/react/CommandPalette';
 
 // 가상 활동 내역 샘플
 const activities = [
@@ -147,6 +148,9 @@ const forms = [
       </div>
     </section>
   </div>
+  
+  <!-- 명령 팔레트 -->
+  <CommandPalette client:load />
 </MainLayout>
 
 <style>

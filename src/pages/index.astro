@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import Slider from '../components/react/Slider';
+import CommandPalette from '../components/react/CommandPalette';
 import strapiClient from '../lib/strapi';
 import { getEnv } from '../lib/env';
 
@@ -218,6 +219,9 @@ const upcomingEvents = [
       </div>
     </section>
   </div>
+  
+  <!-- 명령 팔레트 -->
+  <CommandPalette client:load />
 </MainLayout>
 
 <style>
