@@ -70,6 +70,28 @@ const announcements = await (async () => {
   }
 })();
 
+// 필터링된 공지사항 처리
+const today = new Date();
+const filteredAnnouncements = announcements.filter((item: any) => {
+  if (item.startDate) {
+    const start = new Date(item.startDate);
+    return start <= today;
+  }
+  return true;
+});
+
+// 만료 상태 표시 함수
+const isExpired = (endDate: string | null) => {
+  if (!endDate) return false;
+  const end = new Date(endDate);
+  return end < today;
+};
+
+// 표시할 날짜 결정 함수
+const getDisplayDate = (item: any) => {
+  return item.startDate ? item.startDate : item.createdAt;
+};
+
 // 가상 행사일정 샘플 (연혁 기반)
 const events = [
   {
@@ -110,34 +132,43 @@ const events = [
       <div class="container">
         <h2 class="section-title clickable-title">공지사항</h2>
         <div class="board-list" id="announcement-list">
-          {announcements.length > 0 ? announcements.map((item: any) => (
-            <div class="board-item" data-strapi-path={`collection-types > notices > ${item.id}`}>
-              <div class="board-header">
-                <h3 class="announcement-title" data-strapi-path={`collection-types > notices > ${item.id} > title`} data-id={item.id}>{item.title}</h3>
-                <div class="date-info">
-                  <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(item.createdAt).toLocaleDateString('ko-KR')}</span>
-                </div>
-              </div>
-              <div class="board-content-wrapper">
-                <div class="board-text">
-                  <div class="board-preview" data-strapi-path={`collection-types > notices > ${item.id} > body`}>
-                    {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
-                  </div>
-                  <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''} data-photo-alt={item.photoAlt || ''}>
-                    자세히 보기
-                  </button>
-                </div>
-                {item.photo && (
-                  <div class="board-thumbnail">
-                    <img src={item.photo.startsWith('http') ? item.photo : `${env.STRAPI_URL}${item.photo}`} alt={item.photoAlt || item.title} />
-                  </div>
-                )}
-              </div>
-            </div>
-          )) : (
+          {filteredAnnouncements.length === 0 ? (
             <div class="no-announcements">
               <p>등록된 공지사항이 없습니다.</p>
             </div>
+          ) : (
+            filteredAnnouncements.map((item: any) => {
+              const expired = isExpired(item.endDate);
+              const displayDate = getDisplayDate(item);
+              
+              return (
+                <div class="board-item" data-strapi-path={`collection-types > notices > ${item.id}`}>
+                  <div class="board-header">
+                    <h3 class="announcement-title" data-strapi-path={`collection-types > notices > ${item.id} > title`} data-id={item.id} data-end-date={item.endDate || ''}>{item.title}</h3>
+                    <div class="date-info">
+                      <span class="date" data-strapi-path={`collection-types > notices > ${item.id} > createdAt`}>{new Date(displayDate).toLocaleDateString('ko-KR')}</span>
+                    </div>
+                  </div>
+                  {!expired && (
+                    <div class="board-content-wrapper">
+                      <div class="board-text">
+                        <div class="board-preview" data-strapi-path={`collection-types > notices > ${item.id} > body`}>
+                          {item.body.replace(/<[^>]*>/g, '').substring(0, 100)}...
+                        </div>
+                        <button class="btn-view-more" data-id={item.id} data-title={item.title} data-body={item.body} data-photo={item.photo || ''} data-photo-alt={item.photoAlt || ''} data-end-date={item.endDate || ''}>
+                          자세히 보기
+                        </button>
+                      </div>
+                      {item.photo && (
+                        <div class="board-thumbnail">
+                          <img src={item.photo.startsWith('http') ? item.photo : `${env.STRAPI_URL}${item.photo}`} alt={item.photoAlt || item.title} />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })
           )}
         </div>
       </div>
@@ -961,7 +992,19 @@ const events = [
 
   const STRAPI_URL_CLIENT = document.documentElement.dataset.strapiUrl || 'http://localhost:1337';
 
-  function openModal(title: string, body: string, photo: string, noticeId?: string) {
+  function openModal(title: string, body: string, photo: string, noticeId?: string, endDate?: string) {
+    // endDate 체크: 오늘보다 작으면 만료됨
+    const today = new Date();
+    let isExpired = false;
+    if (endDate) {
+      const end = new Date(endDate);
+      isExpired = end < today;
+    }
+    
+    const bodyContent = isExpired 
+      ? '<div style="padding: 2rem; text-align: center; color: #999;"><p>게시 기간이 종료된 공지사항입니다.</p></div>'
+      : (photo ? `<img src="${photo.startsWith('http') ? photo : STRAPI_URL_CLIENT + photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : '') + body;
+    
     const modalHTML = `
       <div class="modal-overlay" id="announcement-modal">
         <div class="modal-container">
@@ -973,8 +1016,7 @@ const events = [
             </div>
           </div>
           <div class="modal-body">
-            ${photo ? `<img src="${photo.startsWith('http') ? photo : STRAPI_URL_CLIENT + photo}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />` : ''}
-            ${body}
+            ${bodyContent}
           </div>
         </div>
       </div>
@@ -1070,7 +1112,8 @@ const events = [
         const title = target.dataset.title || '';
         const body = target.dataset.body || '';
         const photo = target.dataset.photo || '';
-        openModal(title, body, photo, id);
+        const endDate = target.dataset.endDate || '';
+        openModal(title, body, photo, id, endDate);
       });
     });
 
@@ -1102,7 +1145,8 @@ const events = [
         const id = btn?.dataset.id || '';
         const body = btn?.dataset.body || '';
         const photo = btn?.dataset.photo || '';
-        openModal(title, body, photo, id);
+        const endDate = btn?.dataset.endDate || '';
+        openModal(title, body, photo, id, endDate);
       });
     });
 
@@ -1119,7 +1163,8 @@ const events = [
         const title = btn.dataset.title || '';
         const body = btn.dataset.body || '';
         const photo = btn.dataset.photo || '';
-        openModal(title, body, photo, noticeId);
+        const endDate = btn.dataset.endDate || '';
+        openModal(title, body, photo, noticeId, endDate);
       }
     }
   }
@@ -1208,6 +1253,7 @@ const events = [
         button.setAttribute('data-body', item.body || '');
         button.setAttribute('data-photo', item.photo || '');
         button.setAttribute('data-photo-alt', item.photoAlt || '');
+        button.setAttribute('data-end-date', item.endDate || '');
         button.textContent = '자세히 보기 →';
         textDiv.appendChild(button);
 

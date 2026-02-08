@@ -69,15 +69,38 @@ const popupData: Awaited<ReturnType<typeof strapiClient.getPopups>>[0] | null = 
 })();
 
 // Strapi에서 최근 공지사항 가져오기 (3개)
-const recentNotices = await (async () => {
+const recentNoticesRaw = await (async () => {
   try {
-    const data = await strapiClient.getAnnouncements(3, env);
+    const data = await strapiClient.getAnnouncements(10, env); // 더 많이 가져와서 필터링
     return Array.isArray(data) ? data : [];
   } catch (e) {
     console.warn('[Home] Failed to load recent notices from Strapi:', e);
     return [];
   }
 })();
+
+// startDate/endDate 필터링 적용
+const today = new Date();
+const recentNotices = recentNoticesRaw
+  .filter((item: any) => {
+    // startDate가 있으면 오늘 이전이어야 함
+    if (item.startDate) {
+      const start = new Date(item.startDate);
+      if (start > today) return false;
+    }
+    // endDate가 있으면 오늘 이후여야 함 (만료되지 않음)
+    if (item.endDate) {
+      const end = new Date(item.endDate);
+      if (end < today) return false;
+    }
+    return true;
+  })
+  .slice(0, 3); // 최대 3개만
+
+// 표시할 날짜 결정 헬퍼
+const getDisplayDate = (item: any) => {
+  return item.startDate ? item.startDate : item.createdAt;
+};
 
 // 행사일정 샘플
 const upcomingEvents = [
@@ -170,9 +193,7 @@ const upcomingEvents = [
             </div>
           ))}
         </div>
-        <div class="news-footer">
-          <a href="/resources#activities" class="btn btn-sm">더 보기 →</a>
-        </div>
+
       </div>
     </section>
 
@@ -184,11 +205,11 @@ const upcomingEvents = [
           <div class="news-column">
             <h2 class="section-title clickable-title">공지사항</h2>
             <ul class="news-list">
-              {recentNotices.map((notice: any, idx: number) => (
+              {recentNotices.map((notice: any) => (
                 <li class="news-item">
-                  <a href={`/notice#notice-notice-${idx}`}>
+                  <a href={`/notice#notice-${notice.id}`}>
                     <span class="news-title">{notice.title}</span>
-                    <span class="news-date">{notice.createdAt ? new Date(notice.createdAt).toLocaleDateString('ko-KR') : ''}</span>
+                    <span class="news-date">{getDisplayDate(notice) ? new Date(getDisplayDate(notice)).toLocaleDateString('ko-KR') : ''}</span>
                   </a>
                 </li>
               ))}

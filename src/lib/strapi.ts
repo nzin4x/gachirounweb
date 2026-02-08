@@ -314,6 +314,8 @@ export async function getAnnouncements(limit = 10, env?: any) {
       }
       createdAt
       updatedAt
+      startDate
+      endDate
     }
   }`;
 
@@ -329,6 +331,8 @@ export async function getAnnouncements(limit = 10, env?: any) {
         photoAlt: item.photo?.alternativeText || item.photo?.name || '',
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
+        startDate: item.startDate || null,
+        endDate: item.endDate || null,
       }));
       
       // 자동 경로 태깅 적용
