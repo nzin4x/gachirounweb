@@ -2,10 +2,47 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "./node_modules/.bin/astro dev",
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Brave",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}",
+      "runtimeExecutable": "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "command": "npm run dev",
       "name": "Development server",
       "request": "launch",
       "type": "node-terminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch Brave & Server",
+      "configurations": [
+        "Development server",
+        "Launch Brave"
+      ]
+    },
+    {
+      "name": "Launch Chrome & Server",
+      "configurations": [
+        "Development server",
+        "Launch Chrome"
+      ]
     }
   ]
 }

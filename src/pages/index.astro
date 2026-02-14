@@ -79,19 +79,17 @@ const recentNoticesRaw = await (async () => {
   }
 })();
 
-// startDate/endDate 필터링 적용
-const today = new Date();
+// startDate/endDate 필터링 적용 (KST 기준 문자열 비교)
+const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
 const recentNotices = recentNoticesRaw
   .filter((item: any) => {
-    // startDate가 있으면 오늘 이전이어야 함
-    if (item.startDate) {
-      const start = new Date(item.startDate);
-      if (start > today) return false;
+    // startDate가 있으면 오늘(KST)보다 미래면 안됨
+    if (item.startDate && item.startDate > today) {
+      return false;
     }
-    // endDate가 있으면 오늘 이후여야 함 (만료되지 않음)
-    if (item.endDate) {
-      const end = new Date(item.endDate);
-      if (end < today) return false;
+    // endDate가 있으면 오늘(KST)보다 과거면 안됨 (즉 오늘까지 표시)
+    if (item.endDate && item.endDate < today) {
+      return false;
     }
     return true;
   })

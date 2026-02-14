@@ -70,12 +70,12 @@ const announcements = await (async () => {
   }
 })();
 
-// 필터링된 공지사항 처리
-const today = new Date();
+// 필터링된 공지사항 처리 (KST 기준 문자열 비교)
+const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
 const filteredAnnouncements = announcements.filter((item: any) => {
-  if (item.startDate) {
-    const start = new Date(item.startDate);
-    return start <= today;
+  // startDate가 미래면 숨김
+  if (item.startDate && item.startDate > today) {
+    return false;
   }
   return true;
 });
@@ -83,8 +83,8 @@ const filteredAnnouncements = announcements.filter((item: any) => {
 // 만료 상태 표시 함수
 const isExpired = (endDate: string | null) => {
   if (!endDate) return false;
-  const end = new Date(endDate);
-  return end < today;
+  // endDate가 과거면 만료됨
+  return endDate < today;
 };
 
 // 표시할 날짜 결정 함수
