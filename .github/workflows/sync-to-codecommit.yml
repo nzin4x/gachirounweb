@@ -3,7 +3,7 @@ name: Sync to AWS CodeCommit
 on:
   push:
     branches:
-      - main  # main 브랜치에 push될 때마다 동기화
+      - master  # master 브랜치에 push될 때마다 동기화
 
 jobs:
   sync:
