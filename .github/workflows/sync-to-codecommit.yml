@@ -1,0 +1,22 @@
+name: Sync to AWS CodeCommit
+
+on:
+  push:
+    branches:
+      - master  # master 브랜치에 push될 때마다 동기화
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    environment: Prod  # Prod environment의 secrets를 사용합니다
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 전체 히스토리를 가져옵니다 (mirror를 위해 필요)
+
+      - name: Sync to CodeCommit
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: https://${{ secrets.CODECOMMIT_USERNAME }}:${{ secrets.CODECOMMIT_PASSWORD }}@git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/gachiroun-web
